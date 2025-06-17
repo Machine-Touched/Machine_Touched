@@ -1,16 +1,256 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>QBASIC Web Emulator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Touched Laboratories</title>
     <style>
-        body { background: #000; color: #fff; font-family: monospace; }
-        #screen { background: #000080; color: #fff; width: 640px; height: 400px; padding: 10px; }
-        #input { width: 640px; background: #000; color: #fff; border: 1px solid #fff; }
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #0f0;
+            overflow-x: hidden; /* Prevent horizontal scroll from skewed elements */
+            background: #000; /* Fallback background */
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Stack header, conveyor, display, footer vertically */
+            z-index: 2; /* Ensure container content is above background iframe */
+        }
+
+        /* Background Iframe */
+        #background-iframe {
+            position: fixed; /* Fixed position to cover entire viewport */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 1; /* Place it behind the .container */
+            pointer-events: none; /* Allow mouse events to pass through */
+        }
+
+        /* Overall Page Header */
+        .page-header {
+            background: rgba(0, 20, 0, 0.7); /* Translucent background */
+            padding: 15px 0;
+            text-align: center;
+            border-bottom: 2px solid #0f0;
+            box-shadow: 0 0 10px #0f0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            color: #0f0;
+            text-shadow: 0 0 8px #0f0;
+        }
+
+        /* Conveyor Belt Styles */
+        .conveyor-belt-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            padding: 20px 0;
+            white-space: nowrap;
+            border-bottom: 2px solid #0f0;
+            background: rgba(0, 20, 0, 0.6); /* Translucent background */
+            box-shadow: 0 0 10px #0f0;
+            position: relative;
+            z-index: 50;
+        }
+
+        .conveyor-belt {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 30px;
+            padding: 0 50px;
+        }
+
+        .conveyor-item {
+            display: inline-block;
+            width: 280px;
+            height: 200px;
+            background: rgba(0, 10, 0, 0.9); /* Translucent background */
+            border: 1px solid #0f0;
+            box-shadow: 0 0 8px #0f0;
+            transform: skewX(-15deg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .conveyor-item:hover {
+            transform: skewX(0deg) scale(1.05);
+            box-shadow: 0 0 15px #0f0, 0 0 25px rgba(0, 255, 0, 0.7);
+            border-color: #00ff00;
+            z-index: 60;
+        }
+
+        .conveyor-item iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            transform: skewX(15deg); /* Counter-skew iframe content */
+            pointer-events: none;
+        }
+
+        .conveyor-item:hover iframe {
+            transform: skewX(0deg);
+        }
+
+        .conveyor-item .item-title {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7); /* Translucent background */
+            color: #0f0;
+            font-size: 0.8em;
+            padding: 3px 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .conveyor-item:hover .item-title {
+            opacity: 1;
+        }
+
+        /* Specimen Display Area */
+        .specimen-display {
+            flex-grow: 1;
+            margin: 20px;
+            background: rgba(0, 20, 0, 0.8); /* Translucent background */
+            border: 2px solid #0f0;
+            box-shadow: 0 0 15px #0f0;
+            padding: 10px;
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+        }
+
+        .specimen-display iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: transparent;
+        }
+
+        /* Status Line - keep similar, adjust positioning if needed */
+        .status-line {
+            /* Position relative to its parent container, not absolutely fixed to viewport */
+            margin-top: 20px; /* Space from element above */
+            text-align: center;
+            color: #0f0;
+            font-family: monospace;
+            z-index: 15;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Page Footer */
+        .page-footer {
+            background: rgba(0, 20, 0, 0.7); /* Translucent background */
+            padding: 15px 0;
+            text-align: center;
+            border-top: 2px solid #0f0;
+            box-shadow: 0 0 10px #0f0;
+            margin-top: auto;
+            position: relative;
+            z-index: 100;
+        }
+
+        .page-footer p {
+            margin: 0;
+            color: #0f0;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
-    <div id="screen"></div>
-    <input type="text" id="input" placeholder="Enter BASIC command...">
-    <script src="qbasic.js"></script>
+    <iframe id="background-iframe" src="./index2.html"></iframe>
+
+    <div class="container">
+        <header class="page-header">
+            <h1></h1>
+        </header>
+        
+        <div class="conveyor-belt-wrapper">
+            <div class="conveyor-belt" id="conveyorBelt">
+                <div class="conveyor-item" data-url="https://www.example.com/specimen1" data-title="Specimen">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen</div>
+                </div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen2" data-title="Specimen 2">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 2</div>
+                </div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen3" data-title="Specimen 3">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 3</div>
+                </div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen4" data-title="Specimen 4">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 4</div>
+                </div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen5" data-title="Specimen 5">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 5</div>
+                </div>
+                </div>
+        </div>
+
+        <div class="specimen-display" id="specimenDisplay">
+            <iframe id="displayIframe" src="about:blank"></iframe>
+        </div>
+
+        <div class="status-line pulse">
+            System Status: ONLINE | Machine Touch Protocol Implementing
+        </div>
+
+        <footer class="page-footer">
+            <p></p>
+        </footer>
+    </div>
+
+    <script>
+        // Function to handle clicking on conveyor items
+        function setupConveyorItemClicks() {
+            const conveyorItems = document.querySelectorAll('.conveyor-item');
+            const displayIframe = document.getElementById('displayIframe');
+            
+            conveyorItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const url = this.dataset.url; // Get URL from data-url attribute
+                    const title = this.dataset.title; // Get title from data-title attribute
+
+                    if (url && displayIframe) {
+                        displayIframe.src = url; // Load the URL into the display iframe
+                        // You could also update a title within the specimenDisplay div if you add one
+                        // specimenDisplay.querySelector('.display-title').textContent = title;
+                    }
+                });
+            });
+        }
+
+        // Initialize the interface and setup click handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            // No fetchQBasicOutput needed directly in this main document anymore,
+            // as it's handled by the background iframe.
+            setupConveyorItemClicks();
+        });
+    </script>
 </body>
 </html>
