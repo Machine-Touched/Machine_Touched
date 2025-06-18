@@ -8,10 +8,11 @@
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            color: #E0F7FA; /* Changed: From #0f0 to a light blue-white */
+            color: #E0F7FA; /* Lightest blue-white for general text */
             overflow-x: hidden; /* Prevent horizontal scroll from skewed elements */
-            /* Changed: From #000 to a white-blue gradient for 'snowflake cooling system' */
+            /* White-blue-blue-white snowflake cooling system background */
             background: linear-gradient(135deg, #FFFFFF 0%, #E3F2FD 25%, #BBDEFB 50%, #90CAF9 75%, #64B5F6 100%);
+            background-attachment: fixed; /* Ensures gradient covers full scroll */
         }
 
         .container {
@@ -25,7 +26,7 @@
 
         /* Background Iframe */
         #background-iframe {
-            position: fixed; /* Fixed position to cover entire viewport */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
@@ -33,23 +34,25 @@
             border: none;
             z-index: 1; /* Place it behind the .container */
             pointer-events: none; /* Allow mouse events to pass through */
+            /* This iframe will load the original-machinetouched-interface.html with its green background */
         }
 
         /* Overall Page Header */
         .page-header {
-            background: rgba(255, 255, 255, 0.2); /* Changed: From rgba(0, 20, 0, 0.7) to white translucent */
+            background: rgba(255, 255, 255, 0.2); /* White translucent background */
+            backdrop-filter: blur(5px); /* Frosty glass effect */
             padding: 15px 0;
             text-align: center;
-            border-bottom: 2px solid #BBDEFB; /* Changed: From #0f0 to light blue */
-            box-shadow: 0 0 10px #BBDEFB; /* Changed: From #0f0 to light blue glow */
+            border-bottom: 2px solid #BBDEFB; /* Light blue border */
+            box-shadow: 0 0 10px #BBDEFB; /* Light blue glow */
             position: relative;
             z-index: 100;
         }
 
         .page-header h1 {
             margin: 0;
-            color: #2196F3; /* Changed: From #0f0 to medium blue */
-            text-shadow: 0 0 8px #BBDEFB; /* Changed: From #0f0 to light blue glow */
+            color: #2196F3; /* Medium blue for header text */
+            text-shadow: 0 0 8px #BBDEFB; /* Light blue glow for text */
         }
 
         /* Conveyor Belt Styles */
@@ -58,9 +61,10 @@
             overflow-x: auto;
             padding: 20px 0;
             white-space: nowrap;
-            border-bottom: 2px solid #BBDEFB; /* Changed: From #0f0 to light blue */
-            background: rgba(255, 255, 255, 0.15); /* Changed: From rgba(0, 20, 0, 0.6) to more transparent white */
-            box-shadow: 0 0 10px #BBDEFB; /* Changed: From #0f0 to light blue glow */
+            border-bottom: 2px solid #BBDEFB; /* Light blue border */
+            background: rgba(255, 255, 255, 0.15); /* Slightly more transparent white */
+            backdrop-filter: blur(5px); /* Frosty glass effect */
+            box-shadow: 0 0 10px #BBDEFB; /* Light blue glow */
             position: relative;
             z-index: 50;
         }
@@ -77,20 +81,21 @@
             display: inline-block;
             width: 280px;
             height: 200px;
-            background: rgba(255, 255, 255, 0.1); /* Changed: From rgba(0, 10, 0, 0.9) to very transparent white */
-            border: 1px solid #BBDEFB; /* Changed: From #0f0 to light blue */
-            box-shadow: 0 0 8px #BBDEFB; /* Changed: From #0f0 to light blue glow */
+            background: rgba(255, 255, 255, 0.1); /* Very transparent white */
+            border: 1px solid #BBDEFB; /* Light blue border */
+            box-shadow: 0 0 8px #BBDEFB; /* Light blue glow */
             transform: skewX(-15deg);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             cursor: pointer;
             position: relative;
             flex-shrink: 0;
+            border-radius: 5px; /* Added for 'specimen file' look */
         }
 
         .conveyor-item:hover {
             transform: skewX(0deg) scale(1.05);
-            box-shadow: 0 0 15px #2196F3, 0 0 25px rgba(33, 150, 243, 0.7); /* Changed: From #0f0 to intense blue glow */
-            border-color: #2196F3; /* Changed: From #00ff00 to medium blue */
+            box-shadow: 0 0 15px #2196F3, 0 0 25px rgba(33, 150, 243, 0.7); /* More intense blue glow */
+            border-color: #2196F3; /* Medium blue border on hover */
             z-index: 60;
         }
 
@@ -101,6 +106,7 @@
             display: block;
             transform: skewX(15deg); /* Counter-skew iframe content */
             pointer-events: none;
+            background-color: transparent; /* Ensure transparency for content inside */
         }
 
         .conveyor-item:hover iframe {
@@ -113,8 +119,8 @@
             left: 0;
             width: 100%;
             text-align: center;
-            background: rgba(0, 0, 0, 0.5); /* Retained as translucent black for contrast */
-            color: #E0F7FA; /* Changed: From #0f0 to light blue-white */
+            background: rgba(0, 0, 0, 0.5); /* Dark translucent background for title */
+            color: #E0F7FA; /* Lightest blue-white for title text */
             font-size: 0.8em;
             padding: 3px 0;
             opacity: 0;
@@ -129,9 +135,10 @@
         .specimen-display {
             flex-grow: 1;
             margin: 20px;
-            background: rgba(255, 255, 255, 0.1); /* Changed: From rgba(0, 20, 0, 0.8) to very transparent white */
-            border: 2px solid #BBDEFB; /* Changed: From #0f0 to light blue */
-            box-shadow: 0 0 15px #BBDEFB; /* Changed: From #0f0 to light blue glow */
+            background: rgba(255, 255, 255, 0.1); /* Very transparent white */
+            backdrop-filter: blur(5px); /* Frosty glass effect */
+            border: 2px solid #BBDEFB; /* Light blue border */
+            box-shadow: 0 0 15px #BBDEFB; /* Light blue glow */
             padding: 10px;
             overflow: hidden;
             position: relative;
@@ -147,10 +154,11 @@
 
         /* Status Line */
         .status-line {
-            margin-top: 20px; /* Space from element above */
+            margin-top: 20px;
             text-align: center;
-            color: #2196F3; /* Changed: From #0f0 to medium blue */
-            font-family: monospace;
+            color: #2196F3; /* Medium blue for status line */
+            font-family: 'Share Tech Mono', monospace; /* Futuristic font */
+            text-shadow: 0 0 5px #BBDEFB; /* Light blue glow */
             z-index: 15;
         }
 
@@ -166,11 +174,12 @@
 
         /* Page Footer */
         .page-footer {
-            background: rgba(255, 255, 255, 0.2); /* Changed: From rgba(0, 20, 0, 0.7) to white translucent */
+            background: rgba(255, 255, 255, 0.2); /* White translucent background */
+            backdrop-filter: blur(5px); /* Frosty glass effect */
             padding: 15px 0;
             text-align: center;
-            border-top: 2px solid #BBDEFB; /* Changed: From #0f0 to light blue */
-            box-shadow: 0 0 10px #BBDEFB; /* Changed: From #0f0 to light blue glow */
+            border-top: 2px solid #BBDEFB; /* Light blue border */
+            box-shadow: 0 0 10px #BBDEFB; /* Light blue glow */
             margin-top: auto;
             position: relative;
             z-index: 100;
@@ -178,36 +187,37 @@
 
         .page-footer p {
             margin: 0;
-            color: #BBDEFB; /* Changed: From #0f0 to light blue */
+            color: #BBDEFB; /* Light blue for footer text */
             font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <iframe id="background-iframe" src="./original-machinetouched-interface.html"></iframe> 
+    <iframe id="background-iframe" src="./original-machinetouched-interface.html"></iframe>
+
     <div class="container">
         <header class="page-header">
-            <h1></h1>
+            <h1>Machine Touched Laboratories</h1>
         </header>
         
         <div class="conveyor-belt-wrapper">
             <div class="conveyor-belt" id="conveyorBelt">
-                <div class="conveyor-item" data-url="https://www.example.com/specimen1" data-title="Specimen 1">
-                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 1</div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen1" data-title="Specimen 1: OLD_PC.log">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 1: OLD_PC.log</div>
                 </div>
-                <div class="conveyor-item" data-url="https://www.example.com/specimen2" data-title="Specimen 2">
-                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 2</div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen2" data-title="Specimen 2: SERVER_BLADE.dat">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 2: SERVER_BLADE.dat</div>
                 </div>
-                <div class="conveyor-item" data-url="https://www.example.com/specimen3" data-title="Specimen 3">
-                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 3</div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen3" data-title="Specimen 3: LAPTOP_UNIT.arc">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 3: LAPTOP_UNIT.arc</div>
                 </div>
-                <div class="conveyor-item" data-url="https://www.example.com/specimen4" data-title="Specimen 4">
-                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 4</div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen4" data-title="Specimen 4: MICROCTRL.idx">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 4: MICROCTRL.idx</div>
                 </div>
-                <div class="conveyor-item" data-url="https://www.example.com/specimen5" data-title="Specimen 5">
-                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 5</div>
+                <div class="conveyor-item" data-url="https://www.example.com/specimen5" data-title="Specimen 5: VINTAGE_CONSOLE.rec">
+                    <iframe src="about:blank"></iframe> <div class="item-title">Specimen 5: VINTAGE_CONSOLE.rec</div>
                 </div>
-            </div>
+                </div>
         </div>
 
         <div class="specimen-display" id="specimenDisplay">
@@ -215,11 +225,11 @@
         </div>
 
         <div class="status-line pulse">
-            System Status: ONLINE | Machine Touch(Laboratories): Protocol Implementing
+            System Status: ONLINE | Machine_Touch(Laboratories): Protocols Implementing 
         </div>
 
         <footer class="page-footer">
-            <p></p>
+           
         </footer>
     </div>
 
@@ -245,8 +255,6 @@
 
         // Initialize the interface and setup click handlers
         document.addEventListener('DOMContentLoaded', () => {
-            // No fetchQBasicOutput needed directly in this main document anymore,
-            // as it's handled by the background iframe.
             setupConveyorItemClicks();
         });
     </script>
