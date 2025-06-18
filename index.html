@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            color: #e0f7fa;
+            color: #E0F7FA; /* Changed: From #0f0 to a light blue-white */
             overflow-x: hidden; /* Prevent horizontal scroll from skewed elements */
             /* Changed: From #000 to a white-blue gradient for 'snowflake cooling system' */
             background: linear-gradient(135deg, #FFFFFF 0%, #E3F2FD 25%, #BBDEFB 50%, #90CAF9 75%, #64B5F6 100%);
@@ -38,19 +37,19 @@
 
         /* Overall Page Header */
         .page-header {
-            background: rgba(255, 255, 255, 0.2); /* Translucent background */
+            background: rgba(255, 255, 255, 0.2); /* Changed: From rgba(0, 20, 0, 0.7) to white translucent */
             padding: 15px 0;
             text-align: center;
-            border-bottom: 2px solid #bbdefb;
-            box-shadow: 0 0 10px #bbdefb;
+            border-bottom: 2px solid #BBDEFB; /* Changed: From #0f0 to light blue */
+            box-shadow: 0 0 10px #BBDEFB; /* Changed: From #0f0 to light blue glow */
             position: relative;
             z-index: 100;
         }
 
         .page-header h1 {
             margin: 0;
-            color: #2196f3;
-            text-shadow: 0 0 8px #bbdefb;
+            color: #2196F3; /* Changed: From #0f0 to medium blue */
+            text-shadow: 0 0 8px #BBDEFB; /* Changed: From #0f0 to light blue glow */
         }
 
         /* Conveyor Belt Styles */
@@ -59,9 +58,9 @@
             overflow-x: auto;
             padding: 20px 0;
             white-space: nowrap;
-            border-bottom: 2px solid #bbdefb;
-            background: rgba(0, 20, 0, 0.6); /* Translucent background */
-            box-shadow: 0 0 10px #bbdefb;
+            border-bottom: 2px solid #BBDEFB; /* Changed: From #0f0 to light blue */
+            background: rgba(255, 255, 255, 0.15); /* Changed: From rgba(0, 20, 0, 0.6) to more transparent white */
+            box-shadow: 0 0 10px #BBDEFB; /* Changed: From #0f0 to light blue glow */
             position: relative;
             z-index: 50;
         }
@@ -78,10 +77,10 @@
             display: inline-block;
             width: 280px;
             height: 200px;
-            background: rgba(255, 255, 255, 0.1); /* Translucent background */
-            border: 1px solid #bbdefb;
-            box-shadow: 0 0 8px #bbdefb;
-            transform: skewX(-90deg);
+            background: rgba(255, 255, 255, 0.1); /* Changed: From rgba(0, 10, 0, 0.9) to very transparent white */
+            border: 1px solid #BBDEFB; /* Changed: From #0f0 to light blue */
+            box-shadow: 0 0 8px #BBDEFB; /* Changed: From #0f0 to light blue glow */
+            transform: skewX(-15deg);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             cursor: pointer;
             position: relative;
@@ -90,8 +89,8 @@
 
         .conveyor-item:hover {
             transform: skewX(0deg) scale(1.05);
-            box-shadow: 0 0 15px #2196f3, 0 0 25px rgba(33, 150, 243, 0.7);
-            border-color: #2196f3;
+            box-shadow: 0 0 15px #2196F3, 0 0 25px rgba(33, 150, 243, 0.7); /* Changed: From #0f0 to intense blue glow */
+            border-color: #2196F3; /* Changed: From #00ff00 to medium blue */
             z-index: 60;
         }
 
@@ -100,7 +99,7 @@
             height: 100%;
             border: none;
             display: block;
-            transform: skewX(90deg); /* Counter-skew iframe content */
+            transform: skewX(15deg); /* Counter-skew iframe content */
             pointer-events: none;
         }
 
@@ -114,8 +113,8 @@
             left: 0;
             width: 100%;
             text-align: center;
-            background: rgba(0, 0, 0, 0.5); /* Translucent background */
-            color: #e0f7fa;
+            background: rgba(0, 0, 0, 0.5); /* Retained as translucent black for contrast */
+            color: #E0F7FA; /* Changed: From #0f0 to light blue-white */
             font-size: 0.8em;
             padding: 3px 0;
             opacity: 0;
@@ -130,9 +129,9 @@
         .specimen-display {
             flex-grow: 1;
             margin: 20px;
-            background: rgba(255, 255, 255, 0.1); /* Translucent background */
-            border: 2px solid #bbdefb;
-            box-shadow: 0 0 15px #bbdefb;
+            background: rgba(255, 255, 255, 0.1); /* Changed: From rgba(0, 20, 0, 0.8) to very transparent white */
+            border: 2px solid #BBDEFB; /* Changed: From #0f0 to light blue */
+            box-shadow: 0 0 15px #BBDEFB; /* Changed: From #0f0 to light blue glow */
             padding: 10px;
             overflow: hidden;
             position: relative;
@@ -146,12 +145,11 @@
             background-color: transparent;
         }
 
-        /* Status Line - keep similar, adjust positioning if needed */
+        /* Status Line */
         .status-line {
-            /* Position relative to its parent container, not absolutely fixed to viewport */
             margin-top: 20px; /* Space from element above */
             text-align: center;
-            color: #2196f3;
+            color: #2196F3; /* Changed: From #0f0 to medium blue */
             font-family: monospace;
             z-index: 15;
         }
@@ -168,11 +166,11 @@
 
         /* Page Footer */
         .page-footer {
-            background: rgba(255, 255, 255, 0.2); /* Translucent background */
+            background: rgba(255, 255, 255, 0.2); /* Changed: From rgba(0, 20, 0, 0.7) to white translucent */
             padding: 15px 0;
             text-align: center;
-            border-top: 2px solid #bbdefb;
-            box-shadow: 0 0 10px #bbdefb;
+            border-top: 2px solid #BBDEFB; /* Changed: From #0f0 to light blue */
+            box-shadow: 0 0 10px #BBDEFB; /* Changed: From #0f0 to light blue glow */
             margin-top: auto;
             position: relative;
             z-index: 100;
@@ -180,14 +178,13 @@
 
         .page-footer p {
             margin: 0;
-            color: #bbdefb;
+            color: #BBDEFB; /* Changed: From #0f0 to light blue */
             font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    
-
+    <iframe id="background-iframe" src="./original-machinetouched-interface.html"></iframe> 
     <div class="container">
         <header class="page-header">
             <h1></h1>
@@ -210,7 +207,7 @@
                 <div class="conveyor-item" data-url="https://www.example.com/specimen5" data-title="Specimen 5">
                     <iframe src="about:blank"></iframe> <div class="item-title">Specimen 5</div>
                 </div>
-                </div>
+            </div>
         </div>
 
         <div class="specimen-display" id="specimenDisplay">
@@ -224,7 +221,6 @@
         <footer class="page-footer">
             <p></p>
         </footer>
-    
     </div>
 
     <script>
