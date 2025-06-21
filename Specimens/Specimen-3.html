@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Computer Emulator</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; padding: 20px; }
+        #memory, #registers, #output { 
+            background: #001100; 
+            padding: 10px; 
+            margin: 10px 0; 
+            border: 1px solid #0f0; 
+        }
+        #code { 
+            width: 100%; 
+            height: 100px; 
+            background: #001100; 
+            color: #0f0; 
+            border: 1px solid #0f0; 
+        }
+    </style>
+</head>
+<body>
+    <h2>Simple Computer Emulator</h2>
+    <textarea id="code">MOV A,5
+ADD A,3
+OUT A</textarea>
+    <button onclick="emulator.run()">Run</button>
+    <div id="registers">Registers:</div>
+    <div id="memory">Memory:</div>
+    <div id="output">Output:</div>
+    <script src="emulator.js"></script>
+</body>
+</html>
