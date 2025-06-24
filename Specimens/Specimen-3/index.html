@@ -34,10 +34,30 @@ OUT A</textarea>
     <div id="memory">Memory:</div>
     <div id="output">Output:</div>
 
-    <script src="power.js"></script>
+    <script src="power.js"></script> 
     <script>
-        // Instantiate the PowerSystem after its class definition is loaded
+        // Instantiate the PowerSystem after its class definition is loaded.
+        // This makes 'powerSystem' available globally for the buttons to use.
         const powerSystem = new PowerSystem(); 
+
+        // This is an example of how you can 'listen' to the power system's state changes.
+        // Open your browser's developer console (F12) to see these messages.
+        powerSystem.onStateChange((newState) => {
+            console.log("Power system state changed to:", newState);
+
+            if (newState === 'BIOS') {
+                console.log("System is ready for user input or program loading!");
+                // You could enable the 'Run' button here, for example:
+                // document.querySelector('button[onclick="emulator.run()"]').disabled = false;
+            } else if (newState === 'OFF') {
+                console.log("System is completely shut down.");
+                // You could disable the 'Run' button here:
+                // document.querySelector('button[onclick="emulator.run()"]').disabled = true;
+            }
+        });
+
+        console.log("Initial power system state:", powerSystem.state);
     </script>
-    <script src="emulator.js"></script> </body>
+    <script src="emulator.js"></script> 
+</body>
 </html>
