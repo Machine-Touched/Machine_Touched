@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor 1 Content</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 0.8em;
+            text-align: center;
+            background-color: #333; /* Dark background */
+            color: #0f0; /* Green text */
+            margin: 0;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            box-sizing: border-box; /* Include padding in height calculation */
+            overflow: hidden;
+        }
+        button {
+            background-color: #008cba; /* Blue button */
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.7em;
+            margin: 5px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #005f7a;
+        }
+        .message-log {
+            margin-top: 5px;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 5px;
+            border-radius: 3px;
+            max-height: 40px; /* Limit log height */
+            overflow-y: auto; /* Enable scrolling for messages */
+            width: 90%;
+            text-align: left;
+            font-size: 0.6em;
+            word-wrap: break-word; /* Prevent long words from overflowing */
+        }
+    </style>
+</head>
+<body>
+    <div id="monitor-info"></div>
+    <p>Status: OK</p>
+    <button id="sendMessageBtn">Send to Next</button>
+    <div class="message-log" id="messageLog">Messages:</div>
+
+    <script>
+        let myMonitorId = 'unknown';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get the unique ID passed as a query parameter from background-monitors.html
+            const urlParams = new URLSearchParams(window.location.search);
+            myMonitorId = urlParams.get('id') || 'monitorX';
+            document.getElementById('monitor-info').textContent = `${myMonitorId}`;
+
+            document.getElementById('sendMessageBtn').addEventListener('click', () => {
+                const message = `Hello from ${myMonitorId} at ${new Date().toLocaleTimeString()}`;
+                // Send message to parent (background-monitors.html)
+                window.parent.postMessage(
+                    { type: 'messageToNextMonitor', senderId: myMonitorId, message: message },
+                    window.location.origin // Specify target origin for security
+                );
+                appendMessage(`Sent: "${message}"`);
+                console.log(`[${myMonitorId}] Sent message to parent.`);
+            });
+        });
+
+        // Listen for messages from parent (background-monitors.html)
+        window.addEventListener('message', (event) => {
+            // Security check: ensure message is from the expected origin
+            if (event.origin !== window.location.origin) {
+                console.warn('Message from untrusted origin:', event.origin);
+                return;
+            }
+
+            const data = event.data;
+            if (data && data.type === 'receivedMessage') {
+                appendMessage(`Received from ${data.from}: "${data.message}"`);
+                console.log(`[${myMonitorId}] Received message from ${data.from}: "${data.message}"`);
+            }
+        });
+
+        function appendMessage(msg) {
+            const log = document.getElementById('messageLog');
+            const p = document.createElement('p');
+            p.textContent = msg;
+            log.prepend(p); // Add newest message at the top
+            if (log.children.length > 3) { // Keep only the latest 3 messages
+                log.removeChild(log.lastChild);
+            }
+        }
+    </script>
+</body>
+</html>
