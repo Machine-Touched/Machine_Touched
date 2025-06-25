@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Monitors Background</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars from appearing from randomly placed monitors */
+            background-color: #1a1a2e; /* Dark background for a tech feel */
+            color: #e0e0e0;
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px; /* Adds a bit of 3D perspective capability */
+        }
+
+        .monitor-container {
+            position: absolute; /* Allows random positioning and z-index stacking */
+            border: 2px solid #00f; /* Blue border for monitors */
+            box-shadow: 0 0 10px #00f, inset 0 0 5px #00f; /* Glow effect */
+            background-color: rgba(0, 0, 50, 0.8); /* Dark semi-transparent background */
+            border-radius: 5px;
+            overflow: hidden; /* Ensures iframe content stays within bounds */
+            display: flex;
+            flex-direction: column;
+            cursor: pointer; /* Indicate interactivity */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover effects */
+        }
+
+        .monitor-container:hover {
+            transform: scale(1.02) rotateY(3deg) rotateX(1deg); /* Slight scale and rotation on hover */
+            box-shadow: 0 0 20px #0ff, inset 0 0 10px #0ff; /* Brighter glow on hover */
+        }
+
+        .monitor-header {
+            background-color: rgba(0, 0, 50, 0.9);
+            color: #0ff; /* Cyan text for header */
+            padding: 5px;
+            font-size: 0.8em;
+            text-align: center;
+            border-bottom: 1px solid #00f;
+            user-select: none; /* Prevent text selection */
+        }
+
+        .monitor-iframe {
+            flex-grow: 1; /* Make iframe fill available space */
+            width: 100%;
+            height: calc(100% - 25px); /* Account for header height */
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const NUM_MONITORS = 20; // Number of monitors to generate (feel free to increase!)
+        const monitorData = []; // Stores references to iframes and their IDs for communication
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const bodyWidth = window.innerWidth;
+            const bodyHeight = window.innerHeight;
+
+            for (let i = 0; i < NUM_MONITORS; i++) {
+                const monitorDiv = document.createElement('div');
+                monitorDiv.className = 'monitor-container';
+                monitorDiv.id = `monitor-${i + 1}`; // Assign a unique ID
+
+                // Generate random size, position, and z-index for overlapping
+                const width = Math.floor(Math.random() * (350 - 180) + 180); // 180-350px width
+                const height = Math.floor(Math.random() * (250 - 120) + 120); // 120-250px height
+                const top = Math.floor(Math.random() * (bodyHeight - height));
+                const left = Math.floor(Math.random() * (bodyWidth - width));
+                const zIndex = Math.floor(Math.random() * 5000) + 1; // Z-index from 1 to 5000 (pushing limits!)
+
+                monitorDiv.style.width = `${width}px`;
+                monitorDiv.style.height = `${height}px`;
+                monitorDiv.style.top = `${top}px`;
+                monitorDiv.style.left = `${left}px`;
+                monitorDiv.style.zIndex = zIndex;
+                // Add slight random rotation and scale for a more organic look
+                monitorDiv.style.transform = `rotate(${Math.random() * 10 - 5}deg) scale(${Math.random() * 0.2 + 0.9})`;
+
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'monitor-header';
+                headerDiv.textContent = `Monitor ${i + 1} (Z: ${zIndex})`;
+                monitorDiv.appendChild(headerDiv);
+
+                const iframe = document.createElement('iframe');
+                iframe.className = 'monitor-iframe';
+                // Cycle through monitor1.html, monitor2.html, monitor3.html
+                iframe.src = `monitor${(i % 3) + 1}.html?id=monitor${i + 1}`;
+                iframe.title = `Monitor ${i + 1} Content`;
+                monitorDiv.appendChild(iframe);
+
+                document.body.appendChild(monitorDiv);
+                // Store monitor data for easy lookup during communication
+                monitorData.push({ id: `monitor${i + 1}`, iframe: iframe, index: i });
+            }
+
+            console.log(`[Background] Generated ${NUM_MONITORS} monitors.`);
+        });
+
+        // Listen for messages coming *from* the child iframes (the individual monitors)
+        window.addEventListener('message', (event) => {
+            // IMPORTANT SECURITY CHECK: Always verify the origin of messages!
+            // In a real application, you'd check `event.origin` against your expected domain.
+            // For this local file example, we assume same-origin.
+            if (event.origin !== window.location.origin) {
+                console.warn('[Background] Message from untrusted origin:', event.origin);
+                return;
+            }
+
+            const data = event.data;
+            if (data && data.type === 'messageToNextMonitor') {
+                console.log(`[Background] Received message from ${data.senderId}: "${data.message}"`);
+
+                // Find the sender's index to determine the next monitor
+                const senderIndex = monitorData.findIndex(m => m.id === data.senderId);
+                if (senderIndex !== -1) {
+                    const nextMonitorIndex = (senderIndex + 1) % NUM_MONITORS; // Calculate next, looping back to 0
+                    const nextMonitor = monitorData[nextMonitorIndex];
+
+                    if (nextMonitor && nextMonitor.iframe.contentWindow) {
+                        // Send the message to the next monitor's iframe
+                        nextMonitor.iframe.contentWindow.postMessage(
+                            { type: 'receivedMessage', message: data.message, from: data.senderId },
+                            window.location.origin // Specify target origin for security
+                        );
+                        console.log(`[Background] Forwarded message to ${nextMonitor.id}.`);
+                    } else {
+                        console.warn(`[Background] Could not find next monitor or its contentWindow for index ${nextMonitorIndex}.`);
+                    }
+                } else {
+                    console.warn(`[Background] Sender ID ${data.senderId} not found in monitor data.`);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
