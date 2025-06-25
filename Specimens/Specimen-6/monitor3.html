@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor 3 Content</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 0.8em;
+            text-align: center;
+            background-color: #333;
+            color: #f00; /* Red text */
+            margin: 0;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        button {
+            background-color: #cc0000; /* Red button */
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.7em;
+            margin: 5px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #990000;
+        }
+        .message-log {
+            margin-top: 5px;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 5px;
+            border-radius: 3px;
+            max-height: 40px;
+            overflow-y: auto;
+            width: 90%;
+            text-align: left;
+            font-size: 0.6em;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div id="monitor-info"></div>
+    <p>Status: ACTIVE</p>
+    <button id="sendMessageBtn">Transmit</button>
+    <div class="message-log" id="messageLog">Messages:</div>
+
+    <script>
+        let myMonitorId = 'unknown';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            myMonitorId = urlParams.get('id') || 'monitorX';
+            document.getElementById('monitor-info').textContent = `${myMonitorId}`;
+
+            document.getElementById('sendMessageBtn').addEventListener('click', () => {
+                const message = `Transmit from ${myMonitorId} at ${new Date().toLocaleTimeString()}`;
+                window.parent.postMessage(
+                    { type: 'messageToNextMonitor', senderId: myMonitorId, message: message },
+                    window.location.origin
+                );
+                appendMessage(`Sent: "${message}"`);
+                console.log(`[${myMonitorId}] Sent message to parent.`);
+            });
+        });
+
+        window.addEventListener('message', (event) => {
+            if (event.origin !== window.location.origin) {
+                console.warn('Message from untrusted origin:', event.origin);
+                return;
+            }
+
+            const data = event.data;
+            if (data && data.type === 'receivedMessage') {
+                appendMessage(`Received from ${data.from}: "${data.message}"`);
+                console.log(`[${myMonitorId}] Received message from ${data.from}: "${data.message}"`);
+            }
+        });
+
+        function appendMessage(msg) {
+            const log = document.getElementById('messageLog');
+            const p = document.createElement('p');
+            p.textContent = msg;
+            log.prepend(p);
+            if (log.children.length > 3) {
+                log.removeChild(log.lastChild);
+            }
+        }
+    </script>
+</body>
+</html>
