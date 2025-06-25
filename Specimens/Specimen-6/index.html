@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website with Network Background</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Hide scrollbars if content overflows due to fixed background */
+            font-family: sans-serif;
+            color: #333;
+        }
+
+        /* Container for the background iframe, spans the whole page */
+        #background-iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Puts it behind everything else */
+            /* Removed pointer-events: none here to allow interaction with background monitors */
+        }
+
+        /* The actual background iframe */
+        #background-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0.7; /* Make it slightly transparent so foreground content is visible */
+        }
+
+        /* Main content area, positioned above the background */
+        .main-content {
+            position: relative; /* Essential for z-index to work */
+            z-index: 10000; /* Give main content a very high z-index to be on top */
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for readability */
+            margin: 50px auto; /* Center the content block */
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(2px); /* Adds a slight blur effect behind the content (modern browsers) */
+        }
+
+        .main-content h1 {
+            color: #007bff;
+        }
+
+        .main-content p {
+            line-height: 1.6;
+        }
+
+        .main-content a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .main-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="background-iframe-container">
+        <iframe id="background-iframe" src="background-monitors.html" title="Network Background"></iframe>
+    </div>
+
+    <div class="main-content">
+        <h1>Welcome to My Website!</h1>
+        <p>This is the main content of your webpage, subtly overlaid on top of a dynamic network background.</p>
+        <p>The background showcases a visual representation of interconnected monitors, pushing the limits of <code>z-index</code> layering by randomly stacking them.</p>
+        <p>You can click the "Send to Next" or similar buttons on the *visible parts* of the background monitors to see inter-frame communication in action!</p>
+        <p>Keep your browser's developer console open (F12) to observe the messages being passed between the monitors.</p>
+        <p>The address of my website is <a href="www.machinetouched.w3spaces.com" target="_blank">www.machinetouched.w3spaces.com</a>.</p>
+    </div>
+
+    <script>
+        document.getElementById('background-iframe').onload = function() {
+            console.log('Background monitors iframe loaded.');
+        };
+    </script>
+</body>
+</html>
