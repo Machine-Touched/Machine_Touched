@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Creature Ability Generator</title>
+</head>
+<body>
+
+<h1>Discover a New Ability!</h1>
+
+<button onclick="generateAbility()">Click for an Ability</button>
+
+<p id="abilityOutput" style="font-size: 20px; margin-top: 15px; color: #0066cc;"></p>
+
+<script>
+function generateAbility() {
+  const abilities = [
+    "Can communicate with plants through humming.",
+    "Can temporarily slow down time for small objects.",
+    "Has a built-in compass that always points to the nearest source of water.",
+    "Can glow faintly in the dark when feeling happy.",
+    "Possesses an extra eye that can see in the infrared spectrum.",
+    "Can perfectly mimic any sound heard within the last hour.",
+    "Has a small, retractable third arm for fiddly tasks.",
+    "Can count perfectly up to 1,000,000 in under a second."
+  ];
+
+  const randomIndex = Math.floor(Math.random() * abilities.length);
+  const selectedAbility = abilities[randomIndex];
+
+  document.getElementById("abilityOutput").textContent = selectedAbility;
+}
+</script>
+
+</body>
+</html>
