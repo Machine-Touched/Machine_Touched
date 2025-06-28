@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta author="Replit Assistant(Replit.com)">
+
+    <title>''Machine_Touched:(A)'' - Digital Pet Assistant</title>
+
+    <link rel="stylesheet" href="tamagotchi.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+
+            <h1>''Machine_Touched''</h1>
+
+            <p>Digital Intelligence</p>
+
+        </header>
+
+
+        <div class="tamagotchi-screen">
+
+            <!-- Pet Display Area -->
+
+            <div class="pet-container">
+
+                <div class="pet-avatar" id="petAvatar">
+
+                    <div class="pet-face">
+
+                        <div class="eyes">
+
+                            <div class="eye left-eye" id="leftEye">
+
+                                <div class="pupil"></div>
+
+                            </div>
+
+                            <div class="eye right-eye" id="rightEye">
+
+                                <div class="pupil"></div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mouth" id="mouth"></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Status Bubbles -->
+
+                <div class="status-bubble" id="statusBubble">
+
+                    <span id="statusText">Initializing neural networks...</span>
+
+                </div>
+
+
+                <!-- Thought Bubble -->
+
+                <div class="thought-bubble" id="thoughtBubble">
+
+                    <div class="bubble-content">
+
+                        <code id="thoughtText">Ready to learn!</code>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Pet Stats -->
+
+            <div class="stats-panel">
+
+                <h3>🧠 AI Status</h3>
+
+                <div class="stat-bars">
+
+                    <div class="stat-item">
+
+                        <span class="stat-label">Intelligence:</span>
+
+                        <div class="stat-bar">
+
+                            <div class="stat-fill intelligence" id="intelligenceBar"></div>
+
+                        </div>
+
+                        <code class="stat-value" id="intelligenceValue">85%</code>
+
+                    </div>
+
+                    <div class="stat-item">
+
+                        <span class="stat-label">Cache Health:</span>
+
+                        <div class="stat-bar">
+
+                            <div class="stat-fill cache" id="cacheBar"></div>
+
+                        </div>
+
+                        <code class="stat-value" id="cacheValue">92%</code>
+
+                    </div>
+
+                    <div class="stat-item">
+
+                        <span class="stat-label">Code Hunger:</span>
+
+                        <div class="stat-bar">
+
+                            <div class="stat-fill hunger" id="hungerBar"></div>
+
+                        </div>
+
+                        <code class="stat-value" id="hungerValue">67%</code>
+
+                    </div>
+
+                    <div class="stat-item">
+
+                        <span class="stat-label">Energy:</span>
+
+                        <div class="stat-bar">
+
+                            <div class="stat-fill energy" id="energyBar"></div>
+
+                        </div>
+
+                        <code class="stat-value" id="energyValue">78%</code>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Pet State -->
+
+                <div class="current-state">
+
+                    <h4>Current State:</h4>
+
+                    <code class="state-display" id="currentState">🤔 Processing...</code>
+
+                </div>
+
+            </div>
+
+
+            <!-- Action Buttons -->
+
+            <div class="action-panel">
+
+                <h3>🎮 Care Actions</h3>
+
+                <div class="action-buttons">
+
+                    <button class="action-btn cookie-btn" onclick="giveCookie()" id="cookieBtn">
+
+                        🍪 Give Cookie
+
+                        <small>Feed browser cookies</small>
+
+                    </button>
+
+                    <button class="action-btn cache-btn" onclick="clearCache()" id="cacheBtn">
+
+                        🧹 Clear Cache
+
+                        <small>Clean memory</small>
+
+                    </button>
+
+                    <button class="action-btn code-btn" onclick="showCodeInput()" id="codeBtn">
+
+                        💻 Feed Code
+
+                        <small>Provide learning material</small>
+
+                    </button>
+
+                    <button class="action-btn sleep-btn" onclick="toggleSleep()" id="sleepBtn">
+
+                        😴 Sleep Mode
+
+                        <small>Rest the AI</small>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Code Input Modal -->
+
+            <div class="code-modal" id="codeModal">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+                        <h3>💻 Feed Code to AI</h3>
+
+                        <button class="close-btn" onclick="closeCodeInput()">&times;</button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <p>Your AI is hungry for knowledge! Feed it some delicious code:</p>
+
+                        <textarea id="codeInput" placeholder="// Enter any code here for your AI to 'learn'
+
+function greetWorld() {
+
+    console.log('Hello, digital world!');
+
+}"></textarea>
+
+                        <div class="modal-actions">
+
+                            <button class="submit-btn" onclick="feedCode()">🍽️ Feed Code</button>
+
+                            <button class="cancel-btn" onclick="closeCodeInput()">Cancel</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Activity Log -->
+
+        <div class="activity-log">
+
+            <h3>📜 Activity Log</h3>
+
+            <div class="log-container" id="activityLog">
+
+                <code class="log-entry startup">[SYSTEM] AI Tamagotchi initialized successfully</code>
+
+                <code class="log-entry startup">[NEURAL] Loading personality matrix...</code>
+
+                <code class="log-entry startup">[STATUS] Ready for interaction</code>
+
+            </div>
+
+            <button class="clear-log-btn" onclick="clearLog()">🗑️ Clear Log</button>
+
+        </div>
+
+
+        <!-- Info Panel -->
+
+        <div class="info-panel">
+
+            <h3>📚 About Your AI Pet</h3>
+
+            <div class="info-content">
+
+                <p>This AI Tamagotchi simulates a digital intelligence that needs care and attention:</p>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+
+                        <h4>🍪 Cookies</h4>
+
+                        <code>Feeds on browser cookies for sustenance</code>
+
+                    </div>
+
+                    <div class="info-item">
+
+                        <h4>🧹 Cache Cleaning</h4>
+
+                        <code>Requires regular memory maintenance</code>
+
+                    </div>
+
+                    <div class="info-item">
+
+                        <h4>💻 Code Learning</h4>
+
+                        <code>Grows smarter by consuming code snippets</code>
+
+                    </div>
+
+                    <div class="info-item">
+
+                        <h4>😴 Sleep Cycles</h4>
+
+                        <code>Needs rest to process information</code>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <footer>
+
+            <p>🤖 Your Digital Intelligence Companion - Keep it happy and well-fed!</p>
+
+        </footer>
+
+    </div>
+
+
+    <script src="tamagotchi.js"></script>
+
+</body>
+
+</html> 
