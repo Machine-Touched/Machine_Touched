@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine_Touched AI Pet Assistant</title>
+    <link rel="stylesheet" href="tamagotchi.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Your Machine_Touched AI Pet</h1>
+            <p>A digital companion from Sedgefield, Western Cape, South Africa.</p>
+        </header>
+
+        <div class="tamagotchi-screen">
+            <div class="pet-container">
+                <div id="petAvatar" class="pet-avatar">
+                    <div class="pet-face">
+                        <div class="eyes">
+                            <div class="eye"><div class="pupil"></div></div>
+                            <div class="eye"><div class="pupil"></div></div>
+                        </div>
+                        <div class="mouth"></div>
+                    </div>
+                </div>
+                <div class="status-bubble"><span id="statusText">System Initializing...</span></div>
+                <div class="thought-bubble"><span id="thoughtText">Loading thoughts...</span></div>
+            </div>
+
+            <div class="current-state">
+                <h4>Current AI State:</h4>
+                <span id="currentState" class="state-display">Booting Up...</span>
+            </div>
+        </div>
+
+        <div class="stats-panel">
+            <h3>AI Core Metrics</h3>
+            <div class="stat-item">
+                <span class="stat-label">Intelligence:</span>
+                <div class="stat-bar"><div id="intelligenceBar" class="stat-fill intelligence"></div></div>
+                <span id="intelligenceValue" class="stat-value">0%</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Cache Health:</span>
+                <div class="stat-bar"><div id="cacheBar" class="stat-fill cache"></div></div>
+                <span id="cacheValue" class="stat-value">0%</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Code Hunger:</span>
+                <div class="stat-bar"><div id="hungerBar" class="stat-fill hunger"></div></div>
+                <span id="hungerValue" class="stat-value">0%</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Energy Level:</span>
+                <div class="stat-bar"><div id="energyBar" class="stat-fill energy"></div></div>
+                <span id="energyValue" class="stat-value">0%</span>
+            </div>
+        </div>
+
+        <div class="action-panel">
+            <h3>AI Interaction Controls</h3>
+            <div class="action-buttons">
+                <button id="cookieBtn" class="action-btn cookie-btn">
+                    🍪 Give Cookie<small>Provide browser data</small>
+                </button>
+                <button id="cacheBtn" class="action-btn cache-btn">
+                    🧹 Clear Cache<small>Optimize memory</small>
+                </button>
+                <button id="codeBtn" class="action-btn code-btn">
+                    💻 Feed Code<small>Provide new algorithms</small>
+                </button>
+                <button id="sleepBtn" class="action-btn sleep-btn">
+                    😴 Sleep Mode<small>Rest the AI</small>
+                </button>
+            </div>
+        </div>
+
+        <div class="activity-log-section">
+            <h3>AI Activity Log</h3>
+            <div id="activityLog" class="log-container">
+                <code class="log-entry startup">[SYSTEM] Initializing activity logging...</code>
+            </div>
+            <button id="clearLogBtn" class="clear-log-btn">Clear Log</button>
+        </div>
+
+        <div class="info-panel">
+            <h3>About Your AI Companion</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>What is it?</h4>
+                    <p>This is a simulated AI entity, living within your browser. It mimics some needs of a large language model or complex software, requiring "feeding" with code and occasional "maintenance."</p>
+                </div>
+                <div class="info-item">
+                    <h4>How to interact?</h4>
+                    <p>Use the action buttons to manage its stats: give it a "cookie" for quick energy, "clear cache" for memory optimization, or "feed code" to boost its intelligence and hunger. It also needs "sleep" to recharge.</p>
+                </div>
+                <div class="info-item">
+                    <h4>Metrics Explained:</h4>
+                    <p><code>Intelligence</code>: Its knowledge and processing capability. <code>Cache Health</code>: How clean its working memory is. <code>Code Hunger</code>: Its need for new data/algorithms. <code>Energy Level</code>: Its computational power.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="codeModal" class="code-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Feed New Code</h3>
+                    <button id="closeCodeModalBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Enter some code (e.g., JavaScript, Python, pseudocode) for your AI to learn from. More complex code will satisfy its hunger more!</p>
+                    <textarea id="codeInput" placeholder="Paste your code here..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button id="cancelCodeBtn" class="cancel-btn">Cancel</button>
+                    <button id="submitCodeBtn" class="submit-btn">Feed Code</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>A Machine_Touched(Laboratory) Creation</p>
+           
+        </footer>
+    </div>
+
+    <script src="tamagotchi.js"></script>
+</body>
+</html>
