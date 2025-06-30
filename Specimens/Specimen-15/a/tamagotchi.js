@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Robot Nursery - Machine_Touched</title>
+    <style>
+        /* Your existing CSS here */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e0030 0%, #0a0020 100%); /* Dark, futuristic background */
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            gap: 30px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+            width: 100%;
+            max-width: 900px;
+            position: relative; /* For nurse cat positioning */
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px rgba(0, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.3em;
+            color: #a0a0a0;
+        }
+
+        .nursery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Adjust minmax for frame size */
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+            justify-content: center;
+            align-items: start;
+        }
+
+        .robot-cradle, .ability-generator-card {
+            background-color: #0d0d1a; /* Dark background for each cradle/card */
+            border-radius: 20px;
+            border: 3px solid #00ffff; /* Neon border */
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), 0 0 10px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .robot-cradle h2, .ability-generator-card h2 {
+            color: #00ffff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px #00ffff;
+            text-align: center;
+        }
+
+        /* Styling for the iframe itself */
+        .robot-iframe {
+            width: 100%; /* Take full width of its container */
+            height: 600px; /* Adjust height as needed for your Tamagotchi */
+            border: 2px solid #00aaaa; /* Inner border for the iframe */
+            border-radius: 10px;
+            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.2);
+            background-color: #000; /* Fallback background */
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            color: #a0a0a0;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 800px) {
+            .nursery-grid {
+                grid-template-columns: 1fr; /* Stack cradles vertically on smaller screens */
+            }
+            .robot-iframe {
+                height: 500px; /* Adjust iframe height for smaller screens */
+            }
+            header h1 {
+                font-size: 2.2em;
+            }
+            .nurse-cat {
+                display: none; /* Hide cat on very small screens if it obstructs */
+            }
+        }
+
+        /* Nurse Cat Styling */
+        .nurse-cat {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3em;
+            line-height: 1;
+            animation: purrGlow 2s infinite alternate, floatCat 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.5));
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        @keyframes purrGlow {
+            from { text-shadow: 0 0 5px rgba(255, 0, 255, 0.3); }
+            to { text-shadow: 0 0 15px rgba(255, 0, 255, 0.8); }
+        }
+
+        @keyframes floatCat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+        }
+
+        /* Ability Generator Specific Styles */
+        .ability-generator-card {
+            min-height: 400px; /* Ensure it has some presence */
+            justify-content: space-between;
+        }
+
+        .ability-generator-card p {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #ccc;
+        }
+
+        .generate-btn {
+            background: linear-gradient(45deg, #8A2BE2, #4B0082); /* Violet to Indigo */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+            margin-top: 20px;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.6);
+        }
+
+        #abilityOutput {
+            background-color: #000a1a;
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 25px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #00ffaa;
+            min-height: 100px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            line-height: 1.4;
+            flex-grow: 1; /* Allow it to take available space */
+        }
+
+        /* New styles for the radio section */
+        .radio-station-card {
+            background-color: #0d0d1a;
+            border-radius: 20px;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), 0 0 10px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .radio-station-card h2 {
+            color: #00ffff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px #00ffff;
+        }
+
+        .radio-station-card p {
+            font-size: 1.1em;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .radio-station-card a.live-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #0077B6, #00B4D8); /* Blue gradient */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 119, 182, 0.4);
+        }
+
+        .radio-station-card a.live-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 119, 182, 0.6);
+        }
+
+        /* Basic visual for 'signal' */
+        .signal-indicator {
+            width: 80px;
+            height: 15px;
+            background-color: rgba(0, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .signal-bar {
+            width: 20%; /* Each segment */
+            height: 100%;
+            background-color: #00ffff;
+            position: absolute;
+            animation: signalPulse 2s infinite ease-out;
+        }
+
+        .signal-bar:nth-child(1) { left: 0; animation-delay: 0s; }
+        .signal-bar:nth-child(2) { left: 25%; animation-delay: 0.2s; }
+        .signal-bar:nth-child(3) { left: 50%; animation-delay: 0.4s; }
+        .signal-bar:nth-child(4) { left: 75%; animation-delay: 0.6s; }
+
+
+        @keyframes signalPulse {
+            0%, 100% { transform: scaleX(0.5); opacity: 0.5; }
+            50% { transform: scaleX(1); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="nurse-cat" title="Nurse Cat is watching over your robots!">🐱‍💻</span>
+        <h1>The Robot Nursery</h1>
+        <p>A digital haven for your AI companions from Machine_Touched.</p>
+    </header>
+
+    <div class="nursery-grid">
+        <div class="robot-cradle">
+            <h2>''Machine_Touched'' - Digital Pet Assistant</h2>
+            <iframe src="./a/index.html" class="robot-iframe" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="ability-generator-card">
+            <h2>🤖 AI Ability Generator 🧠</h2>
+            <p>Unleash new browser-based functionalities for your AI companions!</p>
+            <button class="generate-btn" onclick="generateAbility()">Generate New Ability</button>
+            <div id="abilityOutput">
+                Click "Generate New Ability" to discover a powerful new browser plugin or widget for your robots!
+            </div>
+        </div>
+
+        <div class="radio-station-card">
+            <h2>📡 Interstellar Broadcast 🎶</h2>
+            <p>Tune into the sounds of cosmic exploration and the latest from SETI.</p>
+            <p>
+                **Now Playing:** *Big Picture Science* - Distant Signals Edition
+            </p>
+            <a href="https://radio.seti.org/" target="_blank" class="live-link">Listen Live on SETI.org</a>
+            <div class="signal-indicator" title="Live Signal Detected">
+                <div class="signal-bar"></div>
+                <div class="signal-bar"></div>
+                <div class="signal-bar"></div>
+                <div class="signal-bar"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Built with care in Sedgefield, Western Cape, South Africa. &copy; 2025 Machine_Touched.</p>
+        <p>Visit our main site: <a href="http://www.machinetouched.w3spaces.com" style="color: #00ffff; text-decoration: none;">www.machinetouched.w3spaces.com</a></p>
+    </footer>
+
+    <script>
+        // Array of creative, browser-centric AI abilities
+        const aiAbilities = [
+            "**Contextual Search Weaver:** Analyzes current page content to proactively suggest related browser searches, opening them in discreet background tabs for deeper understanding.",
+            "**Intelligent Form Autocompleter:** Learns your input patterns across websites to predict and fill complex forms with incredible accuracy, securing sensitive data locally.",
+            "**Adaptive UI Personalizer:** Dynamically adjusts webpage layouts, font sizes, and color schemes based on your past Browse habits and visual comfort preferences.",
+            "**Real-time Content Summarizer Widget:** Provides instant, concise summaries of lengthy articles or documents you're viewing, appearing as a discreet sidebar widget.",
+            "**Predictive Link Prefetcher:** Anticipates your next click based on your navigation history and pre-loads potential next pages in the background for lightning-fast Browse.",
+            "**Personalized Ad Blocker Synthesizer:** Goes beyond typical ad blocking by learning what kinds of content you find genuinely useful and filtering out only truly irrelevant or intrusive elements.",
+            "**Cross-Tab Knowledge Integrator:** Connects information across all open tabs, allowing you to ask questions that draw data from multiple sources simultaneously.",
+            "**Voice Command Browser Navigator:** Enables hands-free control of your browser, allowing you to navigate, open new tabs, and interact with elements using natural language commands.",
+            "**Secure Password Manager Plugin (AI-enhanced):** Not just stores, but intelligently suggests ultra-strong passwords and monitors for potential breaches across your logins.",
+            "**Ephemeral Tab Organizer:** Automatically groups and discards temporary or research tabs after a session, decluttering your browser without losing important work.",
+            "**Digital Wellbeing Nudge Bot:** Monitors your screen time and content, offering gentle, personalized suggestions for breaks or content diversification when it detects potential digital fatigue.",
+            "**Optimized Resource Manager:** Intelligently pauses background animations, video autoplay, and non-essential scripts on inactive tabs to significantly reduce CPU and memory consumption.",
+            "**Automated Screenshot Annotator:** Instantly captures screenshots of specific page elements, then provides AI-generated basic annotations or highlights based on context.",
+            "**Interactive Data Visualizer:** Transforms raw tabular data on web pages (e.g., in tables or lists) into interactive charts and graphs for easier analysis, displayed as an overlay."
+        ];
+
+        function generateAbility() {
+            const outputDiv = document.getElementById('abilityOutput');
+            const randomAbility = aiAbilities[Math.floor(Math.random() * aiAbilities.length)];
+            outputDiv.innerHTML = randomAbility; // Use innerHTML to render bold markdown
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Optional: Nurse cat purr/meow on click
+            const nurseCat = document.querySelector('.nurse-cat');
+            nurseCat.addEventListener('click', () => {
+                const sounds = ['meow.mp3', 'purr.mp3']; // You'd need these audio files
+                const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+                // Using the absolute path to your w3spaces.com audio folder
+                const audio = new Audio(`https://www.machinetouched.w3spaces.com/audio/${randomSound}`);
+                audio.play().catch(e => console.error("Audio play error:", e));
+            });
+        });
+    </script>
+</body>
+</html>
