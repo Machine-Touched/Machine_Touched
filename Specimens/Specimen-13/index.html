@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyborg Security Interface</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif; /* Modern, clean font */
+            color: #ddd;
+            overflow: hidden; /* Hide scrollbars */
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #1a1a1a, #000000); /* Deep space gradient */
+        }
+
+        /* Animated Starfield */
+        @keyframes twinkle {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 1s infinite alternate;
+        }
+
+        /* Organic Veins Overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('organic-veins.png'); /* Replace with your image */
+            background-size: cover;
+            opacity: 0.15; /* Subtle overlay */
+            mix-blend-mode: overlay; /* Blend with background */
+        }
+
+        /* Header and Footer Styling */
+        header,
+        footer {
+            position: absolute;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent */
+            padding: 10px 20px;
+            z-index: 10; /* Ensure they're on top */
+        }
+
+        header {
+            top: 0;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        footer {
+            bottom: 0;
+            text-align: center;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="overlay"></div>
+        <header>
+            <h1>Cyborg Security</h1>
+        </header>
+        <main>
+            </main>
+        <footer>
+            </footer>
+    </div>
+
+    <script>
+        // Initial Star Creation (JavaScript)
+        const container = document.querySelector('.container');
+        const numberOfStars = 100;
+
+        for (let i = 0; i < numberOfStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.width = `${Math.random() * 2 + 1}px`;
+            star.style.height = `${Math.random() * 2 + 1}px`;
+            star.style.animationDelay = `${Math.random() * 2}s`;
+            container.appendChild(star);
+        }
+    </script>
+</body>
+</html>
