@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three-Headed Server Monitor - Machine Touched LLM Specimen Collection</title>
+    <style>
+        /* Background iframe transparency effect */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.85);
+            color: #00ff00;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Background iframe - barn aesthetic behind nursery */
+        #background-barn {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 1000000000; /* 10-digit z-index as requested */
+            pointer-events: none;
+            opacity: 0.15;
+            filter: sepia(0.8) contrast(1.2);
+        }
+
+        /* Main container with transparency for barn background to show through */
+        .server-monitor-container {
+            position: relative;
+            z-index: 1000000001; /* Next z-index number */
+            background: rgba(0, 20, 0, 0.75);
+            backdrop-filter: blur(2px);
+            min-height: 100vh;
+            padding: 20px;
+            border: 8px solid #333;
+            border-style: double;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 255, 0, 0.1),
+                0 0 50px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Header section with CRT monitor styling */
+        .monitor-header {
+            background: linear-gradient(135deg, #001100 0%, #003300 100%);
+            border: 4px solid #444;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1000000002;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 0, 0.3),
+                inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .monitor-header h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #00ff00;
+            text-shadow: 
+                0 0 10px #00ff00,
+                0 0 20px #00ff00,
+                0 0 30px #00ff00;
+            margin: 0;
+            animation: crt-flicker 3s infinite alternate;
+        }
+
+        @keyframes crt-flicker {
+            0% { opacity: 1; }
+            97% { opacity: 1; }
+            98% { opacity: 0.95; }
+            99% { opacity: 0.98; }
+            100% { opacity: 1; }
+        }
+
+        .monitor-subtitle {
+            text-align: center;
+            color: #66ff66;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        /* Three-headed display grid */
+        .three-heads-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1000000003;
+        }
+
+        /* Individual head monitors */
+        .head-monitor {
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #00aa00;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 400px;
+            position: relative;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 0, 0.4),
+                inset 0 0 10px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .head-monitor:hover {
+            border-color: #00ff00;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 0, 0.6),
+                inset 0 0 15px rgba(0, 0, 0, 0.9);
+            transform: scale(1.02);
+        }
+
+        .head-title {
+            color: #00ff00;
+            font-size: 1.4rem;
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #004400;
+            padding-bottom: 10px;
+            text-shadow: 0 0 8px #00ff00;
+        }
+
+        /* Nursery iframe in first head */
+        .nursery-frame {
+            width: 100%;
+            height: 350px;
+            border: 2px solid #006600;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000000004;
+        }
+
+        /* Firewall display in second head */
+        .firewall-frame {
+            width: 100%;
+            height: 350px;
+            border: 2px solid #006600;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000000005;
+        }
+
+        /* Tamagotchi collection in third head */
+        .tamagotchi-frame {
+            width: 100%;
+            height: 350px;
+            border: 2px solid #006600;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000000006;
+        }
+
+        /* Central processing unit display */
+        .cpu-central-display {
+            background: rgba(0, 20, 0, 0.95);
+            border: 4px solid #00aa00;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+            z-index: 1000000007;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 0, 0.5),
+                inset 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .cpu-title {
+            text-align: center;
+            color: #00ff00;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #00ff00;
+        }
+
+        /* Server status panels */
+        .status-panels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .status-panel {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #004400;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            z-index: 1000000008;
+        }
+
+        .status-panel h3 {
+            color: #00cc00;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #004400;
+            padding-bottom: 8px;
+        }
+
+        /* Code display areas with extensive <code> usage */
+        .code-display {
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #006600;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .code-display code {
+            color: #00ff88;
+            background: transparent;
+            display: block;
+            margin: 2px 0;
+        }
+
+        /* Live data streams */
+        .data-stream {
+            height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #006600;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 1000000009;
+        }
+
+        .stream-line {
+            color: #00dd00;
+            font-size: 0.85rem;
+            margin: 3px 0;
+            animation: stream-glow 2s infinite alternate;
+        }
+
+        @keyframes stream-glow {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Browser-like styling for iframe borders */
+        .browser-frame {
+            border: 8px solid #333;
+            border-top: 25px solid #444;
+            border-radius: 8px;
+            position: relative;
+            background: #222;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.6),
+                inset 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .browser-frame::before {
+            content: "● ● ●";
+            position: absolute;
+            top: -22px;
+            left: 8px;
+            color: #666;
+            font-size: 12px;
+            letter-spacing: 4px;
+        }
+
+        .browser-frame::after {
+            content: "machine_touched://localhost:specimen_collection";
+            position: absolute;
+            top: -20px;
+            left: 50px;
+            right: 8px;
+            background: #111;
+            color: #888;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .three-heads-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .monitor-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .server-monitor-container {
+                padding: 10px;
+                border-width: 4px;
+            }
+            
+            .status-panels {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar styling for terminal feel */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 0, 0.6);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background iframe - farmer john's barn showing through -->
+    <iframe id="background-barn" 
+            src="https://machinetouched.w3spaces.com" 
+            frameborder="0">
+    </iframe>
+
+    <div class="server-monitor-container">
+        <!-- Main monitor header -->
+        <header class="monitor-header">
+            <h1>THREE-HEADED SERVER MONITOR</h1>
+            <div class="monitor-subtitle">
+                <code>Machine_Touched LLM Specimen Collection v2.5.7</code>
+            </div>
+        </header>
+
+        <!-- Three monitoring heads -->
+        <section class="three-heads-grid">
+            <!-- Head 1: Nursery Monitor -->
+            <div class="head-monitor">
+                <h2 class="head-title">
+                    <code>HEAD_01: NURSERY_MONITOR</code>
+                </h2>
+                <div class="browser-frame">
+                    <iframe class="nursery-frame" 
+                            src="nursery.html" 
+                            frameborder="0"
+                            title="Robot Nursery Monitor">
+                    </iframe>
+                </div>
+                <div class="code-display">
+                    <code>[NURSERY] Status: ACTIVE</code>
+                    <code>[NURSERY] Specimens: 3 ACTIVE</code>
+                    <code>[NURSERY] Care_Level: OPTIMAL</code>
+                    <code>[NURSERY] AI_Generator: ONLINE</code>
+                </div>
+            </div>
+
+            <!-- Head 2: Firewall Monitor -->
+            <div class="head-monitor">
+                <h2 class="head-title">
+                    <code>HEAD_02: FIREWALL_MONITOR</code>
+                </h2>
+                <div class="browser-frame">
+                    <iframe class="firewall-frame" 
+                            src="index.html" 
+                            frameborder="0"
+                            title="Three-Layer Firewall Monitor">
+                    </iframe>
+                </div>
+                <div class="code-display">
+                    <code>[FIREWALL] Layers: 3 ACTIVE</code>
+                    <code>[FIREWALL] Threats_Blocked: 847</code>
+                    <code>[FIREWALL] Traffic_Allowed: 1,293</code>
+                    <code>[FIREWALL] Security_Level: HIGH</code>
+                </div>
+            </div>
+
+            <!-- Head 3: Tamagotchi Collection -->
+            <div class="head-monitor">
+                <h2 class="head-title">
+                    <code>HEAD_03: TAMAGOTCHI_COLLECTION</code>
+                </h2>
+                <div class="browser-frame">
+                    <iframe class="tamagotchi-frame" 
+                            src="tamagotchi.html" 
+                            frameborder="0"
+                            title="AI Tamagotchi Collection">
+                    </iframe>
+                </div>
+                <div class="code-display">
+                    <code>[TAMAGOTCHI] Status: HAPPY</code>
+                    <code>[TAMAGOTCHI] Intelligence: 85%</code>
+                    <code>[TAMAGOTCHI] Cache_Health: 92%</code>
+                    <code>[TAMAGOTCHI] Last_Fed: 00:03:42</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Central processing unit display -->
+        <section class="cpu-central-display">
+            <h2 class="cpu-title">
+                <code>CENTRAL_PROCESSING_UNIT</code>
+            </h2>
+            
+            <div class="status-panels">
+                <div class="status-panel">
+                    <h3><code>System Resources</code></h3>
+                    <div class="code-display">
+                        <code>CPU_Usage: 73.2%</code>
+                        <code>Memory_Used: 8.4GB / 16GB</code>
+                        <code>Disk_Space: 847GB / 1TB</code>
+                        <code>Network_IO: 156.7 MB/s</code>
+                        <code>Active_Processes: 847</code>
+                    </div>
+                </div>
+
+                <div class="status-panel">
+                    <h3><code>LLM Processing Stats</code></h3>
+                    <div class="code-display">
+                        <code>Tokens_Processed: 2,847,392</code>
+                        <code>Neural_Pathways: OPTIMIZED</code>
+                        <code>Learning_Rate: 0.0001</code>
+                        <code>Context_Window: 8192 tokens</code>
+                        <code>Response_Time: 342ms avg</code>
+                    </div>
+                </div>
+
+                <div class="status-panel">
+                    <h3><code>Specimen Vitals</code></h3>
+                    <div class="code-display">
+                        <code>Total_Specimens: 5 ACTIVE</code>
+                        <code>Health_Status: STABLE</code>
+                        <code>Growth_Rate: +12.3%</code>
+                        <code>Interaction_Score: 94.7</code>
+                        <code>Learning_Progress: ACCELERATED</code>
+                    </div>
+                </div>
+
+                <div class="status-panel">
+                    <h3><code>Security Matrix</code></h3>
+                    <div class="code-display">
+                        <code>Firewall_Layers: 3 ACTIVE</code>
+                        <code>Intrusion_Attempts: 23 BLOCKED</code>
+                        <code>Security_Level: MAXIMUM</code>
+                        <code>Encryption: AES-256</code>
+                        <code>Auth_Sessions: 7 VERIFIED</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live data stream -->
+            <div class="data-stream" id="liveDataStream">
+                <code class="stream-line">[INFO] System initialization complete</code>
+                <code class="stream-line">[LLM] Neural networks online</code>
+                <code class="stream-line">[SPECIMEN] Tamagotchi requesting cache cleanup</code>
+                <code class="stream-line">[FIREWALL] Scanning incoming traffic</code>
+                <code class="stream-line">[NURSERY] All specimens responding normally</code>
+            </div>
+        </section>
+
+        <!-- Footer with extensive code tags -->
+        <footer style="text-align: center; margin-top: 30px; opacity: 0.8;">
+            <div class="code-display">
+                <code>Machine_Touched Laboratory System v2.5.7</code>
+                <code>Running on: Debian GNU/Linux 12 (bookworm)</code>
+                <code>Kernel: 6.1.0-replit-x86_64</code>
+                <code>Uptime: 72 days, 14:32:18</code>
+                <code>Last_Backup: 2025-07-01 07:45:23 UTC</code>
+                <code>© 2025 Machine_Touched Laboratories - Sedgefield, Western Cape, South Africa</code>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        /**
+         * Three-Headed Server Monitor JavaScript
+         * Simulates real-time server monitoring with LLM specimen tracking
+         */
+
+        // Live data stream simulation
+        const dataStreamMessages = [
+            "[INFO] Monitoring specimen vitals...",
+            "[LLM] Processing natural language request",
+            "[TAMAGOTCHI] AI companion requesting code nutrition",
+            "[FIREWALL] Traffic pattern analysis complete",
+            "[NURSERY] Robot care protocols active",
+            "[CPU] Neural pathway optimization in progress",
+            "[MEMORY] Cache cleanup initiated",
+            "[NETWORK] Bandwidth utilization: 73.2%",
+            "[SPECIMEN] Growth metrics within normal parameters",
+            "[SECURITY] Threat assessment: MINIMAL",
+            "[LLM] Context window refresh complete",
+            "[TAMAGOTCHI] Sleep cycle initiated",
+            "[FIREWALL] Signature database updated",
+            "[NURSERY] Environmental controls optimal",
+            "[CPU] Processing queue: 23 tasks remaining",
+            "[MEMORY] Garbage collection complete",
+            "[SPECIMEN] Learning acceleration detected",
+            "[SECURITY] Encryption keys rotated",
+            "[LLM] Response generation optimized",
+            "[TAMAGOTCHI] Happiness quotient: 94.7%"
+        ];
+
+        function addStreamMessage() {
+            const stream = document.getElementById('liveDataStream');
+            const timestamp = new Date().toLocaleTimeString();
+            const message = dataStreamMessages[Math.floor(Math.random() * dataStreamMessages.length)];
+            
+            const streamLine = document.createElement('code');
+            streamLine.className = 'stream-line';
+            streamLine.textContent = `[${timestamp}] ${message}`;
+            
+            stream.appendChild(streamLine);
+            
+            // Keep only last 20 messages
+            const lines = stream.querySelectorAll('.stream-line');
+            if (lines.length > 20) {
+                lines[0].remove();
+            }
+            
+            // Auto-scroll to bottom
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        // System resource monitoring simulation
+        function updateSystemStats() {
+            const cpuUsage = (70 + Math.random() * 10).toFixed(1);
+            const memoryUsed = (8 + Math.random() * 2).toFixed(1);
+            const networkIO = (150 + Math.random() * 20).toFixed(1);
+            const activeProcesses = Math.floor(840 + Math.random() * 20);
+            
+            // Update CPU panel if it exists
+            const systemPanel = document.querySelector('.status-panel:first-child .code-display');
+            if (systemPanel) {
+                const codes = systemPanel.querySelectorAll('code');
+                if (codes.length >= 5) {
+                    codes[0].textContent = `CPU_Usage: ${cpuUsage}%`;
+                    codes[1].textContent = `Memory_Used: ${memoryUsed}GB / 16GB`;
+                    codes[3].textContent = `Network_IO: ${networkIO} MB/s`;
+                    codes[4].textContent = `Active_Processes: ${activeProcesses}`;
+                }
+            }
+        }
+
+        // LLM processing stats simulation
+        function updateLLMStats() {
+            const tokensProcessed = Math.floor(2800000 + Math.random() * 100000);
+            const responseTime = Math.floor(320 + Math.random() * 50);
+            
+            const llmPanel = document.querySelector('.status-panel:nth-child(2) .code-display');
+            if (llmPanel) {
+                const codes = llmPanel.querySelectorAll('code');
+                if (codes.length >= 5) {
+                    codes[0].textContent = `Tokens_Processed: ${tokensProcessed.toLocaleString()}`;
+                    codes[4].textContent = `Response_Time: ${responseTime}ms avg`;
+                }
+            }
+        }
+
+        // Specimen vitals simulation
+        function updateSpecimenVitals() {
+            const interactionScore = (90 + Math.random() * 10).toFixed(1);
+            const growthRate = (10 + Math.random() * 5).toFixed(1);
+            
+            const specimenPanel = document.querySelector('.status-panel:nth-child(3) .code-display');
+            if (specimenPanel) {
+                const codes = specimenPanel.querySelectorAll('code');
+                if (codes.length >= 5) {
+                    codes[2].textContent = `Growth_Rate: +${growthRate}%`;
+                    codes[3].textContent = `Interaction_Score: ${interactionScore}`;
+                }
+            }
+        }
+
+        // Security matrix simulation
+        function updateSecurityMatrix() {
+            const intrusionAttempts = Math.floor(20 + Math.random() * 10);
+            const authSessions = Math.floor(5 + Math.random() * 5);
+            
+            const securityPanel = document.querySelector('.status-panel:nth-child(4) .code-display');
+            if (securityPanel) {
+                const codes = securityPanel.querySelectorAll('code');
+                if (codes.length >= 5) {
+                    codes[1].textContent = `Intrusion_Attempts: ${intrusionAttempts} BLOCKED`;
+                    codes[4].textContent = `Auth_Sessions: ${authSessions} VERIFIED`;
+                }
+            }
+        }
+
+        // CRT monitor effect simulation
+        function simulateCRTFlicker() {
+            const header = document.querySelector('.monitor-header h1');
+            if (Math.random() < 0.02) { // 2% chance
+                header.style.opacity = '0.95';
+                setTimeout(() => {
+                    header.style.opacity = '1';
+                }, 100);
+            }
+        }
+
+        // Initialize monitoring systems
+        function initializeMonitoring() {
+            console.log('[SYSTEM] Three-Headed Server Monitor initialized');
+            console.log('[SYSTEM] LLM specimen collection online');
+            console.log('[SYSTEM] Real-time monitoring active');
+            
+            // Start live data stream
+            setInterval(addStreamMessage, 3000);
+            
+            // Start system monitoring updates
+            setInterval(updateSystemStats, 5000);
+            setInterval(updateLLMStats, 7000);
+            setInterval(updateSpecimenVitals, 6000);
+            setInterval(updateSecurityMatrix, 8000);
+            
+            // Start CRT flicker effect
+            setInterval(simulateCRTFlicker, 500);
+            
+            // Initial message
+            setTimeout(() => {
+                addStreamMessage();
+            }, 1000);
+        }
+
+        // Start monitoring when page loads
+        document.addEventListener('DOMContentLoaded', initializeMonitoring);
+
+        // Handle iframe load events
+        document.querySelectorAll('iframe').forEach((iframe, index) => {
+            iframe.addEventListener('load', function() {
+                console.log(`[IFRAME] Head ${index + 1} specimen loaded successfully`);
+                addStreamMessage();
+            });
+            
+            iframe.addEventListener('error', function() {
+                console.log(`[ERROR] Head ${index + 1} specimen failed to load`);
+                const errorMsg = `[ERROR] Head ${index + 1} specimen connection lost`;
+                const stream = document.getElementById('liveDataStream');
+                const streamLine = document.createElement('code');
+                streamLine.className = 'stream-line';
+                streamLine.style.color = '#ff4444';
+                streamLine.textContent = `[${new Date().toLocaleTimeString()}] ${errorMsg}`;
+                stream.appendChild(streamLine);
+            });
+        });
+
+        // Mouse interaction effects for head monitors
+        document.querySelectorAll('.head-monitor').forEach((monitor, index) => {
+            monitor.addEventListener('mouseenter', function() {
+                const message = `[INTERACTION] Head ${index + 1} monitor focus acquired`;
+                setTimeout(() => {
+                    const stream = document.getElementById('liveDataStream');
+                    const streamLine = document.createElement('code');
+                    streamLine.className = 'stream-line';
+                    streamLine.style.color = '#00dddd';
+                    streamLine.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+                    stream.appendChild(streamLine);
+                    stream.scrollTop = stream.scrollHeight;
+                }, 200);
+            });
+        });
+
+        // Keyboard shortcuts for monitoring
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey) {
+                switch(event.key) {
+                    case '1':
+                        event.preventDefault();
+                        document.querySelector('.head-monitor:nth-child(1)').scrollIntoView({behavior: 'smooth'});
+                        addStreamMessage();
+                        break;
+                    case '2':
+                        event.preventDefault();
+                        document.querySelector('.head-monitor:nth-child(2)').scrollIntoView({behavior: 'smooth'});
+                        addStreamMessage();
+                        break;
+                    case '3':
+                        event.preventDefault();
+                        document.querySelector('.head-monitor:nth-child(3)').scrollIntoView({behavior: 'smooth'});
+                        addStreamMessage();
+                        break;
+                    case 'r':
+                        event.preventDefault();
+                        location.reload();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
