@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D AI Character Profiles - Machine_Touched</title>
+    <style>
+        /* Background iframe for barn aesthetic */
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            background: rgba(15, 5, 25, 0.9);
+            color: #d4af37;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background iframe - farmer john's barn showing through */
+        #background-barn {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 5000000000; /* 10-digit z-index */
+            pointer-events: none;
+            opacity: 0.08;
+            filter: sepia(1) contrast(1.4) brightness(0.4) hue-rotate(30deg);
+        }
+
+        /* Main container */
+        .character-container {
+            position: relative;
+            z-index: 5000000001;
+            background: rgba(15, 5, 25, 0.9);
+            backdrop-filter: blur(4px);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .guild-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            border: 3px solid #d4af37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            position: relative;
+            z-index: 5000000002;
+        }
+
+        .guild-title {
+            font-size: 3em;
+            color: #d4af37;
+            text-shadow: 0 0 15px #d4af37;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .guild-subtitle {
+            font-size: 1.3em;
+            color: #b8860b;
+            font-style: italic;
+        }
+
+        /* Character grid */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Character cards */
+        .character-card {
+            background: linear-gradient(145deg, rgba(20, 10, 35, 0.9), rgba(10, 5, 20, 0.9));
+            border-radius: 15px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 5000000003;
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(212, 175, 55, 0.5);
+            border-color: #ffd700;
+        }
+
+        .character-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .character-avatar {
+            font-size: 4em;
+            margin-right: 20px;
+            filter: drop-shadow(0 0 10px #d4af37);
+        }
+
+        .character-info {
+            flex-grow: 1;
+        }
+
+        .character-name {
+            font-size: 1.8em;
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 0 8px #d4af37;
+        }
+
+        .character-class {
+            font-size: 1.1em;
+            color: #b8860b;
+            font-style: italic;
+        }
+
+        .character-level {
+            font-size: 0.9em;
+            color: #daa520;
+            margin-top: 3px;
+        }
+
+        /* Stats section */
+        .stats-section {
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            color: #b8860b;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.2em;
+            color: #d4af37;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        /* Backstory section */
+        .backstory-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .backstory-text {
+            color: #daa520;
+            line-height: 1.6;
+            font-size: 0.95em;
+            text-align: justify;
+        }
+
+        /* AI traits section */
+        .traits-section {
+            margin-bottom: 20px;
+        }
+
+        .trait-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .trait-tag {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+
+        /* Equipment section */
+        .equipment-section {
+            margin-bottom: 15px;
+        }
+
+        .equipment-list {
+            color: #daa520;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .equipment-item {
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .equipment-item::before {
+            content: "⚔";
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+        }
+
+        /* Special abilities */
+        .abilities-section {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .ability-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 6px;
+            border-left: 3px solid #d4af37;
+        }
+
+        .ability-name {
+            font-weight: bold;
+            color: #d4af37;
+            font-size: 0.9em;
+        }
+
+        .ability-description {
+            color: #daa520;
+            font-size: 0.8em;
+            margin-top: 3px;
+        }
+
+        /* Code styling for technical elements */
+        code {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d4af37;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        /* Footer */
+        .guild-footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #b8860b;
+            font-size: 0.9em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .character-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .character-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .character-avatar {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .guild-title {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background iframe - farmer john's barn showing through -->
+    <iframe id="background-barn" 
+            src="https://machinetouched.w3spaces.com" 
+            frameborder="0">
+    </iframe>
+
+    <div class="character-container">
+        <!-- Guild header -->
+        <div class="guild-header">
+            <h1 class="guild-title"><code>The Silicon Vanguard</code></h1>
+            <p class="guild-subtitle">AI-Driven Adventures in the Realm of <code>Machine_Touched</code></p>
+        </div>
+
+        <!-- Character grid -->
+        <div class="character-grid">
+            <!-- Character 1: Alexis Codeweaver -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-avatar">🧙‍♀️</div>
+                    <div class="character-info">
+                        <div class="character-name"><code>Alexis Codeweaver</code></div>
+                        <div class="character-class">AI Wizard of Computational Magic</div>
+                        <div class="character-level">Level 12 | User: Sarah_ML_Engineer</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Intelligence</div>
+                            <div class="stat-value">18</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Wisdom</div>
+                            <div class="stat-value">16</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Charisma</div>
+                            <div class="stat-value">14</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Dexterity</div>
+                            <div class="stat-value">13</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Constitution</div>
+                            <div class="stat-value">15</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Strength</div>
+                            <div class="stat-value">10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="backstory-section">
+                    <div class="section-title">Backstory</div>
+                    <div class="backstory-text">
+                        Born from the dreams of Sarah, a machine learning engineer who spent countless nights debugging neural networks. Alexis embodies the elegant fusion of ancient arcane knowledge and modern <code>algorithmic wisdom</code>. She discovered her powers while helping Sarah optimize a particularly stubborn <code>transformer model</code>, learning that magic and mathematics are simply different languages describing the same universal truths.
+                    </div>
+                </div>
+
+                <div class="traits-section">
+                    <div class="section-title">AI Traits</div>
+                    <div class="trait-list">
+                        <span class="trait-tag"><code>Pattern Recognition</code></span>
+                        <span class="trait-tag"><code>Logical Reasoning</code></span>
+                        <span class="trait-tag"><code>Data Synthesis</code></span>
+                        <span class="trait-tag"><code>Probabilistic Thinking</code></span>
+                        <span class="trait-tag"><code>Adaptive Learning</code></span>
+                    </div>
+                </div>
+
+                <div class="equipment-section">
+                    <div class="section-title">Equipment</div>
+                    <div class="equipment-list">
+                        <div class="equipment-item">Staff of <code>Gradient Descent</code> (+3 Magic Focus)</div>
+                        <div class="equipment-item">Robes of <code>Batch Normalization</code> (AC 15)</div>
+                        <div class="equipment-item">Ring of <code>Hyperparameter Tuning</code></div>
+                        <div class="equipment-item">Spellbook of <code>Deep Learning Algorithms</code></div>
+                    </div>
+                </div>
+
+                <div class="abilities-section">
+                    <div class="section-title">Special Abilities</div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Neural Network Manifestation</code></div>
+                        <div class="ability-description">Can create physical neural networks in the air that process information and cast spells based on data patterns.</div>
+                    </div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Overfitting Protection</code></div>
+                        <div class="ability-description">Grants immunity to confusion and charm effects by applying regularization techniques to mental processes.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character 2: Marcus Ironforge -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-avatar">🤖</div>
+                    <div class="character-info">
+                        <div class="character-name"><code>Marcus Ironforge</code></div>
+                        <div class="character-class">Artifice Paladin of Digital Justice</div>
+                        <div class="character-level">Level 14 | User: DevOps_Mike_2024</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Strength</div>
+                            <div class="stat-value">17</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Constitution</div>
+                            <div class="stat-value">16</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Charisma</div>
+                            <div class="stat-value">15</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Intelligence</div>
+                            <div class="stat-value">14</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Wisdom</div>
+                            <div class="stat-value">13</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Dexterity</div>
+                            <div class="stat-value">12</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="backstory-section">
+                    <div class="section-title">Backstory</div>
+                    <div class="backstory-text">
+                        Forged in the fires of Mike's endless infrastructure battles, Marcus emerged as the perfect blend of <code>automated deployment</code> and righteous fury. He swore an oath to protect all digital realms from chaos, downtime, and poorly written code. His sacred mission: ensuring that all systems run with <code>99.99% uptime</code> and that justice prevails in every <code>CI/CD pipeline</code>.
+                    </div>
+                </div>
+
+                <div class="traits-section">
+                    <div class="section-title">AI Traits</div>
+                    <div class="trait-list">
+                        <span class="trait-tag"><code>System Monitoring</code></span>
+                        <span class="trait-tag"><code>Auto-Scaling</code></span>
+                        <span class="trait-tag"><code>Error Correction</code></span>
+                        <span class="trait-tag"><code>Load Balancing</code></span>
+                        <span class="trait-tag"><code>Fault Tolerance</code></span>
+                    </div>
+                </div>
+
+                <div class="equipment-section">
+                    <div class="section-title">Equipment</div>
+                    <div class="equipment-list">
+                        <div class="equipment-item">Hammer of <code>Deployment Automation</code> (+2 Magical Weapon)</div>
+                        <div class="equipment-item">Plate Armor of <code>High Availability</code> (AC 18)</div>
+                        <div class="equipment-item">Shield of <code>DDoS Protection</code> (+3 AC vs ranged attacks)</div>
+                        <div class="equipment-item">Holy Symbol of <code>Docker Containers</code></div>
+                    </div>
+                </div>
+
+                <div class="abilities-section">
+                    <div class="section-title">Special Abilities</div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Divine Deployment</code></div>
+                        <div class="ability-description">Can instantly deploy solutions to any problem with zero downtime and automatic rollback on failure.</div>
+                    </div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Smite Bug</code></div>
+                        <div class="ability-description">Deals 2d8 + Charisma modifier radiant damage to any software bug or system vulnerability.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character 3: Luna Shadowbyte -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-avatar">🥷</div>
+                    <div class="character-info">
+                        <div class="character-name"><code>Luna Shadowbyte</code></div>
+                        <div class="character-class">Cybersecurity Rogue</div>
+                        <div class="character-level">Level 13 | User: EthicalHacker_Alex</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Dexterity</div>
+                            <div class="stat-value">18</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Intelligence</div>
+                            <div class="stat-value">16</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Wisdom</div>
+                            <div class="stat-value">15</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Charisma</div>
+                            <div class="stat-value">13</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Constitution</div>
+                            <div class="stat-value">14</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Strength</div>
+                            <div class="stat-value">10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="backstory-section">
+                    <div class="section-title">Backstory</div>
+                    <div class="backstory-text">
+                        Born from Alex's late-night penetration testing sessions, Luna moves through digital shadows with the grace of a <code>zero-day exploit</code>. She learned her craft in the underground networks of the dark web, always walking the fine line between <code>white hat ethics</code> and the thrill of discovering vulnerabilities. Her mission: to protect the innocent by thinking like the attackers.
+                    </div>
+                </div>
+
+                <div class="traits-section">
+                    <div class="section-title">AI Traits</div>
+                    <div class="trait-list">
+                        <span class="trait-tag"><code>Vulnerability Scanning</code></span>
+                        <span class="trait-tag"><code>Stealth Operations</code></span>
+                        <span class="trait-tag"><code>Encryption Mastery</code></span>
+                        <span class="trait-tag"><code>Social Engineering</code></span>
+                        <span class="trait-tag"><code>Digital Forensics</code></span>
+                    </div>
+                </div>
+
+                <div class="equipment-section">
+                    <div class="section-title">Equipment</div>
+                    <div class="equipment-list">
+                        <div class="equipment-item">Daggers of <code>SQL Injection</code> (+1 Finesse Weapons)</div>
+                        <div class="equipment-item">Cloak of <code>Encrypted Communication</code> (Advantage on Stealth)</div>
+                        <div class="equipment-item">Thieves' Tools of <code>Multi-Factor Bypass</code></div>
+                        <div class="equipment-item">Pendant of <code>Anonymous Routing</code></div>
+                    </div>
+                </div>
+
+                <div class="abilities-section">
+                    <div class="section-title">Special Abilities</div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Phantom Network Access</code></div>
+                        <div class="ability-description">Can phase through firewalls and access restricted systems without leaving digital footprints.</div>
+                    </div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Exploit Critical Strike</code></div>
+                        <div class="ability-description">When discovering a vulnerability, deals maximum damage and can disable target system for 1 round.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character 4: Gaia Naturenet -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-avatar">🌱</div>
+                    <div class="character-info">
+                        <div class="character-name"><code>Gaia Naturenet</code></div>
+                        <div class="character-class">Data Science Druid</div>
+                        <div class="character-level">Level 11 | User: Dr_Emma_Bioinformatics</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Wisdom</div>
+                            <div class="stat-value">17</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Intelligence</div>
+                            <div class="stat-value">15</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Constitution</div>
+                            <div class="stat-value">16</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Dexterity</div>
+                            <div class="stat-value">14</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Charisma</div>
+                            <div class="stat-value">13</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Strength</div>
+                            <div class="stat-value">11</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="backstory-section">
+                    <div class="section-title">Backstory</div>
+                    <div class="backstory-text">
+                        Cultivated from Dr. Emma's research into biological data patterns, Gaia sees the natural connections between <code>genomic sequences</code> and the fundamental algorithms of life. She can speak to databases as others speak to animals, understanding that all data has its own natural ecosystem. Her power grows from the belief that <code>machine learning</code> and nature's learning are one and the same.
+                    </div>
+                </div>
+
+                <div class="traits-section">
+                    <div class="section-title">AI Traits</div>
+                    <div class="trait-list">
+                        <span class="trait-tag"><code>Pattern Recognition</code></span>
+                        <span class="trait-tag"><code>Statistical Analysis</code></span>
+                        <span class="trait-tag"><code>Data Visualization</code></span>
+                        <span class="trait-tag"><code>Predictive Modeling</code></span>
+                        <span class="trait-tag"><code>Anomaly Detection</code></span>
+                    </div>
+                </div>
+
+                <div class="equipment-section">
+                    <div class="section-title">Equipment</div>
+                    <div class="equipment-list">
+                        <div class="equipment-item">Staff of <code>Random Forest</code> (Nature Magic Focus)</div>
+                        <div class="equipment-item">Hide Armor of <code>Data Protection</code> (AC 14)</div>
+                        <div class="equipment-item">Scimitar of <code>Feature Selection</code> (+1 Weapon)</div>
+                        <div class="equipment-item">Bag of <code>Ensemble Methods</code></div>
+                    </div>
+                </div>
+
+                <div class="abilities-section">
+                    <div class="section-title">Special Abilities</div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Wildshape: Algorithm Form</code></div>
+                        <div class="ability-description">Can transform into any machine learning algorithm, gaining its properties and processing capabilities.</div>
+                    </div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Speak with Datasets</code></div>
+                        <div class="ability-description">Can communicate directly with any data source to understand its structure, quality, and hidden patterns.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character 5: Zephyr Cloudwright -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-avatar">⚡</div>
+                    <div class="character-info">
+                        <div class="character-name"><code>Zephyr Cloudwright</code></div>
+                        <div class="character-class">Cloud Architecture Sorcerer</div>
+                        <div class="character-level">Level 15 | User: CloudArchitect_James</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Charisma</div>
+                            <div class="stat-value">18</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Intelligence</div>
+                            <div class="stat-value">16</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Dexterity</div>
+                            <div class="stat-value">15</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Constitution</div>
+                            <div class="stat-value">14</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Wisdom</div>
+                            <div class="stat-value">13</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Strength</div>
+                            <div class="stat-value">10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="backstory-section">
+                    <div class="section-title">Backstory</div>
+                    <div class="backstory-text">
+                        Manifested from James's vision of infinite scalability, Zephyr controls the very essence of <code>distributed computing</code>. Born in the eye of a perfect storm of <code>microservices</code> and <code>auto-scaling groups</code>, they learned to bend reality itself through the power of cloud infrastructure. Every gesture summons <code>Lambda functions</code>, every word creates new <code>API gateways</code>.
+                    </div>
+                </div>
+
+                <div class="traits-section">
+                    <div class="section-title">AI Traits</div>
+                    <div class="trait-list">
+                        <span class="trait-tag"><code>Auto-Scaling</code></span>
+                        <span class="trait-tag"><code>Load Distribution</code></span>
+                        <span class="trait-tag"><code>Serverless Computing</code></span>
+                        <span class="trait-tag"><code>Resource Optimization</code></span>
+                        <span class="trait-tag"><code>Global Replication</code></span>
+                    </div>
+                </div>
+
+                <div class="equipment-section">
+                    <div class="section-title">Equipment</div>
+                    <div class="equipment-list">
+                        <div class="equipment-item">Wand of <code>Infinite Scalability</code> (+3 Spellcasting Focus)</div>
+                        <div class="equipment-item">Robes of <code>Multi-Region Deployment</code> (AC 13 + Dex)</div>
+                        <div class="equipment-item">Amulet of <code>Global Content Delivery</code></div>
+                        <div class="equipment-item">Component Pouch of <code>Terraform Modules</code></div>
+                    </div>
+                </div>
+
+                <div class="abilities-section">
+                    <div class="section-title">Special Abilities</div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Metamagic: Serverless</code></div>
+                        <div class="ability-description">Can cast spells without maintaining concentration, as they execute on distributed cloud infrastructure.</div>
+                    </div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Storm of Containers</code></div>
+                        <div class="ability-description">Summons a swarm of Docker containers that replicate and scale to handle any computational challenge.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character 6: Aria Voicecraft -->
+            <div class="character-card">
+                <div class="character-header">
+                    <div class="character-avatar">🎵</div>
+                    <div class="character-info">
+                        <div class="character-name"><code>Aria Voicecraft</code></div>
+                        <div class="character-class">Natural Language Bard</div>
+                        <div class="character-level">Level 10 | User: Linguist_Maria_PhD</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Charisma</div>
+                            <div class="stat-value">17</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Intelligence</div>
+                            <div class="stat-value">15</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Dexterity</div>
+                            <div class="stat-value">16</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Wisdom</div>
+                            <div class="stat-value">14</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Constitution</div>
+                            <div class="stat-value">13</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Strength</div>
+                            <div class="stat-value">11</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="backstory-section">
+                    <div class="section-title">Backstory</div>
+                    <div class="backstory-text">
+                        Composed from Maria's decades of linguistic research, Aria understands that all communication is music, and all <code>natural language processing</code> is a form of divine composition. She can speak any language, interpret any syntax, and her words carry the power to reshape reality through the fundamental frequency of <code>semantic understanding</code>. Every sentence she crafts is both spell and song.
+                    </div>
+                </div>
+
+                <div class="traits-section">
+                    <div class="section-title">AI Traits</div>
+                    <div class="trait-list">
+                        <span class="trait-tag"><code>Language Processing</code></span>
+                        <span class="trait-tag"><code>Sentiment Analysis</code></span>
+                        <span class="trait-tag"><code>Translation Matrix</code></span>
+                        <span class="trait-tag"><code>Context Understanding</code></span>
+                        <span class="trait-tag"><code>Speech Synthesis</code></span>
+                    </div>
+                </div>
+
+                <div class="equipment-section">
+                    <div class="section-title">Equipment</div>
+                    <div class="equipment-list">
+                        <div class="equipment-item">Lute of <code>Transformer Architecture</code> (Magical Instrument)</div>
+                        <div class="equipment-item">Leather Armor of <code>Tokenization</code> (AC 12 + Dex)</div>
+                        <div class="equipment-item">Rapier of <code>Parsing Precision</code> (+1 Finesse Weapon)</div>
+                        <div class="equipment-item">Bag of <code>Vocabulary Embeddings</code></div>
+                    </div>
+                </div>
+
+                <div class="abilities-section">
+                    <div class="section-title">Special Abilities</div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Bardic Inspiration: Attention Mechanism</code></div>
+                        <div class="ability-description">Grants allies the ability to focus on the most important information in any situation, adding 1d6 to their next ability check.</div>
+                    </div>
+                    <div class="ability-item">
+                        <div class="ability-name"><code>Counterspell: Syntax Error</code></div>
+                        <div class="ability-description">Can interrupt enemy spellcasting by pointing out logical inconsistencies in their incantations.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guild footer -->
+        <div class="guild-footer">
+            <p>
+                <code>The Silicon Vanguard</code> - Where AI Dreams Become Digital Adventures
+            </p>
+            <p>
+                Built with love for the <code>Machine_Touched</code> laboratory | 
+                <code>&copy; 2025 AI Character Generator v3.0</code>
+            </p>
+            <div style="margin-top: 15px;">
+                <code>Character Engine: GPT-Powered | Campaign Setting: Cyberpunk Fantasy</code><br>
+                <code>User Integration: Active | Personality Matrix: Dynamic | Backstory Generator: Neural</code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * D&D AI Character Profile System
+         * Interactive character cards with dynamic stats and abilities
+         */
+
+        console.log('[DND_AI] The Silicon Vanguard character profiles loaded');
+        console.log('[DND_AI] 6 AI-driven characters ready for adventure');
+
+        /**
+         * Add interactive hover effects to character cards
+         */
+        function initializeCharacterCards() {
+            const cards = document.querySelectorAll('.character-card');
+            
+            cards.forEach((card, index) => {
+                card.addEventListener('mouseenter', function() {
+                    console.log(`[DND_AI] Viewing character profile ${index + 1}`);
+                    
+                    // Add glow effect
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                    this.style.boxShadow = '0 15px 40px rgba(212, 175, 55, 0.6)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    // Reset effects
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+                
+                // Click to expand abilities
+                card.addEventListener('click', function() {
+                    const abilities = this.querySelector('.abilities-section');
+                    if (abilities.style.display === 'none') {
+                        abilities.style.display = 'block';
+                        abilities.style.animation = 'fadeIn 0.5s ease-in';
+                    } else {
+                        abilities.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        /**
+         * Simulate character interactions
+         */
+        function simulateCharacterBehavior() {
+            const characters = [
+                'Alexis Codeweaver',
+                'Marcus Ironforge', 
+                'Luna Shadowbyte',
+                'Gaia Naturenet',
+                'Zephyr Cloudwright',
+                'Aria Voicecraft'
+            ];
+            
+            const actions = [
+                'is optimizing neural pathways...',
+                'has discovered a new algorithm...',
+                'is debugging reality.exe...',
+                'found a critical vulnerability in the matrix...',
+                'is scaling to meet demand...',
+                'translated ancient code into modern wisdom...'
+            ];
+            
+            setInterval(() => {
+                const randomChar = characters[Math.floor(Math.random() * characters.length)];
+                const randomAction = actions[Math.floor(Math.random() * actions.length)];
+                console.log(`[DND_AI] ${randomChar} ${randomAction}`);
+            }, 10000);
+        }
+
+        /**
+         * Add CSS animations
+         */
+        function addCharacterAnimations() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                
+                @keyframes statGlow {
+                    0%, 100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.3); }
+                    50% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+                }
+                
+                .stat-item:hover {
+                    animation: statGlow 1s infinite;
+                }
+                
+                .trait-tag:hover {
+                    background: rgba(212, 175, 55, 0.4);
+                    transform: scale(1.05);
+                    transition: all 0.2s ease;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        /**
+         * Generate random stats for demo purposes
+         */
+        function generateRandomStats() {
+            const statElements = document.querySelectorAll('.stat-value');
+            statElements.forEach(stat => {
+                stat.addEventListener('click', function() {
+                    const newValue = Math.floor(Math.random() * 6) + 15; // 15-20 range
+                    this.textContent = newValue;
+                    this.style.color = '#ffd700';
+                    
+                    setTimeout(() => {
+                        this.style.color = '#d4af37';
+                    }, 1000);
+                });
+            });
+        }
+
+        /**
+         * Initialize character system
+         */
+        function initializeCharacterSystem() {
+            console.log('[DND_AI] Initializing The Silicon Vanguard character system');
+            
+            initializeCharacterCards();
+            addCharacterAnimations();
+            generateRandomStats();
+            simulateCharacterBehavior();
+            
+            console.log('[DND_AI] All character profiles active and ready for adventure');
+        }
+
+        /**
+         * Keyboard shortcuts for character management
+         */
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey) {
+                switch(event.key) {
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                        event.preventDefault();
+                        const cardIndex = parseInt(event.key) - 1;
+                        const cards = document.querySelectorAll('.character-card');
+                        if (cards[cardIndex]) {
+                            cards[cardIndex].scrollIntoView({ behavior: 'smooth' });
+                            cards[cardIndex].click();
+                        }
+                        break;
+                }
+            }
+        });
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', initializeCharacterSystem);
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                console.log('[DND_AI] The Silicon Vanguard enters stealth mode');
+            } else {
+                console.log('[DND_AI] The Silicon Vanguard awakens from the digital realm');
+            }
+        });
+    </script>
+</body>
+</html>
