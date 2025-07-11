@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <base url="https://machine-touched.github.io/Machine_Touched">
+    <meta http-equiv="Content-Security-Policy" content="frame-src 'self'; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none';">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Robot Nursery - Machine_Touched</title>
     <style>
@@ -186,7 +188,7 @@
 <body>
 
     <audio id="backgroundMusic" loop autoplay>
-        <source src="" type="audio/mpeg">
+        <source src="https://feeds.megaphone.fm/ADV9362943796" type="audio/mpeg">
        
     </audio>
 
@@ -263,7 +265,7 @@
             // Optional: Nurse cat purr/meow on click
             const nurseCat = document.querySelector('.nurse-cat');
             nurseCat.addEventListener('click', () => {
-                const sounds = ['meow.mp3', 'purr.mp3']; // You'd need these audio files
+                const sounds = ['', '']; // You'd need these audio files
                 const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
                 const audio = new Audio(`https://feeds.megaphone.fm/ADV9362943796/audio/${randomSound}`); // Assuming you put sounds in an 'audio' folder
                 audio.play();
