@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analogue Text Talker: Specimen 20 (Machine Touched)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👾</text></svg>" />
+</head>
+<body>
+    <div class="container" style="z-index: 1;">
+        <h1><code>&lt;Analogue&gt;</code> Text Talker <code>&lt;/Analogue&gt;</code> (circa 1990s)</h1>
+        <p>A <code>&lt;Specimen&gt;</code> for <code>&lt;Machine&gt;</code> Touched.</p>
+
+        <div class="analogue-screen">
+            <pre id="display-output"><code>&gt; Awaiting input...</code></pre>
+            <div class="cursor-blink">_</div>
+        </div>
+
+        <div class="input-area">
+            <label for="text-input"><code>&lt;Type&gt;</code> Here:<code>&lt;/Type&gt;</code></label>
+            <input type="text" id="text-input" placeholder="Say something to your digital analogue...">
+            <button id="talk-button"><code>&lt;Talk&gt;</code></button>
+        </div>
+
+        <hr>
+
+        <h2><code>&lt;Tamagotchi&gt;</code>: The Digital Companion <code>&lt;/Tamagotchi&gt;</code></h2>
+        <div id="tamagotchi-container">
+            <div id="tamagotchi-display">
+                <pre id="tama-status"><code>&lt;Name&gt;</code>: RoboBuddy
+<code>&lt;Hunger&gt;</code>: [|||||]
+<code>&lt;Happiness&gt;</code>: [|||||]
+<code>&lt;Discipline&gt;</code>: [|||||]</pre>
+                <div id="tama-character">
+                    <code>
+  _.-'^'-._
+ /         \
+|  (.) (.)  |
+|     ^     |
+ \    '-'    /
+  '-.,___,.-'
+                    </code>
+                </div>
+            </div>
+            <div class="tama-controls">
+                <button id="tama-feed"><code>&lt;Feed&gt;</code></button>
+                <button id="tama-play"><code>&lt;Play&gt;</code></button>
+                <button id="tama-discipline"><code>&lt;Discipline&gt;</code></button>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2><code>&lt;Optical&gt;</code> Mark Reader: Keyboard Emoticons <code>&lt;/Optical&gt;</code></h2>
+        <div class="omr-area">
+            <label for="omr-input"><code>&lt;Enter&gt;</code> Text for Emoticons:<code>&lt;/Enter&gt;</code></label>
+            <input type="text" id="omr-input" placeholder="Try :) or :( or ;)">
+            <div id="omr-output">
+                <code>&lt;Detected&gt;</code> Emoticons: <span id="smiley-display"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2><code>&lt;Counter&gt;</code>: Pascal/QBasic Style <code>&lt;/Counter&gt;</code></h2>
+        <div class="counter-area">
+            <p>Current <code>&lt;Count&gt;</code>: <span id="qbasic-counter"><code>0</code></span></p>
+            <button id="increment-button"><code>&lt;Increment&gt;</code></button>
+            <button id="reset-button"><code>&lt;Reset&gt;</code></button>
+        </div>
+
+        <p class="footer-note"><code>&lt;A&gt;</code> Machine Touched <code>&lt;/A&gt;</code> Specimen (AI) - machinetouched@gmail.com</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
