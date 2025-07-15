@@ -1,0 +1,256 @@
+/* style.css for Analogue Text Talker Specimen 20 */
+
+body {
+    font-family: 'Courier New', Courier, monospace; /* Classic retro font */
+    background-color: #000080; /* Dark blue background, like old terminals */
+    color: #00FF00; /* Bright green text, classic monochrome monitor */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top for longer content */
+    min-height: 100vh; /* Ensure full viewport height */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.container {
+    background-color: #000000; /* Black inner container */
+    border: 2px solid #00FF00; /* Green border */
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); /* Glowing effect */
+    max-width: 800px;
+    width: 100%;
+    position: relative; /* Essential for z-index */
+    z-index: 1; /* User's interaction layer */
+    box-sizing: border-box;
+}
+
+h1, h2, p {
+    text-align: center;
+    color: #00FFFF; /* Cyan for headings */
+    margin-bottom: 15px;
+}
+
+h1 code, h2 code {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border: 1px dashed #00FF00;
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed #00FF00;
+    margin: 30px 0;
+}
+
+/* Analogue Text Talker */
+.analogue-screen {
+    background-color: #002200; /* Darker green for screen background */
+    border: 1px solid #00FF00;
+    padding: 20px;
+    height: 150px;
+    overflow-y: auto;
+    white-space: pre-wrap; /* Preserve whitespace and wrap text */
+    word-wrap: break-word;
+    margin-bottom: 20px;
+    position: relative;
+    font-size: 1.1em;
+}
+
+.analogue-screen pre {
+    margin: 0;
+    color: #00FF00;
+}
+
+.cursor-blink {
+    display: inline-block;
+    animation: blink 0.8s infinite step-end;
+    color: #00FF00;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.input-area label {
+    color: #FFFF00; /* Yellow for labels */
+}
+
+.input-area input[type="text"] {
+    background-color: #000000;
+    border: 1px solid #00FF00;
+    color: #00FF00;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+}
+
+.input-area input[type="text"]:focus {
+    outline: none;
+    border-color: #00FFFF;
+    box-shadow: 0 0 5px #00FFFF;
+}
+
+.input-area button {
+    background-color: #008000; /* Dark green button */
+    color: #FFFFFF;
+    border: 1px solid #00FF00;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.input-area button:hover {
+    background-color: #00FF00;
+    color: #000000;
+    box-shadow: 0 0 10px #00FFFF;
+}
+
+/* Tamagotchi */
+#tamagotchi-container {
+    background-color: #002200;
+    border: 1px solid #00FF00;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#tamagotchi-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#tama-status {
+    color: #00FF00;
+    text-align: left;
+    width: 100%;
+}
+
+#tama-character {
+    font-size: 1.2em;
+    line-height: 1;
+    color: #FFD700; /* Gold for the Tamagotchi character */
+    white-space: pre;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.tama-controls button {
+    background-color: #800080; /* Purple buttons for Tamagotchi */
+    color: #FFFFFF;
+    border: 1px solid #FF00FF;
+    padding: 8px 15px;
+    margin: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.tama-controls button:hover {
+    background-color: #FF00FF;
+    color: #FFFFFF;
+    box-shadow: 0 0 10px #FF00FF;
+}
+
+/* Optical Mark Reader */
+.omr-area {
+    background-color: #002200;
+    border: 1px solid #00FF00;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.omr-area label {
+    color: #FFFF00;
+}
+
+.omr-area input[type="text"] {
+    background-color: #000000;
+    border: 1px solid #00FF00;
+    color: #00FF00;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    width: calc(100% - 22px); /* Account for padding and border */
+    margin-top: 10px;
+}
+
+#omr-output {
+    margin-top: 15px;
+    color: #00FFFF;
+}
+
+#smiley-display {
+    font-size: 1.5em; /* Larger smileys */
+}
+
+/* Counter */
+.counter-area {
+    background-color: #002200;
+    border: 1px solid #00FF00;
+    padding: 20px;
+    text-align: center;
+}
+
+#qbasic-counter {
+    font-size: 2em;
+    color: #FF0000; /* Red for the counter value */
+    font-weight: bold;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.counter-area button {
+    background-color: #000080; /* Dark blue buttons */
+    color: #FFFFFF;
+    border: 1px solid #0000FF;
+    padding: 8px 15px;
+    margin: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.counter-area button:hover {
+    background-color: #0000FF;
+    color: #FFFFFF;
+    box-shadow: 0 0 10px #00FFFF;
+}
+
+.footer-note {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.8em;
+    color: #808080; /* Grey for subtle footer */
+}
+
+/* Specific styling for <code> tags */
+code {
+    background-color: rgba(0, 255, 0, 0.1); /* Subtle green background for code */
+    border: 1px dotted #00FF00;
+    padding: 2px 4px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00FF00;
+}
+
+/* Ensure the iframe doesn't impose its own z-index issues,
+   though this is more about the parent HTML 3.2 page. */
+/* For HTML 3.2 iframe, direct control might be limited, but
+   the z-index:1 on the container within our HTML5 document
+   will ensure its content is above default page elements. */
