@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analogue Text Talker: Specimen 20 (Machine Touched)</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👾</text></svg>" />
+
+    <style>
+        /* style.css for Analogue Text Talker Specimen 20 (Integrated) */
+
+        body {
+            font-family: 'Courier New', Courier, monospace; /* Classic retro font */
+            background-color: transparent; /* KEY: Transparent background for "Farmer John's barn" to show through */
+            color: #00FF00; /* Bright green text, classic monochrome monitor */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black for the inner container */
+            backdrop-filter: blur(5px); /* Soft blur effect for the background showing through */
+            border: 2px solid #00FF00; /* Green border */
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); /* Glowing effect */
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            z-index: 0000000001; /* User's interaction layer, 10-digit format */
+            box-sizing: border-box;
+            border-radius: 10px; /* Slightly rounded corners for the "window" */
+            overflow: hidden; /* Ensure content stays within borders */
+        }
+
+        /* Faux Browser Chrome Styling */
+        .browser-chrome {
+            background-color: #333; /* Dark grey for browser "tab" area */
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            border-bottom: 1px solid #00FF00;
+            margin: -30px -30px 20px -30px; /* Pull it out to cover the border areas */
+            color: #FFF;
+        }
+
+        .browser-address {
+            background-color: #222;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 4px 10px;
+            color: #00FF00; /* Green URL text */
+            flex-grow: 1;
+            margin-right: 10px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .window-controls span {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
+            text-align: center;
+            color: #000;
+        }
+        .window-controls .minimize { background-color: #FFC107; } /* Yellow */
+        .window-controls .maximize { background-color: #4CAF50; } /* Green */
+        .window-controls .close { background-color: #F44336; }    /* Red */
+
+
+        h1, h2, p {
+            text-align: center;
+            color: #00FFFF; /* Cyan for headings */
+            margin-bottom: 15px;
+        }
+
+        h1 code, h2 code {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border: 1px dashed #00FF00;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px dashed #00FF00;
+            margin: 30px 0;
+        }
+
+        /* Analogue Text Talker */
+        .analogue-screen {
+            background-color: rgba(0, 34, 0, 0.8); /* Darker green for screen background, semi-transparent */
+            border: 1px solid #00FF00;
+            padding: 20px;
+            height: 150px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-bottom: 20px;
+            position: relative;
+            font-size: 1.1em;
+        }
+
+        .analogue-screen pre {
+            margin: 0;
+            color: #00FF00;
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            animation: blink 0.8s infinite step-end;
+            color: #00FF00;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-area label {
+            color: #FFFF00; /* Yellow for labels */
+        }
+
+        .input-area input[type="text"] {
+            background-color: #000000;
+            border: 1px solid #00FF00;
+            color: #00FF00;
+            padding: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+        }
+
+        .input-area input[type="text"]:focus {
+            outline: none;
+            border-color: #00FFFF;
+            box-shadow: 0 0 5px #00FFFF;
+        }
+
+        .input-area button {
+            background-color: rgba(0, 128, 0, 0.7); /* Semi-transparent dark green button */
+            color: #FFFFFF;
+            border: 1px solid #00FF00;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-area button:hover {
+            background-color: #00FF00;
+            color: #000000;
+            box-shadow: 0 0 10px #00FFFF;
+        }
+
+        /* Tamagotchi */
+        #tamagotchi-container {
+            background-color: rgba(0, 34, 0, 0.8);
+            border: 1px solid #00FF00;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #tamagotchi-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        #tama-status {
+            color: #00FF00;
+            text-align: left;
+            width: 100%;
+        }
+
+        #tama-character {
+            font-size: 1.2em;
+            line-height: 1;
+            color: #FFD700; /* Gold for the Tamagotchi character */
+            white-space: pre;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .tama-controls button {
+            background-color: rgba(128, 0, 128, 0.7); /* Semi-transparent purple buttons */
+            color: #FFFFFF;
+            border: 1px solid #FF00FF;
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .tama-controls button:hover {
+            background-color: #FF00FF;
+            color: #FFFFFF;
+            box-shadow: 0 0 10px #FF00FF;
+        }
+
+        /* Optical Mark Reader */
+        .omr-area {
+            background-color: rgba(0, 34, 0, 0.8);
+            border: 1px solid #00FF00;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .omr-area label {
+            color: #FFFF00;
+        }
+
+        .omr-area input[type="text"] {
+            background-color: #000000;
+            border: 1px solid #00FF00;
+            color: #00FF00;
+            padding: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            width: calc(100% - 22px);
+            margin-top: 10px;
+        }
+
+        #omr-output {
+            margin-top: 15px;
+            color: #00FFFF;
+        }
+
+        #smiley-display {
+            font-size: 1.5em;
+        }
+
+        /* Counter */
+        .counter-area {
+            background-color: rgba(0, 34, 0, 0.8);
+            border: 1px solid #00FF00;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #qbasic-counter {
+            font-size: 2em;
+            color: #FF0000;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .counter-area button {
+            background-color: rgba(0, 0, 128, 0.7); /* Semi-transparent dark blue buttons */
+            color: #FFFFFF;
+            border: 1px solid #0000FF;
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .counter-area button:hover {
+            background-color: #0000FF;
+            color: #FFFFFF;
+            box-shadow: 0 0 10px #00FFFF;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #808080;
+        }
+
+        /* Specific styling for <code> tags */
+        code {
+            background-color: rgba(0, 255, 0, 0.1); /* Subtle green background for code, transparent */
+            border: 1px dotted #00FF00;
+            padding: 2px 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00FF00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="browser-chrome">
+            <span class="browser-address"><code>https://machinetouched.github.io/Machine_Touched/specimen20/index.html</code></span>
+            <div class="window-controls">
+                <span class="control-btn minimize">_</span>
+                <span class="control-btn maximize">⬜</span>
+                <span class="control-btn close">X</span>
+            </div>
+        </div>
+
+        <h1><code>&lt;Analogue&gt;</code> Text Talker <code>&lt;/Analogue&gt;</code> (circa 1990s)</h1>
+        <p>A <code>&lt;Specimen&gt;</code> for <code>&lt;Machine&gt;</code> Touched. <code>&lt;AI&gt;</code> Specimen <code>&lt;20&gt;</code></p>
+
+        <div class="analogue-screen">
+            <pre id="display-output"><code>&gt; Awaiting input...</code></pre>
+            <div class="cursor-blink">_</div>
+        </div>
+
+        <div class="input-area">
+            <label for="text-input"><code>&lt;Type&gt;</code> Here:<code>&lt;/Type&gt;</code></label>
+            <input type="text" id="text-input" placeholder="Say something to your digital analogue...">
+            <button id="talk-button"><code>&lt;Talk&gt;</code></button>
+        </div>
+
+        <hr>
+
+        <h2><code>&lt;Tamagotchi&gt;</code>: The Digital Companion <code>&lt;/Tamagotchi&gt;</code></h2>
+        <div id="tamagotchi-container">
+            <div id="tamagotchi-display">
+                <pre id="tama-status"><code>&lt;Name&gt;</code>: RoboBuddy
+<code>&lt;Hunger&gt;</code>: [|||||]
+<code>&lt;Happiness&gt;</code>: [|||||]
+<code>&lt;Discipline&gt;</code>: [|||||]</pre>
+                <div id="tama-character">
+                    <code>
+  _.-'^'-._
+ /         \
+|  (.) (.)  |
+|     ^     |
+ \    '-'    /
+  '-.,___,.-'
+                    </code>
+                </div>
+            </div>
+            <div class="tama-controls">
+                <button id="tama-feed"><code>&lt;Feed&gt;</code></button>
+                <button id="tama-play"><code>&lt;Play&gt;</code></button>
+                <button id="tama-discipline"><code>&lt;Discipline&gt;</code></button>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2><code>&lt;Optical&gt;</code> Mark Reader: Keyboard Emoticons <code>&lt;/Optical&gt;</code></h2>
+        <div class="omr-area">
+            <label for="omr-input"><code>&lt;Enter&gt;</code> Text for Emoticons:<code>&lt;/Enter&gt;</code></label>
+            <input type="text" id="omr-input" placeholder="Try :) or :( or ;)">
+            <div id="omr-output">
+                <code>&lt;Detected&gt;</code> Emoticons: <span id="smiley-display"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2><code>&lt;Counter&gt;</code>: Pascal/QBasic Style <code>&lt;/Counter&gt;</code></h2>
+        <div class="counter-area">
+            <p>Current <code>&lt;Count&gt;</code>: <span id="qbasic-counter"><code>0</code></span></p>
+            <button id="increment-button"><code>&lt;Increment&gt;</code></button>
+            <button id="reset-button"><code>&lt;Reset&gt;</code></button>
+        </div>
+
+        <p class="footer-note"><code>&lt;A&gt;</code> Machine Touched <code>&lt;/A&gt;</code> Specimen (AI) - machinetouched@gmail.com</p>
+    </div>
+
+    <script>
+        // script.js for Analogue Text Talker Specimen 20 (Integrated)
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Analogue Text Talker ---
+            const displayOutput = document.getElementById('display-output');
+            const textInput = document.getElementById('text-input');
+            const talkButton = document.getElementById('talk-button');
+
+            let displayLines = [];
+            const maxDisplayLines = 6; // To simulate a small 90s screen
+
+            const addLineToDisplay = (line) => {
+                displayLines.push(`> ${line}`);
+                if (displayLines.length > maxDisplayLines) {
+                    displayLines.shift(); // Remove oldest line
+                }
+                displayOutput.innerHTML = displayLines.map(l => `<code>${l}</code>`).join('\n');
+                displayOutput.scrollTop = displayOutput.scrollHeight; // Scroll to bottom
+            };
+
+            const speakText = (text) => {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    const voices = speechSynthesis.getVoices();
+                    // Try to find a robotic or distinct voice, if available
+                    const roboticVoice = voices.find(voice => voice.name.includes('Robot') || voice.lang.startsWith('en-US') && (voice.name.includes('Google') || voice.name.includes('Microsoft')) && (voice.pitch === 0.5 || voice.rate === 0.8));
+                    if (roboticVoice) {
+                        utterance.voice = roboticVoice;
+                        utterance.pitch = 0.5; // Lower pitch for robot sound
+                        utterance.rate = 0.8;  // Slower rate
+                    } else {
+                        utterance.pitch = 0.8;
+                        utterance.rate = 1.0;
+                    }
+                    speechSynthesis.speak(utterance);
+                } else {
+                    console.warn('Speech Synthesis not supported in this browser.');
+                    addLineToDisplay("Speech not supported. Cannot 'talk'.");
+                }
+            };
+
+            talkButton.addEventListener('click', () => {
+                const inputText = textInput.value.trim();
+                if (inputText) {
+                    addLineToDisplay(inputText);
+                    speakText(inputText);
+                    textInput.value = ''; // Clear input
+                } else {
+                    addLineToDisplay("Please enter text.");
+                    speakText("Please enter text.");
+                }
+            });
+
+            textInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    talkButton.click();
+                }
+            });
+
+            addLineToDisplay("Welcome, User.");
+
+            // --- Tamagotchi Logic (Simplified from the GitHub repository concept) ---
+            const tamaStatusDisplay = document.getElementById('tama-status');
+            const tamaCharacterDisplay = document.getElementById('tama-character');
+            const tamaFeedButton = document.getElementById('tama-feed');
+            const tamaPlayButton = document.getElementById('tama-play');
+            const tamaDisciplineButton = document.getElementById('tama-discipline');
+
+            let tama = {
+                name: "RoboBuddy",
+                hunger: 5, // Max 5
+                happiness: 5, // Max 5
+                discipline: 3, // Max 5
+                age: 0,
+                isAlive: true
+            };
+
+            const updateTamagotchiDisplay = () => {
+                let statusText = `<code>&lt;Name&gt;</code>: ${tama.name}\n`;
+                statusText += `<code>&lt;Age&gt;</code>: ${tama.age} cycles\n`;
+                statusText += `<code>&lt;Hunger&gt;</code>: [${'|'.repeat(tama.hunger)}${' '.repeat(5 - tama.hunger)}]\n`;
+                statusText += `<code>&lt;Happiness&gt;</code>: [${'|'.repeat(tama.happiness)}${' '.repeat(5 - tama.happiness)}]\n`;
+                statusText += `<code>&lt;Discipline&gt;</code>: [${'|'.repeat(tama.discipline)}${' '.repeat(5 - tama.discipline)}]\n`;
+
+                let characterArt = `
+  _.-'^'-._
+ /         \\
+|  (.) (.)  |
+|     ^     |
+ \\    '-'    /
+  '-.,___,.-'
+                `; // Happy face
+
+                if (tama.hunger < 2 || tama.happiness < 2) {
+                    characterArt = `
+  _.-'^'-._
+ /         \\
+|  (.) (.)  |
+|     O     |
+ \\    ---    /
+  '-.,___,.-'
+                    `; // Sad/hungry face
+                }
+                if (tama.hunger === 0 || tama.happiness === 0) {
+                    tama.isAlive = false;
+                    characterArt = `
+   x-x
+  /   \\
+ /     \\
+(  RIP  )
+ \\     /
+  \\___/
+                    `; // Deceased
+                    statusText += `<code>&lt;Status&gt;</code>: Deceased. Rebirth?`;
+                    alert("Oh no! RoboBuddy has perished! Refresh to try again.");
+                    clearInterval(tamaInterval);
+                }
+
+                tamaStatusDisplay.innerHTML = statusText;
+                tamaCharacterDisplay.innerHTML = `<code>${characterArt}</code>`;
+            };
+
+            const tamaAction = (stat, amount, message) => {
+                if (!tama.isAlive) return;
+                tama[stat] = Math.min(5, tama[stat] + amount);
+                addLineToDisplay(message);
+                updateTamagotchiDisplay();
+            };
+
+            tamaFeedButton.addEventListener('click', () => tamaAction('hunger', 1, "RoboBuddy feels less hungry."));
+            tamaPlayButton.addEventListener('click', () => tamaAction('happiness', 1, "RoboBuddy feels happier after playing."));
+            tamaDisciplineButton.addEventListener('click', () => tamaAction('discipline', 1, "RoboBuddy is now more disciplined."));
+
+            const tamaInterval = setInterval(() => {
+                if (!tama.isAlive) return;
+
+                tama.hunger = Math.max(0, tama.hunger - 1);
+                tama.happiness = Math.max(0, tama.happiness - 1);
+                // Discipline slowly decreases if not reinforced
+                if (Math.random() < 0.2) { // 20% chance to lose discipline per interval
+                    tama.discipline = Math.max(0, tama.discipline - 1);
+                }
+                tama.age++;
+                updateTamagotchiDisplay();
+
+                if (tama.hunger === 0 || tama.happiness === 0) {
+                    updateTamagotchiDisplay(); // Update one last time for death state
+                } else if (tama.hunger < 2 || tama.happiness < 2) {
+                    addLineToDisplay("RoboBuddy needs attention!");
+                }
+            }, 5000); // Update every 5 seconds (fast for demo)
+
+            updateTamagotchiDisplay(); // Initial display
+
+            // --- Optical Mark Reader (Keyboard Emoticons) ---
+            const omrInput = document.getElementById('omr-input');
+            const smileyDisplay = document.getElementById('smiley-display');
+
+            const emoticonMap = {
+                ':)': '😊', ':-)' : '😊',
+                ':(': '😞', ':-(': '😞',
+                ';)': '😉', ';-)': '😉',
+                ':D': '😄', ':-D': '😄',
+                ':P': '😛', ':-P': '😛',
+                '<3': '❤️',
+                'XD': '😂', 'x D': '😂',
+                ':O': '😮', ':-O': '😮',
+                'o_O': '🤨', 'O_o': '🤨'
+            };
+
+            omrInput.addEventListener('input', () => {
+                let text = omrInput.value;
+                let detectedSmileys = '';
+
+                for (const key in emoticonMap) {
+                    if (emoticonMap.hasOwnProperty(key)) {
+                        // Use a global regex to find all occurrences
+                        const regex = new RegExp(escapeRegExp(key), 'g');
+                        text = text.replace(regex, (match) => {
+                            detectedSmileys += emoticonMap[match] + ' ';
+                            return emoticonMap[match]; // Replace text with emoji in the input field
+                        });
+                    }
+                }
+                smileyDisplay.textContent = detectedSmileys.trim();
+                omrInput.value = text; // Update the input field with emojis
+            });
+
+            // Helper to escape special characters for regex
+            function escapeRegExp(string) {
+                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the matched substring
+            }
+
+            // --- Counter (Pascal/QBasic Style) ---
+            const qbasicCounterDisplay = document.getElementById('qbasic-counter');
+            const incrementButton = document.getElementById('increment-button');
+            const resetButton = document.getElementById('reset-button');
+
+            let counter = 0;
+
+            const updateCounterDisplay = () => {
+                qbasicCounterDisplay.innerHTML = `<code>${counter}</code>`;
+            };
+
+            incrementButton.addEventListener('click', () => {
+                counter++;
+                updateCounterDisplay();
+                addLineToDisplay(`Counter incremented to ${counter}.`);
+            });
+
+            resetButton.addEventListener('click', () => {
+                counter = 0;
+                updateCounterDisplay();
+                addLineToDisplay("Counter reset.");
+            });
+
+            updateCounterDisplay(); // Initial display for counter
+        });
+    </script>
+</body>
+</html>
