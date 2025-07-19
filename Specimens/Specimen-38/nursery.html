@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Robot Nursery - Machine_Touched</title>
+    <style>
+        /* Background iframe for barn aesthetic */
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: rgba(30, 0, 48, 0.85);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background iframe - farmer john's barn showing through */
+        #background-barn {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 2000000000; /* 10-digit z-index */
+            pointer-events: none;
+            opacity: 0.2;
+            filter: sepia(0.6) contrast(1.1) brightness(0.8);
+        }
+
+        /* Main container with transparency */
+        .nursery-container {
+            position: relative;
+            z-index: 2000000001;
+            background: rgba(30, 0, 48, 0.8);
+            backdrop-filter: blur(3px);
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* Header styling */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 2000000002;
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px rgba(0, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.3em;
+            color: #a0a0a0;
+        }
+
+        /* Nurse Cat */
+        .nurse-cat {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3em;
+            line-height: 1;
+            animation: purrGlow 2s infinite alternate, floatCat 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.5));
+            cursor: pointer;
+            z-index: 2000000003;
+        }
+
+        @keyframes purrGlow {
+            from { text-shadow: 0 0 5px rgba(255, 0, 255, 0.3); }
+            to { text-shadow: 0 0 15px rgba(255, 0, 255, 0.8); }
+        }
+
+        @keyframes floatCat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+        }
+
+        /* Nursery grid with browser-like iframe styling */
+        .nursery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+            justify-content: center;
+            align-items: start;
+            z-index: 2000000004;
+        }
+
+        /* Robot cradle with browser-like styling */
+        .robot-cradle, .ability-generator-card, .radio-station-card {
+            background-color: rgba(13, 13, 26, 0.9);
+            border-radius: 20px;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), 0 0 10px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2000000005;
+            /* Browser-like iframe container */
+            border-top: 25px solid #333;
+            border-left: 8px solid #333;
+            border-right: 8px solid #333;
+            border-bottom: 8px solid #333;
+        }
+
+        /* Browser chrome simulation */
+        .robot-cradle::before, .ability-generator-card::before, .radio-station-card::before {
+            content: "● ● ●";
+            position: absolute;
+            top: -22px;
+            left: 12px;
+            color: #666;
+            font-size: 12px;
+            letter-spacing: 4px;
+            z-index: 2000000006;
+        }
+
+        .robot-cradle::after {
+            content: "nursery://machine_touched/tamagotchi.specimen";
+            position: absolute;
+            top: -20px;
+            left: 60px;
+            right: 12px;
+            background: #111;
+            color: #888;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 2000000007;
+        }
+
+        .ability-generator-card::after {
+            content: "nursery://machine_touched/ai_generator.specimen";
+            position: absolute;
+            top: -20px;
+            left: 60px;
+            right: 12px;
+            background: #111;
+            color: #888;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 2000000007;
+        }
+
+        .radio-station-card::after {
+            content: "nursery://machine_touched/radio.specimen";
+            position: absolute;
+            top: -20px;
+            left: 60px;
+            right: 12px;
+            background: #111;
+            color: #888;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 2000000007;
+        }
+
+        .robot-cradle h2, .ability-generator-card h2, .radio-station-card h2 {
+            color: #00ffff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px #00ffff;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Iframe styling for tamagotchi */
+        .robot-iframe {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #00aaaa;
+            border-radius: 10px;
+            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000000008;
+        }
+
+        /* AI Ability Generator */
+        .ability-generator-card {
+            min-height: 400px;
+            justify-content: space-between;
+        }
+
+        .ability-generator-card p {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #ccc;
+        }
+
+        .generate-btn {
+            background: linear-gradient(45deg, #8A2BE2, #4B0082);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+            margin-top: 20px;
+            z-index: 2000000009;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.6);
+        }
+
+        #abilityOutput {
+            background-color: rgba(0, 10, 26, 0.9);
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 25px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #00ffaa;
+            min-height: 100px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        /* Radio station styling */
+        .radio-station-card {
+            text-align: center;
+        }
+
+        .radio-station-card p {
+            font-size: 1.1em;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .radio-station-card a.live-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #0077B6, #00B4D8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 119, 182, 0.4);
+            z-index: 2000000009;
+        }
+
+        .radio-station-card a.live-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 119, 182, 0.6);
+        }
+
+        /* Signal indicator */
+        .signal-indicator {
+            width: 80px;
+            height: 15px;
+            background-color: rgba(0, 255, 255, 0.2);
+            border-radius: 5px;
+            margin: 15px auto 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .signal-bar {
+            width: 20%;
+            height: 100%;
+            background-color: #00ffff;
+            position: absolute;
+            animation: signalPulse 2s infinite ease-out;
+        }
+
+        .signal-bar:nth-child(1) { left: 0; animation-delay: 0s; }
+        .signal-bar:nth-child(2) { left: 25%; animation-delay: 0.2s; }
+        .signal-bar:nth-child(3) { left: 50%; animation-delay: 0.4s; }
+        .signal-bar:nth-child(4) { left: 75%; animation-delay: 0.6s; }
+
+        @keyframes signalPulse {
+            0%, 100% { transform: scaleX(0.5); opacity: 0.5; }
+            50% { transform: scaleX(1); opacity: 1; }
+        }
+
+        /* Footer with extensive code usage */
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            color: #a0a0a0;
+            opacity: 0.8;
+            font-size: 0.9em;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            z-index: 2000000010;
+        }
+
+        footer code {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #00ffff;
+        }
+
+        /* Responsive design */
+        @media (max-width: 800px) {
+            .nursery-grid {
+                grid-template-columns: 1fr;
+            }
+            .robot-iframe {
+                height: 500px;
+            }
+            header h1 {
+                font-size: 2.2em;
+            }
+            .nurse-cat {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background iframe - farmer john's barn showing through -->
+    <iframe id="background-barn" 
+            src="https://machinetouched.w3spaces.com" 
+            frameborder="0">
+    </iframe>
+
+    <div class="nursery-container">
+        <header>
+            <span class="nurse-cat" title="Nurse Cat is watching over your robots!" onclick="meowInteraction()">🐱‍💻</span>
+            <h1>The Robot Nursery</h1>
+            <p>A digital haven for your AI companions from <code>Machine_Touched</code>.</p>
+        </header>
+
+        <div class="nursery-grid">
+            <div class="robot-cradle">
+                <h2><code>Machine_Touched</code> - Digital Pet Assistant</h2>
+                <iframe src="tamagotchi.html" class="robot-iframe" frameborder="0" allowfullscreen></iframe>
+                <div style="margin-top: 15px; text-align: center;">
+                    <code>Status: ACTIVE | Health: OPTIMAL | Mood: HAPPY</code>
+                </div>
+            </div>
+
+            <div class="ability-generator-card">
+                <h2>🤖 <code>AI_Ability_Generator</code> 🧠</h2>
+                <p>Unleash new browser-based functionalities for your AI companions!</p>
+                <button class="generate-btn" onclick="generateAbility()">
+                    <code>Execute_Generation_Protocol()</code>
+                </button>
+                <div id="abilityOutput">
+                    <code>
+                        Click "Execute_Generation_Protocol()" to discover a powerful new browser plugin or widget for your robots!
+                    </code>
+                </div>
+            </div>
+
+            <div class="radio-station-card">
+                <h2>📡 <code>Interstellar_Broadcast</code> 🎶</h2>
+                <p>Tune into the sounds of cosmic exploration and the latest from <code>SETI</code>.</p>
+                <p>
+                    <code>**Now Playing:** *Big Picture Science* - Distant Signals Edition</code>
+                </p>
+                <a href="https://radio.seti.org/" target="_blank" class="live-link">
+                    <code>Listen_Live_On_SETI.org</code>
+                </a>
+                <div class="signal-indicator" title="Live Signal Detected">
+                    <div class="signal-bar"></div>
+                    <div class="signal-bar"></div>
+                    <div class="signal-bar"></div>
+                    <div class="signal-bar"></div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <code>Signal_Strength: OPTIMAL | Frequency: 1420.405 MHz</code>
+                </div>
+            </div>
+
+            <div class="ability-generator-card">
+                <h2>🔐 <code>Binary_Vault_Specimen</code> 🤖</h2>
+                <p>High-security binary authentication system for protecting valuable AI specimens and research data.</p>
+                <a href="binary-vault.html" target="_blank" class="live-link" style="background: linear-gradient(45deg, #8A2BE2, #4B0082);">
+                    <code>Access_Binary_Vault()</code>
+                </a>
+                <div style="margin-top: 15px; color: #ccc; font-size: 0.9em;">
+                    <code>Security: MAXIMUM | Auth: 4-Digit Binary | Password: Hidden</code>
+                </div>
+            </div>
+
+            <div class="ability-generator-card">
+                <h2>💖 <code>Binary_Tamagotchi_Pet</code> 🤖</h2>
+                <p>Robot-friendly digital companion requiring simple binary authentication. Single-digit access control for AI pets.</p>
+                <a href="binary-tamagotchi.html" target="_blank" class="live-link" style="background: linear-gradient(45deg, #ff1744, #e91e63);">
+                    <code>Unlock_Pet_Companion()</code>
+                </a>
+                <div style="margin-top: 15px; color: #ccc; font-size: 0.9em;">
+                    <code>Security: SIMPLE | Auth: Single Binary | Password: 0 or 1</code>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Built with care in <code>Sedgefield, Western Cape, South Africa</code>. <code>&copy; 2025 Machine_Touched</code>.</p>
+            <p>Visit our main site: <a href="http://www.machinetouched.w3spaces.com" style="color: #00ffff; text-decoration: none;"><code>www.machinetouched.w3spaces.com</code></a></p>
+            <div style="margin-top: 15px;">
+                <code>System_Version: v2.5.7 | Runtime: Node.js | Database: PostgreSQL</code><br>
+                <code>Security_Level: MAXIMUM | Encryption: AES-256 | Backup_Status: CURRENT</code>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        /**
+         * Robot Nursery JavaScript - Machine_Touched LLM Specimen Management
+         * Extensive use of code-based AI abilities and interactions
+         */
+
+        // Array of creative, browser-centric AI abilities with extensive code descriptions
+        const aiAbilities = [
+            `<code>**Contextual_Search_Weaver:**</code> Analyzes current page content to proactively suggest related browser searches, opening them in discreet background tabs for deeper understanding.`,
+            
+            `<code>**Intelligent_Form_Autocompleter:**</code> Learns your input patterns across websites to predict and fill complex forms with incredible accuracy, securing sensitive data locally.`,
+            
+            `<code>**Adaptive_UI_Personalizer:**</code> Dynamically adjusts webpage layouts, font sizes, and color schemes based on your past browse habits and visual comfort preferences.`,
+            
+            `<code>**Real-time_Content_Summarizer_Widget:**</code> Provides instant, concise summaries of lengthy articles or documents you're viewing, appearing as a discreet sidebar widget.`,
+            
+            `<code>**Predictive_Link_Prefetcher:**</code> Anticipates your next click based on your navigation history and pre-loads potential next pages in the background for lightning-fast browsing.`,
+            
+            `<code>**Personalized_Ad_Blocker_Synthesizer:**</code> Goes beyond typical ad blocking by learning what kinds of content you find genuinely useful and filtering out only truly irrelevant or intrusive elements.`,
+            
+            `<code>**Cross-Tab_Knowledge_Integrator:**</code> Connects information across all open tabs, allowing you to ask questions that draw data from multiple sources simultaneously.`,
+            
+            `<code>**Voice_Command_Browser_Navigator:**</code> Enables hands-free control of your browser, allowing you to navigate, open new tabs, and interact with elements using natural language commands.`,
+            
+            `<code>**Secure_Password_Manager_Plugin:**</code> Not just stores, but intelligently suggests ultra-strong passwords and monitors for potential breaches across your logins.`,
+            
+            `<code>**Ephemeral_Tab_Organizer:**</code> Automatically groups and discards temporary or research tabs after a session, decluttering your browser without losing important work.`,
+            
+            `<code>**Digital_Wellbeing_Nudge_Bot:**</code> Monitors your screen time and content, offering gentle, personalized suggestions for breaks or content diversification when it detects potential digital fatigue.`,
+            
+            `<code>**Neural_Bookmark_Classifier:**</code> Uses machine learning to automatically categorize and tag your bookmarks, creating intelligent collections that evolve with your interests.`,
+            
+            `<code>**Context_Aware_Translation_Engine:**</code> Provides real-time, context-sensitive translations that understand technical jargon, cultural nuances, and industry-specific terminology.`,
+            
+            `<code>**Productivity_Flow_State_Monitor:**</code> Tracks your browsing patterns to identify when you're in peak productivity mode and automatically minimizes distractions during these periods.`,
+            
+            `<code>**Intelligent_Download_Manager:**</code> Predicts what files you might need, suggests optimal download times based on your schedule, and organizes downloads with smart folder structures.`,
+            
+            `<code>**Accessibility_Enhancement_Suite:**</code> Dynamically adjusts websites for users with visual, auditory, or motor impairments, learning and improving its adaptations over time.`,
+            
+            `<code>**Privacy_Shield_Orchestrator:**</code> Intelligently manages your digital footprint, automatically adjusting privacy settings across websites and providing real-time privacy impact assessments.`,
+            
+            `<code>**Learning_Path_Curator:**</code> Analyzes your research and learning patterns to suggest educational content, courses, and resources that align with your knowledge acquisition goals.`
+        ];
+
+        // Nursery care messages
+        const nurseryMessages = [
+            "🐱‍💻 Meow! All specimens are healthy and thriving!",
+            "🤖 AI companions are learning and growing stronger!",
+            "📡 Cosmic signals detected from the radio station!",
+            "🧠 Neural pathways in the AI generator are optimizing!",
+            "💾 Cache health is optimal across all specimens!",
+            "🔒 Security protocols active - all specimens protected!",
+            "⚡ Energy levels stable in the digital nursery!",
+            "🌟 New abilities discovered in the specimen collection!"
+        ];
+
+        /**
+         * Generate a new AI ability for the specimens
+         */
+        function generateAbility() {
+            const output = document.getElementById('abilityOutput');
+            const randomAbility = aiAbilities[Math.floor(Math.random() * aiAbilities.length)];
+            
+            // Show loading animation first
+            output.innerHTML = '<code>Executing_Generation_Protocol()...</code>';
+            
+            setTimeout(() => {
+                output.innerHTML = randomAbility;
+                
+                // Log the generation event
+                console.log('[NURSERY] New AI ability generated');
+                
+                // Add visual feedback
+                output.style.animation = 'none';
+                setTimeout(() => {
+                    output.style.animation = 'pulse 1s ease-in-out 3';
+                }, 10);
+                
+            }, 1500);
+        }
+
+        /**
+         * Nurse cat interaction
+         */
+        function meowInteraction() {
+            const cat = document.querySelector('.nurse-cat');
+            const message = nurseryMessages[Math.floor(Math.random() * nurseryMessages.length)];
+            
+            // Create floating message
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = `<code>${message}</code>`;
+            messageDiv.style.cssText = `
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.8);
+                border: 2px solid #ff00ff;
+                border-radius: 10px;
+                padding: 10px;
+                color: #ff00ff;
+                font-size: 0.9em;
+                max-width: 250px;
+                z-index: 2000000010;
+                animation: floatMessage 3s ease-out forwards;
+            `;
+            
+            document.querySelector('header').appendChild(messageDiv);
+            
+            // Cat animation
+            cat.style.transform = 'scale(1.2) rotate(10deg)';
+            setTimeout(() => {
+                cat.style.transform = '';
+            }, 300);
+            
+            // Remove message after animation
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+            
+            console.log('[NURSERY] Nurse cat interaction - specimen status checked');
+        }
+
+        /**
+         * Monitor iframe loading and health
+         */
+        function monitorSpecimens() {
+            const iframes = document.querySelectorAll('iframe:not(#background-barn)');
+            let healthyCount = 0;
+            
+            iframes.forEach((iframe, index) => {
+                iframe.addEventListener('load', function() {
+                    healthyCount++;
+                    console.log(`[NURSERY] Specimen ${index + 1} loaded successfully`);
+                    
+                    if (healthyCount === iframes.length) {
+                        console.log('[NURSERY] All specimens healthy and active');
+                        
+                        // Update status indicators
+                        updateSpecimenStatus();
+                    }
+                });
+                
+                iframe.addEventListener('error', function() {
+                    console.log(`[NURSERY] Specimen ${index + 1} health check failed`);
+                });
+            });
+        }
+
+        /**
+         * Update specimen status displays
+         */
+        function updateSpecimenStatus() {
+            const statusCodes = document.querySelectorAll('code');
+            statusCodes.forEach(code => {
+                if (code.textContent.includes('Status:')) {
+                    const timestamp = new Date().toLocaleTimeString();
+                    code.innerHTML = `Status: ACTIVE | Health: OPTIMAL | Last_Check: ${timestamp}`;
+                }
+            });
+        }
+
+        /**
+         * Simulate nursery environment monitoring
+         */
+        function simulateEnvironmentMonitoring() {
+            const environmentData = {
+                temperature: (22 + Math.random() * 4).toFixed(1),
+                humidity: (45 + Math.random() * 10).toFixed(1),
+                oxygen: (20.9 + Math.random() * 0.2).toFixed(2),
+                specimens: Math.floor(3 + Math.random() * 2),
+                uptime: Math.floor(Date.now() / 1000 - Math.random() * 86400)
+            };
+            
+            console.log(`[NURSERY] Environment Monitor - Temp: ${environmentData.temperature}°C, Humidity: ${environmentData.humidity}%, O2: ${environmentData.oxygen}%`);
+            console.log(`[NURSERY] Active Specimens: ${environmentData.specimens}, System Uptime: ${environmentData.uptime}s`);
+            
+            return environmentData;
+        }
+
+        /**
+         * CSS animation definitions via JavaScript
+         */
+        function addCustomAnimations() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0% { opacity: 1; transform: scale(1); }
+                    50% { opacity: 0.7; transform: scale(1.05); }
+                    100% { opacity: 1; transform: scale(1); }
+                }
+                
+                @keyframes floatMessage {
+                    0% { opacity: 0; transform: translateY(20px); }
+                    20% { opacity: 1; transform: translateY(0); }
+                    80% { opacity: 1; transform: translateY(0); }
+                    100% { opacity: 0; transform: translateY(-20px); }
+                }
+                
+                @keyframes codeGlow {
+                    0%, 100% { text-shadow: 0 0 5px #00ffff; }
+                    50% { text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Apply glow effect to all code elements
+            document.querySelectorAll('code').forEach(code => {
+                code.style.animation = 'codeGlow 3s infinite alternate';
+            });
+        }
+
+        /**
+         * Initialize nursery systems
+         */
+        function initializeNursery() {
+            console.log('[NURSERY] Initializing Machine_Touched Robot Nursery');
+            console.log('[NURSERY] Loading specimen monitoring protocols');
+            
+            // Start monitoring
+            monitorSpecimens();
+            
+            // Add custom animations
+            addCustomAnimations();
+            
+            // Start environment monitoring
+            setInterval(simulateEnvironmentMonitoring, 10000);
+            
+            // Periodic status updates
+            setInterval(updateSpecimenStatus, 30000);
+            
+            // Initial status check
+            setTimeout(updateSpecimenStatus, 2000);
+            
+            console.log('[NURSERY] All systems online - nursery operational');
+        }
+
+        /**
+         * Handle page visibility changes
+         */
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                console.log('[NURSERY] Entering power save mode - specimens in standby');
+            } else {
+                console.log('[NURSERY] Resuming active monitoring - specimens awakening');
+                updateSpecimenStatus();
+            }
+        });
+
+        /**
+         * Keyboard shortcuts for nursery management
+         */
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey) {
+                switch(event.key) {
+                    case 'g':
+                        event.preventDefault();
+                        generateAbility();
+                        break;
+                    case 'm':
+                        event.preventDefault();
+                        meowInteraction();
+                        break;
+                    case 's':
+                        event.preventDefault();
+                        updateSpecimenStatus();
+                        break;
+                }
+            }
+        });
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', initializeNursery);
+
+        // Global error handling for nursery
+        window.addEventListener('error', function(event) {
+            console.log(`[NURSERY] Error detected: ${event.message}`);
+            console.log('[NURSERY] Initiating error recovery protocols');
+        });
+    </script>
+</body>
+</html>
