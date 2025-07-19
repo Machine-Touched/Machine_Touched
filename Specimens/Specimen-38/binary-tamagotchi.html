@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Tamagotchi - Machine_Touched Specimen</title>
+    <!-- Hidden binary key in comment: Access code is simply "1" -->
+    <style>
+        /* Background iframe for barn aesthetic */
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            font-family: 'Courier New', monospace;
+            background: rgba(20, 0, 40, 0.9);
+            color: #ff6b9d;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background iframe - farmer john's barn showing through */
+        #background-barn {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            z-index: 4000000000; /* 10-digit z-index */
+            pointer-events: none;
+            opacity: 0.12;
+            filter: sepia(0.9) contrast(1.3) brightness(0.5) hue-rotate(300deg);
+        }
+
+        /* Main container */
+        .tamagotchi-container {
+            position: relative;
+            z-index: 4000000001;
+            background: rgba(20, 0, 40, 0.85);
+            backdrop-filter: blur(4px);
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Handheld device frame */
+        .device-frame {
+            max-width: 400px;
+            margin: 20px auto;
+            background: linear-gradient(145deg, #2a0845, #1a0530);
+            border-radius: 25px;
+            padding: 20px;
+            border: 4px solid #ff6b9d;
+            box-shadow: 0 0 40px rgba(255, 107, 157, 0.5);
+            position: relative;
+            z-index: 4000000002;
+        }
+
+        /* Device header */
+        .device-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            border: 2px solid #ff6b9d;
+        }
+
+        .device-title {
+            font-size: 1.8em;
+            color: #ff6b9d;
+            text-shadow: 0 0 10px #ff6b9d;
+            margin-bottom: 5px;
+        }
+
+        .device-subtitle {
+            font-size: 0.9em;
+            color: #ff99c7;
+            opacity: 0.8;
+        }
+
+        /* Authentication screen */
+        .auth-screen {
+            display: block;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid #ff6b9d;
+            margin-bottom: 20px;
+            z-index: 4000000003;
+        }
+
+        .auth-screen.hidden {
+            display: none;
+        }
+
+        .auth-logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .auth-title {
+            font-size: 1.5em;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px #ff6b9d;
+        }
+
+        .auth-instructions {
+            color: #ff99c7;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* Binary input for authentication */
+        .binary-auth-input {
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #ff6b9d;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: #ff6b9d;
+            cursor: pointer;
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .binary-auth-input:hover {
+            background: rgba(255, 107, 157, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
+        }
+
+        .binary-auth-input.pulse {
+            animation: pulse 0.3s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .auth-button {
+            background: linear-gradient(45deg, #ff1744, #e91e63);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .auth-button:hover {
+            background: linear-gradient(45deg, #e91e63, #ff1744);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 23, 68, 0.4);
+        }
+
+        .auth-status {
+            font-size: 0.9em;
+            margin-top: 15px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.5s ease;
+        }
+
+        .auth-status.error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+            color: #ff6666;
+        }
+
+        .auth-status.success {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+            color: #66ff66;
+        }
+
+        /* Main tamagotchi interface (hidden until authenticated) */
+        .tamagotchi-main {
+            display: none;
+            z-index: 4000000004;
+        }
+
+        .tamagotchi-main.unlocked {
+            display: block;
+            animation: fadeInTamagotchi 1s ease-in;
+        }
+
+        @keyframes fadeInTamagotchi {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Screen area */
+        .screen-area {
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 3px solid #ff6b9d;
+            box-shadow: inset 0 0 20px rgba(255, 107, 157, 0.2);
+            min-height: 250px;
+            position: relative;
+        }
+
+        /* Pet display */
+        .pet-display {
+            text-align: center;
+            position: relative;
+        }
+
+        .pet-avatar {
+            font-size: 6em;
+            line-height: 1;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px #ff6b9d);
+            transition: all 0.5s ease;
+        }
+
+        .pet-name {
+            font-size: 1.3em;
+            color: #ff6b9d;
+            margin-bottom: 10px;
+            text-shadow: 0 0 8px #ff6b9d;
+        }
+
+        .pet-mood {
+            color: #ff99c7;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        /* Stats display */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ff6b9d;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #ff99c7;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #ff6b9d;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .stat-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 107, 157, 0.2);
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff1744, #ff6b9d);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* Control buttons */
+        .control-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #8e24aa, #ba68c8);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .control-btn:hover {
+            background: linear-gradient(45deg, #ba68c8, #8e24aa);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(142, 36, 170, 0.4);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Activity log */
+        .activity-log {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            border: 2px solid #ff6b9d;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .log-title {
+            color: #ff6b9d;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px #ff6b9d;
+        }
+
+        .log-entry {
+            color: #ff99c7;
+            font-size: 0.8em;
+            margin-bottom: 5px;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255, 107, 157, 0.1);
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-entry.warning {
+            color: #ffaa44;
+        }
+
+        .log-entry.error {
+            color: #ff6666;
+        }
+
+        .log-entry.success {
+            color: #66ff66;
+        }
+
+        /* Thought bubble */
+        .thought-bubble {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            max-width: 200px;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+            pointer-events: none;
+            z-index: 4000000005;
+        }
+
+        .thought-bubble.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        .thought-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(255, 255, 255, 0.9);
+        }
+
+        /* Status message */
+        .status-message {
+            background: rgba(0, 0, 0, 0.7);
+            color: #ff6b9d;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 10px;
+            border: 1px solid #ff6b9d;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .status-message.show {
+            opacity: 1;
+        }
+
+        /* Footer */
+        .device-footer {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            border: 1px solid #ff6b9d;
+            font-size: 0.8em;
+            color: #ff99c7;
+        }
+
+        .device-footer code {
+            background: rgba(255, 107, 157, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #ff6b9d;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .device-frame {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .pet-avatar {
+                font-size: 4em;
+            }
+            
+            .binary-auth-input {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5em;
+            }
+        }
+    </style>
+    <!-- Password hidden in meta tag: content="1" -->
+    <meta name="auth-key" content="1">
+    <meta name="access-level" content="binary-single">
+    <meta name="specimen-type" content="tamagotchi">
+</head>
+<body>
+    <!-- Background iframe - farmer john's barn showing through -->
+    <iframe id="background-barn" 
+            src="https://machinetouched.w3spaces.com" 
+            frameborder="0">
+    </iframe>
+
+    <div class="tamagotchi-container">
+        <div class="device-frame">
+            <!-- Device header -->
+            <div class="device-header">
+                <div class="device-title"><code>BINARY_TAMAGOTCHI</code></div>
+                <div class="device-subtitle">Robot Pet Authentication Required</div>
+            </div>
+
+            <!-- Authentication screen -->
+            <div class="auth-screen" id="authScreen">
+                <div class="auth-logo">🤖💖</div>
+                <h2 class="auth-title"><code>Pet Access Control</code></h2>
+                <p class="auth-instructions">
+                    Your digital pet requires binary authentication.<br>
+                    <code>Click the digit to toggle between 0 and 1</code><br>
+                    Enter the correct single binary digit to unlock.
+                </p>
+
+                <div class="binary-auth-input" id="binaryInput" onclick="toggleAuthBinary()">0</div>
+                
+                <button class="auth-button" onclick="authenticatePet()">
+                    <code>AUTHENTICATE_PET()</code>
+                </button>
+
+                <div class="auth-status" id="authStatus"></div>
+
+                <div style="margin-top: 20px; color: #ff99c7; font-size: 0.8em;">
+                    <code>Hint: Single binary digit | Check HTML for clues</code><br>
+                    <code>Robot-friendly: Simple 0 or 1 authentication</code>
+                </div>
+            </div>
+
+            <!-- Main tamagotchi interface (hidden until authenticated) -->
+            <div class="tamagotchi-main" id="tamagotchiMain">
+                <!-- Screen area -->
+                <div class="screen-area">
+                    <div class="pet-display">
+                        <div class="thought-bubble" id="thoughtBubble">I'm thinking...</div>
+                        <div class="pet-avatar" id="petAvatar">🤖</div>
+                        <div class="pet-name"><code>BINARY_PET_001</code></div>
+                        <div class="pet-mood" id="petMood">Awaiting initialization...</div>
+                    </div>
+
+                    <!-- Stats display -->
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label"><code>Binary_Energy</code></div>
+                            <div class="stat-value" id="energyStat">100</div>
+                            <div class="stat-bar"><div class="stat-fill" id="energyBar" style="width: 100%;"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><code>Code_Happiness</code></div>
+                            <div class="stat-value" id="happinessStat">75</div>
+                            <div class="stat-bar"><div class="stat-fill" id="happinessBar" style="width: 75%;"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><code>Logic_Health</code></div>
+                            <div class="stat-value" id="healthStat">90</div>
+                            <div class="stat-bar"><div class="stat-fill" id="healthBar" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label"><code>Data_Hunger</code></div>
+                            <div class="stat-value" id="hungerStat">40</div>
+                            <div class="stat-bar"><div class="stat-fill" id="hungerBar" style="width: 40%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Control buttons -->
+                <div class="control-grid">
+                    <button class="control-btn" onclick="feedBinaryData()">
+                        <code>Feed_Binary_Data()</code>
+                    </button>
+                    <button class="control-btn" onclick="optimizeCode()">
+                        <code>Optimize_Code()</code>
+                    </button>
+                    <button class="control-btn" onclick="debugSystem()">
+                        <code>Debug_System()</code>
+                    </button>
+                    <button class="control-btn" onclick="toggleSleepMode()">
+                        <code>Sleep_Mode()</code>
+                    </button>
+                </div>
+
+                <!-- Status message -->
+                <div class="status-message" id="statusMessage"></div>
+
+                <!-- Activity log -->
+                <div class="activity-log">
+                    <div class="log-title"><code>System_Activity_Log</code></div>
+                    <div id="activityLog">
+                        <div class="log-entry">Pet initialization complete</div>
+                        <div class="log-entry success">Authentication successful</div>
+                        <div class="log-entry">Binary Tamagotchi online</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Device footer -->
+            <div class="device-footer">
+                <code>MACHINE_TOUCHED_BINARY_TAMAGOTCHI v1.0</code><br>
+                <code>Robot-Friendly | Single Binary Auth | &copy; 2025</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden password clue in invisible div -->
+    <div style="display: none;" data-auth-secret="1" id="secret-auth">SINGLE BINARY: ONE</div>
+    
+    <script>
+        /**
+         * Binary Tamagotchi - Robot Pet with Single Binary Authentication
+         * Simple 0/1 password system hidden throughout HTML structure
+         */
+
+        // Authentication key (hidden in JavaScript - old school method)
+        const correctAuthKey = 1; // Simple binary digit
+        let currentAuthValue = 0;
+        let isAuthenticated = false;
+
+        // Pet stats
+        let petStats = {
+            energy: 100,
+            happiness: 75,
+            health: 90,
+            hunger: 40
+        };
+
+        // Pet state
+        let petState = {
+            mood: 'happy',
+            isSleeping: false,
+            lastFed: Date.now(),
+            lastOptimized: Date.now()
+        };
+
+        // Activity log entries
+        const activities = [];
+
+        /**
+         * Initialize the binary tamagotchi system
+         */
+        function initializeTamagotchi() {
+            console.log('[BINARY_TAMAGOTCHI] System initialization started');
+            console.log('[BINARY_TAMAGOTCHI] Robot-friendly authentication required');
+            
+            // Log password hints for robots
+            console.log('[BINARY_TAMAGOTCHI] Password hints in HTML structure:');
+            console.log('[BINARY_TAMAGOTCHI] 1. Check meta tag "auth-key"');
+            console.log('[BINARY_TAMAGOTCHI] 2. Read HTML comments');
+            console.log('[BINARY_TAMAGOTCHI] 3. Hidden div with data-auth-secret');
+            console.log('[BINARY_TAMAGOTCHI] 4. JavaScript correctAuthKey variable');
+            console.log('[BINARY_TAMAGOTCHI] Correct key: 1 (single binary digit)');
+            
+            // Setup audio context
+            setupAudioSystem();
+        }
+
+        /**
+         * Toggle binary authentication digit between 0 and 1
+         */
+        function toggleAuthBinary() {
+            const inputElement = document.getElementById('binaryInput');
+            currentAuthValue = currentAuthValue === 0 ? 1 : 0;
+            inputElement.textContent = currentAuthValue;
+            
+            // Visual feedback
+            inputElement.classList.add('pulse');
+            setTimeout(() => {
+                inputElement.classList.remove('pulse');
+            }, 300);
+            
+            // Audio feedback
+            playToggleSound();
+            
+            console.log(`[BINARY_TAMAGOTCHI] Auth digit toggled to: ${currentAuthValue}`);
+        }
+
+        /**
+         * Authenticate pet with current binary value
+         */
+        function authenticatePet() {
+            const statusElement = document.getElementById('authStatus');
+            
+            if (currentAuthValue === correctAuthKey) {
+                // Authentication successful
+                statusElement.textContent = 'AUTHENTICATION SUCCESSFUL - Pet unlocked!';
+                statusElement.className = 'auth-status success';
+                
+                setTimeout(() => {
+                    unlockTamagotchi();
+                }, 1500);
+                
+                console.log('[BINARY_TAMAGOTCHI] Authentication successful');
+                playSuccessSound();
+                
+            } else {
+                // Authentication failed
+                statusElement.textContent = `ACCESS DENIED - Expected: ${correctAuthKey}, Got: ${currentAuthValue}`;
+                statusElement.className = 'auth-status error';
+                
+                // Shake animation
+                const authScreen = document.getElementById('authScreen');
+                authScreen.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    authScreen.style.animation = '';
+                }, 500);
+                
+                console.log(`[BINARY_TAMAGOTCHI] Authentication failed - got ${currentAuthValue}, expected ${correctAuthKey}`);
+                playErrorSound();
+            }
+        }
+
+        /**
+         * Unlock the tamagotchi after successful authentication
+         */
+        function unlockTamagotchi() {
+            const authScreen = document.getElementById('authScreen');
+            const mainInterface = document.getElementById('tamagotchiMain');
+            
+            // Hide auth screen
+            authScreen.style.opacity = '0';
+            authScreen.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                authScreen.classList.add('hidden');
+                mainInterface.classList.add('unlocked');
+                isAuthenticated = true;
+                
+                // Start pet systems
+                startPetBehavior();
+                
+                console.log('[BINARY_TAMAGOTCHI] Pet unlocked - all systems active');
+                addToLog('Binary Tamagotchi successfully authenticated', 'success');
+                
+            }, 800);
+        }
+
+        /**
+         * Start pet behavior and update loops
+         */
+        function startPetBehavior() {
+            // Initial pet setup
+            updatePetDisplay();
+            showThought('Hello! I\'m your Binary Pet!');
+            
+            // Start behavior loops
+            setInterval(updatePetStats, 5000); // Update every 5 seconds
+            setInterval(petRandomBehavior, 10000); // Random behavior every 10 seconds
+            setInterval(naturalDecay, 15000); // Natural stat decay every 15 seconds
+        }
+
+        /**
+         * Feed binary data to the pet
+         */
+        function feedBinaryData() {
+            if (!isAuthenticated) return;
+            
+            petStats.hunger = Math.max(0, petStats.hunger - 25);
+            petStats.happiness = Math.min(100, petStats.happiness + 15);
+            petStats.energy = Math.min(100, petStats.energy + 10);
+            
+            updatePetDisplay();
+            showThought('Delicious binary data! 01110100 01111001!');
+            showStatus('Fed pet with fresh binary data');
+            addToLog('Pet fed with binary data stream', 'success');
+            
+            console.log('[BINARY_TAMAGOTCHI] Pet fed with binary data');
+        }
+
+        /**
+         * Optimize pet's code
+         */
+        function optimizeCode() {
+            if (!isAuthenticated) return;
+            
+            petStats.health = Math.min(100, petStats.health + 20);
+            petStats.happiness = Math.min(100, petStats.happiness + 10);
+            
+            updatePetDisplay();
+            showThought('Code optimization complete! Running faster!');
+            showStatus('Pet code optimized successfully');
+            addToLog('Code optimization performed', 'success');
+            
+            console.log('[BINARY_TAMAGOTCHI] Pet code optimized');
+        }
+
+        /**
+         * Debug pet system
+         */
+        function debugSystem() {
+            if (!isAuthenticated) return;
+            
+            petStats.health = Math.min(100, petStats.health + 15);
+            
+            updatePetDisplay();
+            showThought('Debugging complete! Found and fixed 3 memory leaks.');
+            showStatus('System debugging completed');
+            addToLog('System debugging session completed', 'success');
+            
+            console.log('[BINARY_TAMAGOTCHI] Pet system debugged');
+        }
+
+        /**
+         * Toggle pet sleep mode
+         */
+        function toggleSleepMode() {
+            if (!isAuthenticated) return;
+            
+            petState.isSleeping = !petState.isSleeping;
+            
+            if (petState.isSleeping) {
+                petStats.energy = Math.min(100, petStats.energy + 30);
+                showThought('Entering sleep mode... ZZZ...');
+                showStatus('Pet entered sleep mode');
+                addToLog('Pet entered sleep mode', 'info');
+                document.getElementById('petAvatar').textContent = '😴';
+            } else {
+                showThought('Waking up! Ready for more activities!');
+                showStatus('Pet woke up from sleep mode');
+                addToLog('Pet woke up from sleep mode', 'info');
+                document.getElementById('petAvatar').textContent = '🤖';
+            }
+            
+            updatePetDisplay();
+            console.log(`[BINARY_TAMAGOTCHI] Pet sleep mode: ${petState.isSleeping}`);
+        }
+
+        /**
+         * Update pet display and stats
+         */
+        function updatePetDisplay() {
+            // Update stat values and bars
+            document.getElementById('energyStat').textContent = petStats.energy;
+            document.getElementById('happinessStat').textContent = petStats.happiness;
+            document.getElementById('healthStat').textContent = petStats.health;
+            document.getElementById('hungerStat').textContent = petStats.hunger;
+            
+            document.getElementById('energyBar').style.width = petStats.energy + '%';
+            document.getElementById('happinessBar').style.width = petStats.happiness + '%';
+            document.getElementById('healthBar').style.width = petStats.health + '%';
+            document.getElementById('hungerBar').style.width = petStats.hunger + '%';
+            
+            // Update mood based on stats
+            let mood = 'content';
+            if (petStats.happiness > 80) mood = 'very happy';
+            else if (petStats.happiness < 30) mood = 'sad';
+            else if (petStats.hunger > 80) mood = 'very hungry';
+            else if (petStats.energy < 20) mood = 'tired';
+            else if (petStats.health < 30) mood = 'sick';
+            
+            document.getElementById('petMood').textContent = `Mood: ${mood}`;
+            petState.mood = mood;
+        }
+
+        /**
+         * Natural stat decay over time
+         */
+        function naturalDecay() {
+            if (!isAuthenticated || petState.isSleeping) return;
+            
+            petStats.hunger = Math.min(100, petStats.hunger + 5);
+            petStats.energy = Math.max(0, petStats.energy - 3);
+            petStats.happiness = Math.max(0, petStats.happiness - 2);
+            
+            updatePetDisplay();
+            
+            // Check for critical states
+            if (petStats.hunger > 90) {
+                showThought('I\'m really hungry! Please feed me some data!');
+                addToLog('Pet is very hungry', 'warning');
+            }
+            
+            if (petStats.energy < 20) {
+                showThought('I\'m getting tired... maybe I should sleep?');
+                addToLog('Pet energy is low', 'warning');
+            }
+        }
+
+        /**
+         * Random pet behaviors
+         */
+        function petRandomBehavior() {
+            if (!isAuthenticated || petState.isSleeping) return;
+            
+            const behaviors = [
+                'Processing binary streams...',
+                'Optimizing neural pathways...',
+                'Dreaming of electric sheep...',
+                'Calculating pi to 1000 digits...',
+                'Defragmenting memory banks...',
+                'Scanning for bugs in the code...',
+                'Learning new algorithms...',
+                'Compiling happiness.exe...'
+            ];
+            
+            const randomBehavior = behaviors[Math.floor(Math.random() * behaviors.length)];
+            showThought(randomBehavior);
+            addToLog(`Pet activity: ${randomBehavior}`, 'info');
+        }
+
+        /**
+         * Show thought bubble
+         * @param {string} thought - Thought to display
+         */
+        function showThought(thought) {
+            const bubble = document.getElementById('thoughtBubble');
+            bubble.textContent = thought;
+            bubble.classList.add('show');
+            
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+        }
+
+        /**
+         * Show status message
+         * @param {string} message - Status message to display
+         */
+        function showStatus(message) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.classList.add('show');
+            
+            setTimeout(() => {
+                statusEl.classList.remove('show');
+            }, 2000);
+        }
+
+        /**
+         * Add entry to activity log
+         * @param {string} message - Log message
+         * @param {string} type - Log type (info, success, warning, error)
+         */
+        function addToLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            
+            const logContainer = document.getElementById('activityLog');
+            logContainer.appendChild(logEntry);
+            
+            // Keep only last 10 entries
+            while (logContainer.children.length > 10) {
+                logContainer.removeChild(logContainer.firstChild);
+            }
+            
+            // Scroll to bottom
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        /**
+         * Update pet stats periodically
+         */
+        function updatePetStats() {
+            if (!isAuthenticated) return;
+            
+            // Gradual stat changes based on current state
+            if (petState.isSleeping) {
+                petStats.energy = Math.min(100, petStats.energy + 2);
+            }
+            
+            updatePetDisplay();
+        }
+
+        /**
+         * Setup audio system for feedback
+         */
+        function setupAudioSystem() {
+            if (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') {
+                window.audioContext = new (AudioContext || webkitAudioContext)();
+            }
+        }
+
+        /**
+         * Play toggle sound
+         */
+        function playToggleSound() {
+            if (window.audioContext) {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            }
+        }
+
+        /**
+         * Play success sound
+         */
+        function playSuccessSound() {
+            if (window.audioContext) {
+                [330, 440, 550].forEach((freq, index) => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + index * 0.15);
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime + index * 0.15);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + index * 0.15 + 0.2);
+                    
+                    oscillator.start(audioContext.currentTime + index * 0.15);
+                    oscillator.stop(audioContext.currentTime + index * 0.15 + 0.2);
+                });
+            }
+        }
+
+        /**
+         * Play error sound
+         */
+        function playErrorSound() {
+            if (window.audioContext) {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.4);
+            }
+        }
+
+        /**
+         * Add shake animation
+         */
+        function addShakeAnimation() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+                    20%, 40%, 60%, 80% { transform: translateX(3px); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        /**
+         * Keyboard shortcuts for robot automation
+         */
+        document.addEventListener('keydown', function(event) {
+            // Toggle auth binary with spacebar
+            if (event.code === 'Space' && !isAuthenticated) {
+                event.preventDefault();
+                toggleAuthBinary();
+            }
+            
+            // Authenticate with Enter
+            if (event.code === 'Enter' && !isAuthenticated) {
+                event.preventDefault();
+                authenticatePet();
+            }
+            
+            // Pet care shortcuts (when authenticated)
+            if (isAuthenticated) {
+                switch(event.key.toLowerCase()) {
+                    case 'f':
+                        feedBinaryData();
+                        break;
+                    case 'o':
+                        optimizeCode();
+                        break;
+                    case 'd':
+                        debugSystem();
+                        break;
+                    case 's':
+                        toggleSleepMode();
+                        break;
+                }
+            }
+        });
+
+        /**
+         * Handle page visibility changes
+         */
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                console.log('[BINARY_TAMAGOTCHI] Page hidden - pet entering low power mode');
+            } else {
+                console.log('[BINARY_TAMAGOTCHI] Page visible - pet resuming normal operation');
+                if (isAuthenticated) {
+                    showThought('Welcome back! I missed you!');
+                }
+            }
+        });
+
+        /**
+         * Initialize system when DOM is ready
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTamagotchi();
+            addShakeAnimation();
+            
+            console.log('[BINARY_TAMAGOTCHI] ==== ROBOT AUTHENTICATION HELPER ====');
+            console.log('[BINARY_TAMAGOTCHI] Single binary digit authentication required');
+            console.log('[BINARY_TAMAGOTCHI] Password locations:');
+            console.log('[BINARY_TAMAGOTCHI] 1. HTML comment: "Access code is simply \'1\'"');
+            console.log('[BINARY_TAMAGOTCHI] 2. Meta tag auth-key: "1"');
+            console.log('[BINARY_TAMAGOTCHI] 3. Hidden div data-auth-secret: "1"');
+            console.log('[BINARY_TAMAGOTCHI] 4. JavaScript correctAuthKey: 1');
+            console.log('[BINARY_TAMAGOTCHI] ============================================');
+        });
+
+        // Global error handling
+        window.addEventListener('error', function(event) {
+            console.log(`[BINARY_TAMAGOTCHI] Error detected: ${event.message}`);
+            if (isAuthenticated) {
+                addToLog(`System error: ${event.message}`, 'error');
+            }
+        });
+    </script>
+</body>
+</html>
