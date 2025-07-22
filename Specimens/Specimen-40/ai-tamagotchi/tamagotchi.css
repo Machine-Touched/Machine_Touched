@@ -1,0 +1,383 @@
+/* ai-tamagotchi/tamagotchi.css */
+
+/* Remove body styles as they are handled by global-styles.css and iframe parent */
+body {
+    /* background, display, justify-content, align-items, min-height, padding removed */
+}
+
+.device-container {
+    perspective: 1000px;
+    padding: 0; /* Handled by parent iframe */
+}
+
+.device-frame {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a); /* Original gradient for internal device */
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    max-width: 400px;
+    border: 2px solid #444;
+    position: relative;
+}
+.device-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #444;
+}
+.device-lights {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.light {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+.light.red {
+    background: #ff4757;
+    animation-delay: 0s;
+}
+.light.yellow {
+    background: #ffa502;
+    animation-delay: 0.3s;
+}
+.light.green {
+    background: #2ed573;
+    animation-delay: 0.6s;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+.device-title {
+    color: #00d4ff;
+    font-size: 1.4em;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00d4ff;
+    margin-bottom: 5px;
+}
+.device-subtitle {
+    color: #aaa;
+    font-size: 0.9em;
+}
+.screen {
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #333;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+    min-height: 300px;
+}
+.pet-display {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+.thought-bubble {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    max-width: 150px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+.thought-bubble.show {
+    opacity: 1;
+    top: -50px;
+}
+.thought-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(255, 255, 255, 0.9);
+}
+.pet-avatar {
+    font-size: 4em;
+    margin-bottom: 10px;
+    display: block;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 10px #00d4ff);
+}
+.pet-avatar.happy {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px #2ed573);
+}
+.pet-avatar.sad {
+    transform: scale(0.9);
+    filter: drop-shadow(0 0 15px #ff4757);
+}
+.pet-avatar.sleeping {
+    opacity: 0.6;
+    transform: scale(0.95);
+}
+.pet-name {
+    color: #00d4ff;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.pet-mood {
+    color: #aaa;
+    font-size: 0.9em;
+    font-style: italic;
+}
+.status-bars {
+    margin-bottom: 15px;
+}
+.status-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+.status-label {
+    color: #ccc;
+    font-size: 0.9em;
+    width: 70px;
+    text-align: right;
+}
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2ed573, #7bed9f);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 2s infinite;
+}
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+.cache-bar {
+    background: linear-gradient(90deg, #ff6b6b, #feca57) !important;
+}
+.status-value {
+    color: #00d4ff;
+    font-size: 0.9em;
+    font-weight: bold;
+    width: 30px;
+    text-align: center;
+}
+.current-state {
+    color: #2ed573;
+    text-align: center;
+    margin-bottom: 20px;
+    font-style: italic;
+    font-size: 0.95em;
+    padding: 10px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 5px;
+    border: 1px dashed rgba(0, 212, 255, 0.3);
+}
+
+.control-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Base control button styling (will be overridden by global .btn) */
+.control-btn {
+    /* Removed default padding, border, etc. as global .btn handles this */
+    font-size: 1em;
+}
+
+.control-btn.primary { /* Specific overrides if needed, otherwise global .btn.primary applies */ }
+.control-btn.secondary { /* Specific overrides if needed, otherwise global .btn.secondary applies */ }
+.control-btn.info {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+}
+.control-btn.warning {
+    background: linear-gradient(45deg, #ffc107, #e0a800);
+    color: #333;
+    border: none;
+}
+
+
+.status-message {
+    text-align: center;
+    margin-bottom: 20px;
+    min-height: 20px;
+    color: #ffa502;
+    font-size: 0.9em;
+}
+
+.activity-log {
+    background: rgba(0, 0, 0, 0.5); /* Darker background for log */
+    border: 1px solid #00ff00; /* Green border for log */
+    border-radius: 8px;
+    padding: 15px;
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 0.85em;
+}
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #00ff00;
+    font-weight: bold;
+}
+.clear-log-btn {
+    background: none;
+    border: 1px solid #ff4757;
+    color: #ff4757;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: all 0.2s ease;
+}
+.clear-log-btn:hover {
+    background: #ff4757;
+    color: white;
+}
+.log-content {
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 5px;
+}
+.log-entry {
+    margin-bottom: 5px;
+    color: #00cc00;
+}
+.log-entry:last-child {
+    margin-bottom: 0;
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+.modal {
+    background: rgba(10, 20, 30, 0.95); /* Dark blue, almost black */
+    border: 2px solid #00d4ff; /* AI blue border */
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.7);
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    padding: 20px;
+    color: #eee;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.modal-header h3 {
+    color: #00d4ff;
+    font-size: 1.4em;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    color: #ff4757;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+}
+.close-btn:hover {
+    color: #ffa502;
+}
+.modal-body {
+    margin-bottom: 20px;
+}
+textarea#codeInput {
+    width: calc(100% - 20px);
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #00d4ff;
+    background: #0d0d0d;
+    color: #00ff00;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    resize: vertical;
+}
+.code-examples {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.code-examples button {
+    /* Inherit from global .btn, but possibly smaller */
+    padding: 8px 15px;
+    font-size: 0.8em;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid rgba(0, 212, 255, 0.3);
+    padding-top: 15px;
+}
+
+@media (max-width: 600px) {
+    .control-buttons {
+        grid-template-columns: 1fr;
+    }
+}
