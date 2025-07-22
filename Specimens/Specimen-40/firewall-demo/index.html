@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three-Layer Firewall Demo</title>
+    <link rel="stylesheet" href="../global-styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Override body styles as this is inside an iframe with a transparent background */
+        body {
+            background: transparent; /* Crucial for "Farmer John's barn" to show through */
+            color: #ffffff; /* Keep white for the firewall elements */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Keep original font for app detail */
+            min-height: auto; /* Allow content to dictate height */
+            padding: 0; /* Remove padding as container handles it */
+        }
+        .container {
+            max-width: none; /* Remove max-width for full iframe utilization */
+            margin: 0; /* Remove margin */
+            padding: 20px; /* Add padding back inside container */
+            background: rgba(0, 0, 0, 0.6); /* Slightly darker background for this app */
+            border-radius: 0; /* No border-radius as the iframe container has it */
+            box-shadow: none; /* No shadow as the iframe container has it */
+        }
+        /* Adjustments for the transparency/blur aesthetic */
+        header, .control-panel, .layer, .destination, .statistics, .security-log {
+            background: rgba(255, 255, 255, 0.05); /* Lighter transparency for internal elements */
+            backdrop-filter: blur(3px); /* Apply blur to these elements too */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none; /* Let the main iframe container handle the glow */
+        }
+        /* Adjust specific button styles to use global btn classes */
+        .btn-safe { background: linear-gradient(45deg, #4caf50, #66bb6a); color: white; border: none; } /* Revert to specific gradients if desired, or use global primary/secondary */
+        .btn-warning { background: linear-gradient(45deg, #ff9800, #ffb74d); color: white; border: none; }
+        .btn-danger { background: linear-gradient(45deg, #f44336, #ef5350); color: white; border: none; }
+        .btn-secondary { background: linear-gradient(45deg, #607d8b, #78909c); color: white; border: none; }
+
+        /* Ensure code tags are applied */
+        header h1, .layer h3, .control-panel h2, .destination h3, .statistics h3, .security-log h3 {
+            font-family: 'Courier New', monospace; /* Force code font for titles */
+        }
+        header h1 code { font-size: 1em; } /* Adjust code tag size within H1 */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><code>Three-Layer Firewall</code> Security Demonstration</h1>
+            <p><code>Interactive visualization of network security layers</code></p>
+        </header>
+
+        <div class="control-panel">
+            <h2><code>Traffic Simulation Controls</code></h2>
+            <div class="traffic-buttons">
+                <button onclick="simulateTraffic('legitimate')" class="btn btn-safe">
+                    <code>Legitimate HTTP Request</code>
+                </button>
+                <button onclick="simulateTraffic('malware')" class="btn btn-warning">
+                    <code>Malware Payload</code>
+                </button>
+                <button onclick="simulateTraffic('ddos')" class="btn btn-danger">
+                    <code>DDoS Attack</code>
+                </button>
+                <button onclick="simulateTraffic('sql_injection')" class="btn btn-danger">
+                    <code>SQL Injection</code>
+                </button>
+                <button onclick="simulateTraffic('phishing')" class="btn btn-warning">
+                    <code>Phishing Attempt</code>
+                </button>
+                <button onclick="simulateTraffic('port_scan')" class="btn btn-warning">
+                    <code>Port Scanning</code>
+                </button>
+            </div>
+        </div>
+
+        <div class="firewall-layers">
+            <div class="layer tooltip" id="layer1" data-tooltip="First line of defense - filters based on network-level rules">
+                <h3><code>Layer 1: Network Layer Firewall</code></h3>
+                <p><code>Packet filtering based on IP addresses, ports, and protocols</code></p>
+                <div class="layer-status" id="layer1-status"><code>Ready</code></div>
+                <div class="layer-log" id="layer1-log"></div>
+            </div>
+
+            <div class="layer tooltip" id="layer2" data-tooltip="Advanced inspection - understands application protocols">
+                <h3><code>Layer 2: Application Layer Firewall</code></h3>
+                <p><code>Deep packet inspection and application-aware filtering</code></p>
+                <div class="layer-status" id="layer2-status"><code>Ready</code></div>
+                <div class="layer-log" id="layer2-log"></div>
+            </div>
+
+            <div class="layer tooltip" id="layer3" data-tooltip="Content analysis - detects malicious patterns and policy violations">
+                <h3><code>Layer 3: Content Filter</code></h3>
+                <p><code>Content analysis, malware detection, and policy enforcement</code></p>
+                <div class="layer-status" id="layer3-status"><code>Ready</code></div>
+                <div class="layer-log" id="layer3-log"></div>
+            </div>
+        </div>
+
+        <div class="traffic-flow">
+            <div class="packet" id="packet">📦</div>
+        </div>
+
+        <div class="destination" id="destination">
+            <h3><code>Protected Network</code></h3>
+            <p><code>Internal servers and resources</code></p>
+            <div id="destination-log"></div>
+        </div>
+
+        <div class="statistics">
+            <h3><code>Security Statistics</code></h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-label"><code>Total Requests:</code></span>
+                    <span class="stat-value" id="total-requests">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label"><code>Blocked by Layer 1:</code></span>
+                    <span class="stat-value" id="blocked-layer1">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label"><code>Blocked by Layer 2:</code></span>
+                    <span class="stat-value" id="blocked-layer2">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label"><code>Blocked by Layer 3:</code></span>
+                    <span class="stat-value" id="blocked-layer3">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label"><code>Allowed Through:</code></span>
+                    <span class="stat-value" id="allowed-through">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label"><code>Threat Level:</code></span>
+                    <span class="stat-value" id="threat-level">Low</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="security-log">
+            <h3><code>Global Security Log</code></h3>
+            <div class="log-controls">
+                <button onclick="clearGlobalLog()" class="btn btn-secondary"><code>Clear Log</code></button>
+            </div>
+            <div class="log-container" id="global-log"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
