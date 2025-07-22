@@ -4,17 +4,15 @@
     <meta charset="UTF-8">
     <base href="https://machine-touched.github.io/Machine_Touched/">
     <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    frame-src 'self'; /* Allows iframes from your own domain */
-    script-src 'self'; /* Strictly no inline scripts or eval - requires externalizing ALL JS */
-    style-src 'self'; /* Strictly no inline styles - requires externalizing ALL CSS */
-    img-src 'self' data:; /* Allows images from self and data URIs */
-    font-src 'self';
-    connect-src 'self';
-    media-src 'self';
-    object-src 'none';
-    base-uri 'self'; /* Good practice to prevent base URL injection */
-    form-action 'self'; /* Good practice for forms */
+    default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+    frame-src *;
+    img-src * data:;
+    connect-src *;
+    font-src *;
+    media-src *;
+    object-src *;
+    base-uri 'self';
+    form-action 'self';
 ">
     
     <meta name="robots" content="index, follow">
