@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tamagotchi - Machine_Touched</title>
+    <link rel="stylesheet" href="../global-styles.css">
+    <link rel="stylesheet" href="tamagotchi.css">
+    <style>
+        /* Override body styles as this is inside an iframe with a transparent background */
+        body {
+            background: transparent; /* Crucial for "Farmer John's barn" to show through */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Keep original font for app detail */
+            min-height: auto; /* Allow content to dictate height */
+            padding: 0; /* Remove padding as container handles it */
+        }
+        .device-container {
+            padding: 20px; /* Re-add padding that was removed from body */
+            box-shadow: none; /* Remove shadow as parent iframe will handle */
+            max-width: none; /* Remove max-width for full iframe utilization */
+        }
+        .device-frame {
+            background: rgba(0, 0, 0, 0.7); /* Darker, transparent background for the device */
+            border: 2px solid #00d4ff; /* AI blue border */
+            box-shadow: none; /* Remove shadow as parent iframe container handles it */
+            border-radius: 15px; /* Slightly less rounded than parent frame */
+            padding: 15px;
+        }
+        .device-header {
+            border-bottom-color: rgba(0, 212, 255, 0.3); /* Lighter border */
+        }
+        /* Ensure code tags are applied to relevant text */
+        .device-title, .device-subtitle {
+            font-family: 'Courier New', monospace; /* Force code font for titles */
+        }
+        .pet-name {
+            font-family: 'Courier New', monospace;
+        }
+        .control-btn {
+            /* Inherit global button styles but allow specific overrides */
+            font-family: 'Courier New', monospace;
+        }
+        .modal {
+            background: rgba(0, 0, 0, 0.9); /* Darker modal background */
+            border: 1px solid #00ff00; /* Green border for input */
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+        .modal-header h3 {
+            color: #00ff00;
+        }
+        textarea {
+            background: #000;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="device-container">
+        <div class="device-frame">
+            <div class="device-header">
+                <div class="device-lights">
+                    <div class="light red"></div>
+                    <div class="light yellow"></div>
+                    <div class="light green"></div>
+                </div>
+                <div class="device-title"><code>AI TAMAGOTCHI</code></div>
+                <div class="device-subtitle"><code>Digital Intelligence Companion</code></div>
+            </div>
+            <div class="screen">
+                <div class="pet-display">
+                    <div class="thought-bubble" id="thoughtBubble">
+                        <code>I'm thinking...</code>
+                    </div>
+                    <div class="pet-avatar" id="petAvatar">🤖</div>
+                    <div class="pet-name"><code>BINARY_PET_001</code></div>
+                    <div class="pet-mood" id="petMood"><code>Happy and learning!</code></div>
+                </div>
+
+                <div class="status-bars">
+                    <div class="status-bar">
+                        <span class="status-label"><code>Energy</code></span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="energyBar" style="width: 80%;"></div>
+                        </div>
+                        <span class="status-value" id="energyValue">80</span>
+                    </div>
+                    <div class="status-bar">
+                        <span class="status-label"><code>Happiness</code></span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="happinessBar" style="width: 75%;"></div>
+                        </div>
+                        <span class="status-value" id="happinessValue">75</span>
+                    </div>
+                    <div class="status-bar">
+                        <span class="status-label"><code>Knowledge</code></span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="knowledgeBar" style="width: 60%;"></div>
+                        </div>
+                        <span class="status-value" id="knowledgeValue">60</span>
+                    </div>
+                    <div class="status-bar">
+                        <span class="status-label"><code>Cache</code></span>
+                        <div class="progress-bar">
+                            <div class="progress-fill cache-bar" id="cacheBar" style="width: 45%;"></div>
+                        </div>
+                        <span class="status-value" id="cacheValue">45</span>
+                    </div>
+                </div>
+
+                <div class="current-state" id="currentState">
+                    <code>Processing mode: Active learning</code>
+                </div>
+            </div>
+
+            <div class="control-buttons">
+                <button class="control-btn primary" onclick="giveCookie()">
+                    🍪 <code>Give Cookie</code>
+                </button>
+                <button class="control-btn secondary" onclick="clearCache()">
+                    🧹 <code>Clear Cache</code>
+                </button>
+                <button class="control-btn info" onclick="showCodeInput()">
+                    💾 <code>Feed Code</code>
+                </button>
+                <button class="control-btn warning" onclick="toggleSleep()">
+                    😴 <code>Sleep Mode</code>
+                </button>
+            </div>
+
+            <div class="status-message" id="statusMessage"></div>
+
+            <div class="activity-log">
+                <div class="log-header">
+                    <span><code>Activity Log</code></span>
+                    <button class="clear-log-btn" onclick="clearLog()"><code>Clear</code></button>
+                </div>
+                <div class="log-content" id="activityLog">
+                    <div class="log-entry"><code>AI Tamagotchi initialized</code></div>
+                    <div class="log-entry"><code>Learning systems online</code></div>
+                    <div class="log-entry"><code>Ready for interaction</code></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><code>Feed Code to AI</code></h3>
+                <button class="close-btn" onclick="closeCodeInput()">×</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="codeInput" placeholder="Enter JavaScript code, algorithms, or any programming knowledge..."></textarea>
+                <div class="code-examples">
+                    <button class="btn" onclick="fillExample('algorithm')"><code>Algorithm Example</code></button>
+                    <button class="btn" onclick="fillExample('function')"><code>Function Example</code></button>
+                    <button class="btn" onclick="fillExample('data')"><code>Data Structure</code></button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn primary" onclick="feedCode()"><code>Feed to AI</code></button>
+                <button class="btn secondary" onclick="closeCodeInput()"><code>Cancel</code></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="tamagotchi.js"></script>
+</body>
+</html>
