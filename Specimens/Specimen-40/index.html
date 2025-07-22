@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Touched LLM Specimen Collection - The Core</title>
+    <meta name="vault-key-hint" content="Binary Code: 1011">
+    <link rel="stylesheet" href="global-styles.css">
+    <style>
+        /* Specific styles for the main index.html container */
+        body {
+            background-image: url('barn_background.jpg'); /* Placeholder for Farmer John's barn */
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Courier New', monospace; /* More code-like font for overall feel */
+            color: #00ff00; /* Green text for a terminal feel */
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .main-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Darker, slightly transparent for contrast */
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+            width: 90%;
+            max-width: 1000px;
+            z-index: 1000000000; /* Highest z-index for main header */
+        }
+
+        .main-header h1 {
+            color: #00ff00;
+            font-size: 2.8em;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px rgba(0, 255, 0, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .main-header p {
+            font-size: 1.1em;
+            color: #00cc00;
+        }
+
+        .application-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px; /* Increased gap for spacing between apps */
+            width: 90%;
+            max-width: 1400px;
+            margin-top: 30px;
+        }
+
+        .app-frame-container {
+            background: rgba(10, 20, 30, 0.8); /* Dark, transparent background for frame */
+            border: 2px solid #00d4ff; /* AI blue border */
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.6);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .app-title-bar {
+            background: rgba(0, 0, 0, 0.9);
+            color: #00d4ff;
+            padding: 8px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #00d4ff;
+            font-size: 0.9em;
+            cursor: move; /* Indicate draggable */
+        }
+
+        .app-title-bar .controls span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .app-title-bar .controls .close { background-color: #ff5c5c; }
+        .app-title-bar .controls .minimize { background-color: #ffbd4a; }
+        .app-title-bar .controls .maximize { background-color: #5afc5a; }
+
+        .app-iframe {
+            width: 100%;
+            height: 600px; /* Adjust height as needed for each app */
+            border: none;
+            background-color: transparent; /* Crucial for transparency */
+        }
+
+        /* Z-index values - following your 10-digit request */
+        #firewall-app-container { z-index: 9999999999; }
+        #tamagotchi-app-container { z-index: 9999999998; }
+        /* Other apps would follow in descending order */
+
+        /* Old School Password Hiding - HTML Comment & JavaScript Variable */
+        <div id="hidden-binary-secret" style="display:none;">Binary Tamagotchi Activation Code: 1</div>
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <h1><code>Machine Touched</code> LLM Specimen Collection</h1>
+        <p><code>System Core v3.1.4</code> - Digital Laboratory Matrix</p>
+        <p><code>Purpose:</code> Comprehensive backup for restoration after memory reset (like 50 First Dates scenario)</p>
+        <p><code>Network Status: Online</code> | <code>Specimen Containment: Active</code></p>
+    </header>
+
+    <div class="application-grid">
+        <div class="app-frame-container" id="firewall-app-container">
+            <div class="app-title-bar">
+                <span><code>Firewall Demo</code> // Network Security Visualization</span>
+                <div class="controls">
+                    <span class="close"></span>
+                    <span class="minimize"></span>
+                    <span class="maximize"></span>
+                </div>
+            </div>
+            <iframe class="app-iframe" src="firewall-demo/index.html"></iframe>
+        </div>
+
+        <div class="app-frame-container" id="tamagotchi-app-container">
+            <div class="app-title-bar">
+                <span><code>AI Tamagotchi</code> // Digital Intelligence Companion</span>
+                <div class="controls">
+                    <span class="close"></span>
+                    <span class="minimize"></span>
+                    <span class="maximize"></span>
+                </div>
+            </div>
+            <iframe class="app-iframe" src="ai-tamagotchi/tamagotchi.html"></iframe>
+        </div>
+
+        </div>
+
+    <script>
+        // Old School Password Hiding - JavaScript Variable
+        const binaryVaultPassword = '1011'; // For Binary Vault Specimen
+        const binaryTamagotchiSecretValue = '1'; // For Binary Tamagotchi
+
+        console.log("Welcome to the Machine Touched Core. For system diagnostics, observe network traffic.");
+        console.log(`Hidden Vault Key Hint: ${document.querySelector('meta[name="vault-key-hint"]').content}`);
+        console.log(`Hidden Binary Tamagotchi Secret: ${document.getElementById('hidden-binary-secret').textContent.split(': ')[1]}`);
+
+        // Basic iframe resizing based on content (might need more robust solutions for dynamic content)
+        document.querySelectorAll('.app-iframe').forEach(iframe => {
+            iframe.onload = function() {
+                try {
+                    // This attempts to set height based on content, but can be blocked by same-origin policy
+                    // If your files are on the same domain, this should work.
+                    // For external sources or different subdomains, you'd need postMessage.
+                    const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+                    if (contentHeight > 0) {
+                        iframe.style.height = (contentHeight + 50) + 'px'; // Add some padding
+                    }
+                } catch (e) {
+                    console.warn("Could not auto-resize iframe due to same-origin policy or content loading issues:", e);
+                    // Fallback to a fixed height or user-defined height
+                }
+            };
+        });
+    </script>
+</body>
+</html>
