@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+        <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aether-Weaver AI Companion</title>
-    <link rel="stylesheet" href="tamagotchi.css">
+    <link rel="stylesheet" href="./Specimens/Specimen-14/tamagotchi.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -133,6 +148,6 @@
         </footer>
     </div>
 
-    <script src="tamagotchi.js"></script>
+    <script src="./Specimens/Specimen-14/tamagotchi.js"></script>
 </body>
 </html>
