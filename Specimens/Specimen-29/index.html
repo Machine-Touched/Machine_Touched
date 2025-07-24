@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Crowing Clockwork</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./Specimens/Specimen-29/style.css">
 </head>
 <body>
     <div class="crowing-clockwork-container">
@@ -29,9 +44,9 @@
         </div>
 
         <button id="crowButton">Make Him Crow!</button>
-        <audio id="crowSound" src="rooster-crow.mp3" preload="auto"></audio>
+        <audio id="crowSound" src="*.mp3" preload="auto"></audio>
     </div>
 
-    <script src="script.js"></script>
+    <script src="./Specimens/Specimen-29/script.js"></script>
 </body>
 </html>
