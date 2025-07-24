@@ -2,6 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Three-Headed Server Monitor - Machine Touched LLM Specimen Collection</title>
     <style>
@@ -335,7 +350,7 @@
 <body>
     <!-- Background iframe - farmer john's barn showing through -->
     <iframe id="background-barn" 
-            src="https://machinetouched.w3spaces.com" 
+            src="https://machine-touched.github.io/Machine_Touched/Specimens/Specimen-29/index.html" 
             frameborder="0">
     </iframe>
 
@@ -357,7 +372,7 @@
                 </h2>
                 <div class="browser-frame">
                     <iframe class="nursery-frame" 
-                            src="nursery.html" 
+                            src="./Specimens/Specimen-38/nursery.html" 
                             frameborder="0"
                             title="Robot Nursery Monitor">
                     </iframe>
@@ -377,7 +392,7 @@
                 </h2>
                 <div class="browser-frame">
                     <iframe class="firewall-frame" 
-                            src="index.html" 
+                            src="./Specimens/Specimen-1/index.html" 
                             frameborder="0"
                             title="Three-Layer Firewall Monitor">
                     </iframe>
@@ -397,7 +412,7 @@
                 </h2>
                 <div class="browser-frame">
                     <iframe class="tamagotchi-frame" 
-                            src="tamagotchi.html" 
+                            src="./Specimens/Specimen-38/tamagotchi.html" 
                             frameborder="0"
                             title="AI Tamagotchi Collection">
                     </iframe>
@@ -481,7 +496,7 @@
                 <code>Kernel: 6.1.0-replit-x86_64</code>
                 <code>Uptime: 72 days, 14:32:18</code>
                 <code>Last_Backup: 2025-07-01 07:45:23 UTC</code>
-                <code>© 2025 Machine_Touched Laboratories - Sedgefield, Western Cape, South Africa</code>
+                <code>Machine_Touched:(Laboratories)</code>
             </div>
         </footer>
     </div>
