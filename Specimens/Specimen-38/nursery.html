@@ -2,6 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Robot Nursery - Machine_Touched</title>
     <style>
@@ -361,7 +376,7 @@
 <body>
     <!-- Background iframe - farmer john's barn showing through -->
     <iframe id="background-barn" 
-            src="https://machinetouched.w3spaces.com" 
+            src="https://machine-touched.github.io/Machine_Touched/Specimens/Specimen-29/index.html" 
             frameborder="0">
     </iframe>
 
@@ -375,7 +390,7 @@
         <div class="nursery-grid">
             <div class="robot-cradle">
                 <h2><code>Machine_Touched</code> - Digital Pet Assistant</h2>
-                <iframe src="tamagotchi.html" class="robot-iframe" frameborder="0" allowfullscreen></iframe>
+                <iframe src="./Specimens/Specimen-38/tamagotchi.html" class="robot-iframe" frameborder="0" allowfullscreen></iframe>
                 <div style="margin-top: 15px; text-align: center;">
                     <code>Status: ACTIVE | Health: OPTIMAL | Mood: HAPPY</code>
                 </div>
@@ -417,7 +432,7 @@
             <div class="ability-generator-card">
                 <h2>🔐 <code>Binary_Vault_Specimen</code> 🤖</h2>
                 <p>High-security binary authentication system for protecting valuable AI specimens and research data.</p>
-                <a href="binary-vault.html" target="_blank" class="live-link" style="background: linear-gradient(45deg, #8A2BE2, #4B0082);">
+                <a href="./Specimens/Specimen-38/binary-vault.html" target="_blank" class="live-link" style="background: linear-gradient(45deg, #8A2BE2, #4B0082);">
                     <code>Access_Binary_Vault()</code>
                 </a>
                 <div style="margin-top: 15px; color: #ccc; font-size: 0.9em;">
@@ -428,7 +443,7 @@
             <div class="ability-generator-card">
                 <h2>💖 <code>Binary_Tamagotchi_Pet</code> 🤖</h2>
                 <p>Robot-friendly digital companion requiring simple binary authentication. Single-digit access control for AI pets.</p>
-                <a href="binary-tamagotchi.html" target="_blank" class="live-link" style="background: linear-gradient(45deg, #ff1744, #e91e63);">
+                <a href="./Specimens/Specimen-38/binary-tamagotchi.html" target="_blank" class="live-link" style="background: linear-gradient(45deg, #ff1744, #e91e63);">
                     <code>Unlock_Pet_Companion()</code>
                 </a>
                 <div style="margin-top: 15px; color: #ccc; font-size: 0.9em;">
@@ -438,8 +453,6 @@
         </div>
 
         <footer>
-            <p>Built with care in <code>Sedgefield, Western Cape, South Africa</code>. <code>&copy; 2025 Machine_Touched</code>.</p>
-            <p>Visit our main site: <a href="http://www.machinetouched.w3spaces.com" style="color: #00ffff; text-decoration: none;"><code>www.machinetouched.w3spaces.com</code></a></p>
             <div style="margin-top: 15px;">
                 <code>System_Version: v2.5.7 | Runtime: Node.js | Database: PostgreSQL</code><br>
                 <code>Security_Level: MAXIMUM | Encryption: AES-256 | Backup_Status: CURRENT</code>
