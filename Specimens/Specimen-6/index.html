@@ -2,8 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <base url ="https://machine-touched.github.io/Machine_Touched/>
-    <meta http-equiv="Content-Security-Policy" content="frame-src https://machine-touched.github.io/Machine_Touched/; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none';">
+     <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website with Network Background</title>
     <style>
@@ -66,7 +79,7 @@
 </head>
 <body>
     <div id="background-iframe-container">
-        <iframe id="background-iframe" src="background-monitors.html" title="Network Background"></iframe>
+        <iframe id="background-iframe" src="./Specimens/Specimen-6/background-monitors.html" title="Network Background"></iframe>
     </div>
 
     <div class="main-content">
@@ -75,7 +88,7 @@
         <p>The background showcases a visual representation of interconnected monitors, pushing the limits of <code>z-index</code> layering by randomly stacking them.</p>
         <p>You can click the "Send to Next" or similar buttons on the *visible parts* of the background monitors to see inter-frame communication in action!</p>
         <p>Keep your browser's developer console open (F12) to observe the messages being passed between the monitors.</p>
-        <p>The address of my website is <a href="https//:machine-touched.github.io/Machine_Touched/Specimens/Specimen-20/index.html" target="_blank">machine-touched-developer</a>.</p>
+        <p>The address of my website is <a href="https://machine-touched.github.io/Machine_Touched/index.html" target="_blank">Machine-Touched</a>.</p>
     </div>
 
     <script>
