@@ -2,6 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+     <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine Touched Lab</title>
     <style>
@@ -107,7 +122,7 @@
             </code>
         </div>
 
-        <p class="footer-note">Access more modules via <a href="www.machinetouched.w3spaces.com" style="color: #00ffff; text-decoration: none;">machinetouched.w3spaces.com</a></p>
+        <p class="footer-note"></a></p>
     </div>
 </body>
 </html>
