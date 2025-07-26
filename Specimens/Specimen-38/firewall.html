@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+       <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three-Layer Firewall Demonstration Tool</title>
+    <link rel="stylesheet" href="./Specimens/Specimen-38/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 Three-Layer Firewall Security Demonstration</h1>
+            <p>Learn how modern firewalls protect networks through multiple security layers</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Control Panel -->
+            <section class="control-panel">
+                <h2>📡 Traffic Simulation Controls</h2>
+                <div class="controls-grid">
+                    <button class="sim-btn legitimate" onclick="simulateTraffic('legitimate')">
+                        ✅ Legitimate HTTP Request
+                    </button>
+                    <button class="sim-btn malware" onclick="simulateTraffic('malware')">
+                        🦠 Malware Download
+                    </button>
+                    <button class="sim-btn ddos" onclick="simulateTraffic('ddos')">
+                        💥 DDoS Attack
+                    </button>
+                    <button class="sim-btn sql-injection" onclick="simulateTraffic('sql-injection')">
+                        💉 SQL Injection
+                    </button>
+                    <button class="sim-btn phishing" onclick="simulateTraffic('phishing')">
+                        🎣 Phishing Content
+                    </button>
+                    <button class="sim-btn port-scan" onclick="simulateTraffic('port-scan')">
+                        🔍 Port Scanning
+                    </button>
+                </div>
+            </section>
+
+            <!-- Firewall Layers Visualization -->
+            <section class="firewall-layers">
+                <h2>🛡️ Three-Layer Firewall Architecture</h2>
+                
+                <!-- Traffic Flow Animation -->
+                <div class="traffic-flow">
+                    <div class="traffic-packet" id="trafficPacket">
+                        <span id="packetLabel">📦 Packet</span>
+                    </div>
+                </div>
+
+                <!-- Layer 1: Network Layer Firewall -->
+                <div class="firewall-layer layer-1" data-layer="1">
+                    <div class="layer-header">
+                        <h3>🌐 Layer 1: Network Layer Firewall</h3>
+                        <div class="layer-status" id="layer1Status">🟢 Active</div>
+                    </div>
+                    <div class="layer-content">
+                        <div class="rules-section">
+                            <h4>🔧 Active Rules:</h4>
+                            <code class="rule-block">
+# Network Layer Rules
+ALLOW TCP port 80 (HTTP)
+ALLOW TCP port 443 (HTTPS)
+ALLOW TCP port 22 (SSH) from admin_subnet
+BLOCK TCP port 23 (Telnet)
+BLOCK ICMP flood > 10 packets/sec
+DENY ALL other ports
+                            </code>
+                        </div>
+                        <div class="processing-log" id="layer1Log">
+                            <h4>📝 Processing Log:</h4>
+                            <div class="log-content">
+                                <code>Waiting for traffic...</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 2: Application Layer Firewall -->
+                <div class="firewall-layer layer-2" data-layer="2">
+                    <div class="layer-header">
+                        <h3>🔍 Layer 2: Application Layer Firewall</h3>
+                        <div class="layer-status" id="layer2Status">🟢 Active</div>
+                    </div>
+                    <div class="layer-content">
+                        <div class="rules-section">
+                            <h4>🔧 Active Rules:</h4>
+                            <code class="rule-block">
+# Application Layer Rules
+INSPECT HTTP headers for XSS patterns
+BLOCK requests with SQL injection signatures
+VALIDATE Content-Type headers
+RATE-LIMIT: 100 requests/minute per IP
+SIGNATURE-DETECTION: enabled
+WAF-RULES: OWASP_CRS_3.3
+                            </code>
+                        </div>
+                        <div class="processing-log" id="layer2Log">
+                            <h4>📝 Processing Log:</h4>
+                            <div class="log-content">
+                                <code>Waiting for traffic...</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer 3: Content Filter -->
+                <div class="firewall-layer layer-3" data-layer="3">
+                    <div class="layer-header">
+                        <h3>🛡️ Layer 3: Content Filter & Deep Inspection</h3>
+                        <div class="layer-status" id="layer3Status">🟢 Active</div>
+                    </div>
+                    <div class="layer-content">
+                        <div class="rules-section">
+                            <h4>🔧 Active Rules:</h4>
+                            <code class="rule-block">
+# Content Filter Rules
+ANTIVIRUS: scan all downloads
+REPUTATION: block known malicious domains
+CATEGORY-FILTER: block adult, gambling sites
+SSL-INSPECTION: decrypt and inspect HTTPS
+DATA-LOSS-PREVENTION: scan for sensitive data
+SANDBOX: analyze suspicious executables
+                            </code>
+                        </div>
+                        <div class="processing-log" id="layer3Log">
+                            <h4>📝 Processing Log:</h4>
+                            <div class="log-content">
+                                <code>Waiting for traffic...</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination -->
+                <div class="destination" id="destination">
+                    <h3>🎯 Protected Network</h3>
+                    <div class="destination-status" id="destinationStatus">
+                        <code>Status: Awaiting traffic</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Educational Information -->
+            <section class="education-panel">
+                <h2>📚 Educational Information</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>🌐 Network Layer Firewall</h3>
+                        <p>Operates at Layer 3-4 of the OSI model, filtering based on:</p>
+                        <code class="info-code">
+• IP addresses and port numbers
+• Protocol types (TCP, UDP, ICMP)
+• Connection state tracking
+• Basic packet inspection
+                        </code>
+                    </div>
+                    <div class="info-card">
+                        <h3>🔍 Application Layer Firewall</h3>
+                        <p>Operates at Layer 7, providing advanced protection:</p>
+                        <code class="info-code">
+• HTTP/HTTPS request inspection
+• SQL injection detection
+• Cross-site scripting (XSS) prevention
+• Rate limiting and DDoS protection
+                        </code>
+                    </div>
+                    <div class="info-card">
+                        <h3>🛡️ Content Filter</h3>
+                        <p>Deep packet inspection and content analysis:</p>
+                        <code class="info-code">
+• Malware and virus scanning
+• URL reputation checking
+• Data loss prevention (DLP)
+• SSL/TLS decryption and inspection
+                        </code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Panel -->
+            <section class="stats-panel">
+                <h2>📊 Firewall Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Requests:</span>
+                        <code id="totalRequests">0</code>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Blocked by Layer 1:</span>
+                        <code id="blockedLayer1">0</code>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Blocked by Layer 2:</span>
+                        <code id="blockedLayer2">0</code>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Blocked by Layer 3:</span>
+                        <code id="blockedLayer3">0</code>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Allowed Through:</span>
+                        <code id="allowedThrough">0</code>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Security Level:</span>
+                        <code id="securityLevel">🟢 HIGH</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Real-time Log -->
+            <section class="global-log">
+                <h2>📜 Global Security Log</h2>
+                <div class="log-container" id="globalLog">
+                    <code class="log-entry">
+[SYSTEM] Three-layer firewall initialized successfully
+[SYSTEM] All security layers active and monitoring
+[INFO] Ready to process network traffic
+                    </code>
+                </div>
+                <button class="clear-log-btn" onclick="clearGlobalLog()">🗑️ Clear Log</button>
+            </section>
+        </div>
+
+        <footer>
+            <p>🔒 Educational Firewall Demonstration - Learn Cybersecurity Concepts</p>
+        </footer>
+    </div>
+
+    <script src="./Specimens/Specimen-38/script.js"></script>
+</body>
+</html>
