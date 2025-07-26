@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+     <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <title>Simple Computer Emulator</title>
     <style>
         body {
@@ -61,7 +76,7 @@ OUT B</textarea>
     <h3>Output</h3>
     <div id="output"></div>
 
-    <script src="power.js"></script>
+    <script src="./Specimens/Specimen-3/power.js"></script>
 
     <script>
         class Emulator {
