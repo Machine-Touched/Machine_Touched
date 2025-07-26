@@ -2,6 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+     <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Robot Nursery - Machine_Touched</title>
     <style>
@@ -268,7 +283,7 @@
     <div class="nursery-grid">
         <div class="robot-cradle">
             <h2>''Machine_Touched'' - Digital Pet Assistant</h2>
-            <iframe src="./a/index.html" class="robot-iframe" frameborder="0" allowfullscreen></iframe>
+            <iframe src="./Specimens/Specimen-15/a/index.html" class="robot-iframe" frameborder="0" allowfullscreen></iframe>
         </div>
 
         <div class="ability-generator-card">
@@ -299,7 +314,7 @@
 
     <footer>
         <p>Built with care in Sedgefield, Western Cape, South Africa. &copy; 2025 Machine_Touched.</p>
-        <p>Visit our main site: <a href="http://www.machinetouched.w3spaces.com" style="color: #00ffff; text-decoration: none;">www.machinetouched.w3spaces.com</a></p>
+        <p>Visit our main site: <a href="https://machinetouched.w3spaces.com" style="color: #00ffff; text-decoration: none;">https://machinetouched.w3spaces.com</a></p>
     </footer>
 
     <script>
@@ -334,7 +349,7 @@
                 const sounds = ['meow.mp3', 'purr.mp3']; // You'd need these audio files
                 const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
                 // Using the absolute path to your w3spaces.com audio folder
-                const audio = new Audio(`https://www.machinetouched.w3spaces.com/audio/${randomSound}`);
+                const audio = new Audio(`https://machinetouched.w3spaces.com/audio/${randomSound}`);
                 audio.play().catch(e => console.error("Audio play error:", e));
             });
         });
