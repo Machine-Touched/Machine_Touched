@@ -2,6 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+     <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binary Vault - Machine_Touched Specimen</title>
     <!-- Hidden password in comment: Binary sequence 1011 unlocks the vault -->
@@ -345,7 +360,7 @@
 <body>
     <!-- Background iframe - farmer john's barn showing through -->
     <iframe id="background-barn" 
-            src="https://machinetouched.w3spaces.com" 
+            src="" 
             frameborder="0">
     </iframe>
 
@@ -469,8 +484,8 @@
         <!-- Footer -->
         <div class="vault-footer">
             <p>
-                <code>MACHINE_TOUCHED_BINARY_VAULT</code> | Built for robot authentication | 
-                <code>&copy; 2025 Machine_Touched Laboratory</code>
+                <code>MACHINE_TOUCHED</code> | Built for robot authentication | 
+                <code>Machine_Touched</code>
             </p>
             <div style="margin-top: 10px;">
                 <code>Version: 3.1.4 | Protocol: BINARY_AUTH | Encryption: AES-512</code>
