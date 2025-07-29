@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA's Canvas - Machine_Touched</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent; /* Keep the main document transparent */
+            overflow: hidden; /* Prevent scrollbars on the main document */
+            height: 100vh;
+            width: 100vw;
+            position: relative; /* Needed for positioning child iframes */
+        }
+
+        /* --- Styles for the Background Iframe --- */
+        #background-iframe-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Low z-index for background */
+            pointer-events: none; /* Allows clicks to pass through to elements beneath if needed */
+        }
+
+        #background-iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Remove iframe border */
+            background: transparent; /* Ensure iframe content can be transparent if designed that way */
+        }
+
+        /* --- Styles for the Foreground Iframe (for the Zerg/Louse) --- */
+        #foreground-iframe-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /*
+             * Maximum z-index to ensure it's always on top.
+             * Your Digital Clothing Louse (Zerg) will live inside this iframe
+             * and already has a high internal z-index to stay on top of *its own* content.
+             */
+            z-index: 9999999998; /* One less than the louse's internal z-index if it's placed here directly,
+                                    or max possible if the louse itself is not in an iframe but on the main page.
+                                    Given your louse code, it's designed to be a full HTML document itself,
+                                    so it would usually be the source of an iframe.
+                                    Let's assume the louse (from your previous code) will be loaded as the content
+                                    of this foreground iframe. Its internal z-index will then handle its layering within this iframe.
+                                  */
+            pointer-events: none; /* Allows clicks to pass through to elements beneath if needed */
+        }
+
+        #foreground-iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Remove iframe border */
+            background: transparent; /* Ensure iframe content can be transparent */
+        }
+
+        /*
+         * Note on Z-index and Louse's internal Z-index:
+         * Your Digital Clothing Louse's code itself contains 'z-index: 9999999999;'
+         * and 'position: fixed;' on its body. When loaded into an iframe,
+         * its 'position: fixed' will be fixed relative to the iframe's viewport,
+         * not the main document's. Its 'z-index' will apply *within* that iframe.
+         * To make the louse appear to "pass through" from the background iframe
+         * to the foreground iframe, you would need to:
+         * 1. Have the louse's code *removed* from one iframe.
+         * 2. Dynamically *add* the louse's code to the other iframe.
+         * 3. Synchronize its position during this transition using JavaScript
+         * (e.g., using window.postMessage for cross-iframe communication,
+         * if origins allow, or by having the parent control the louse's display
+         * in either iframe).
+         * This HTML provides the visual *layers* for such an effect.
+         */
+    </style>
+</head>
+<body>
+
+    <div id="background-iframe-container">
+        <iframe id="background-iframe" src="path/to/your/background_content.html">
+            </iframe>
+    </div>
+
+    <div id="foreground-iframe-container">
+        <iframe id="foreground-iframe" src="path/to/your/digital_clothing_louse.html">
+            </iframe>
+    </div>
+
+</body>
+</html>
