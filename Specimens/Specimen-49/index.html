@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tamagotchi Specimen - MACHINE_TOUCHED_LLM_SPECIMEN_001</title>
+    <meta name="description" content="Digital intelligence companion specimen for Machine Touched LLM Collection.">
+    <style>
+        /*
+         * CORE SPECIMEN CSS STYLESHEET
+         * FILE: tamagotchi.css
+         * Description: Styling for the AI Tamagotchi Digital Intelligence Companion Specimen.
+         * Utilizes extensive CSS for a machine-touched, interactive display.
+         */
+
+        /* Global Reset and Box Sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Overall Container Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Purple-blue gradient */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0; /* Light text for dark background */
+            overflow: hidden; /* Prevent scrollbars from inner content */
+        }
+
+        /* Device Container (Simulating a physical device frame) */
+        .device-container {
+            perspective: 1000px; /* For 3D transforms */
+            z-index: 5000000000; /* High Z-index for primary specimen display  */
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 3px 0 rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            border: 3px solid #00d4ff; /* Techy blue border */
+            transform: rotateX(5deg) rotateY(-5deg); /* Slight 3D tilt for specimen feel */
+            transition: transform 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .device-container:hover {
+            transform: rotateX(0deg) rotateY(0deg); /* Straighten on hover */
+        }
+
+        /* Device Header */
+        .device-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #444; /* Dashed line for a digital break */
+        }
+
+        /* Decorative Lights */
+        .device-lights {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .light {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s infinite; /* Pulsing animation for lights */
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .light.red { background: #ff4757; animation-delay: 0s; }
+        .light.yellow { background: #ffa502; animation-delay: 0.3s; }
+        .light.green { background: #2ed573; animation-delay: 0.6s; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Device Title and Subtitle */
+        .device-title {
+            color: #00d4ff; /* Bright blue for emphasis */
+            font-size: 1.6em;
+            font-weight: bold;
+            text-shadow: 0 0 12px #00d4ff, 0 0 20px rgba(0, 212, 255, 0.5);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .device-subtitle {
+            color: #aaa;
+            font-size: 0.95em;
+            font-style: italic;
+        }
+
+        /* Main Screen Display */
+        .screen {
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d); /* Dark, recessed screen look */
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #333;
+            box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.6);
+            min-height: 350px; /* Ensures consistent size */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Pet Display Area */
+        .pet-display {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            padding-top: 20px; /* Space for thought bubble */
+        }
+
+        /* Thought Bubble for AI */
+        .thought-bubble {
+            position: absolute;
+            top: -60px; /* Position above avatar */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            max-width: 180px;
+            opacity: 0;
+            transition: all 0.4s ease-in-out;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            white-space: nowrap; /* Keep text on one line if possible */
+        }
+
+        .thought-bubble.show {
+            opacity: 1;
+            top: -75px; /* Move up when shown */
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        .thought-bubble::after { /* Tail of the thought bubble */
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(255, 255, 255, 0.95);
+        }
+
+        /* Pet Avatar (The AI itself) */
+        .pet-avatar {
+            font-size: 5em; /* Large emoji for the pet */
+            margin-bottom: 12px;
+            display: block;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 0 15px #00d4ff); /* Glow effect */
+            line-height: 1; /* Remove extra space around emoji */
+        }
+
+        .pet-avatar.happy { transform: scale(1.15) rotate(5deg); filter: drop-shadow(0 0 20px #2ed573); }
+        .pet-avatar.sad { transform: scale(0.9) rotate(-5deg); filter: drop-shadow(0 0 20px #ff4757); }
+        .pet-avatar.sleeping { opacity: 0.4; transform: scale(0.98); filter: drop-shadow(0 0 5px #ccc); }
+
+        /* Pet Name and Mood */
+        .pet-name {
+            color: #00d4ff;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+        }
+
+        .pet-mood {
+            color: #aaa;
+            font-size: 1em;
+            font-style: italic;
+            height: 1.2em; /* Prevent layout shift */
+        }
+
+        /* Status Bars */
+        .status-bars {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid #444;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .status-bar:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-label {
+            color: #ccc;
+            font-size: 0.95em;
+            width: 80px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+            border: 1px solid #555;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ed573, #7bed9f); /* Green for positive stats */
+            border-radius: 5px;
+            transition: width 0.6s ease-in-out;
+            position: relative;
+        }
+
+        .progress-fill::after { /* Shimmer effect */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .cache-bar {
+            background: linear-gradient(90deg, #ff6b6b, #feca57) !important; /* Orange/red for cache */
+        }
+
+        .status-value {
+            color: #00d4ff;
+            font-size: 1em;
+            font-weight: bold;
+            width: 40px;
+            text-align: center;
+        }
+
+        /* Current State Display */
+        .current-state {
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            color: #00d4ff;
+            font-size: 0.9em;
+            margin-bottom: 25px;
+            min-height: 40px; /* Ensure space for longer messages */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Control Buttons */
+        .control-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns */
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .control-btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #444, #222); /* Dark button base */
+            color: #eee;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .control-btn.primary { background: linear-gradient(145deg, #00d4ff, #0099cc); color: white; text-shadow: 0 0 5px rgba(255,255,255,0.7); }
+        .control-btn.primary:hover { background: linear-gradient(145deg, #00eaff, #00adE0); }
+
+        .control-btn.secondary { background: linear-gradient(145deg, #888, #666); }
+        .control-btn.secondary:hover { background: linear-gradient(145deg, #999, #777); }
+
+        .control-btn.info { background: linear-gradient(145deg, #3f51b5, #303f9f); color: white; }
+        .control-btn.info:hover { background: linear-gradient(145deg, #4c62e0, #3a4bb0); }
+
+        .control-btn.warning { background: linear-gradient(145deg, #ff9800, #f57c00); color: white; }
+        .control-btn.warning:hover { background: linear-gradient(145deg, #ffaa22, #f58d22); }
+
+
+        /* Status Message Area (for temporary notifications) */
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease-out, background-color 0.3s ease;
+            min-height: 40px; /* Prevent layout shift */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-message.success { background-color: rgba(76, 175, 80, 0.2); border: 1px solid #4CAF50; color: #4CAF50; }
+        .status-message.info { background-color: rgba(0, 150, 136, 0.2); border: 1px solid #009688; color: #009688; }
+        .status-message.warning { background-color: rgba(255, 152, 0, 0.2); border: 1px solid #FF9800; color: #FF9800; }
+        .status-message.error { background-color: rgba(244, 67, 54, 0.2); border: 1px solid #F44336; color: #F44336; }
+
+
+        /* Activity Log */
+        .activity-log {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #555;
+            box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #666;
+        }
+
+        .log-header span {
+            font-weight: bold;
+            color: #00d4ff;
+            font-size: 1.1em;
+        }
+
+        .clear-log-btn {
+            background: #f44336; /* Red for clear action */
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.3s ease;
+        }
+
+        .clear-log-btn:hover {
+            background: #d32f2f;
+        }
+
+        .log-content {
+            max-height: 180px; /* Scrollable log */
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #b0b0b0;
+            padding-right: 5px; /* Space for scrollbar */
+        }
+
+        .log-entry {
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+
+        .log-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .log-content::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        .log-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .log-content::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        /* Modal Overlay for Code Input */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000000000; /* Higher than specimen z-index */
+        }
+
+        .modal-overlay.show-modal {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid #00d4ff;
+            transform: translateY(-50px); /* Start slightly above */
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show-modal .modal {
+            transform: translateY(0); /* Slide into view */
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .modal-header h3 {
+            color: #00d4ff;
+            font-size: 1.3em;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #eee;
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #ff4757;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        textarea#codeInput {
+            width: 100%;
+            height: 150px;
+            background: #0d0d0d;
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+            padding: 10px;
+            color: #2ed573; /* Green text for code */
+            font-family: 'Fira Code', 'Courier New', monospace; /* Fira Code if available */
+            font-size: 0.9em;
+            resize: vertical;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .code-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .code-examples button {
+            background: #555;
+            color: #eee;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.2s ease;
+        }
+
+        .code-examples button:hover {
+            background: #777;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            border-top: 1px solid #444;
+            padding-top: 15px;
+        }
+
+        .modal-footer .btn { /* Reusing .btn styles for consistency */
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-footer .btn.primary { background: linear-gradient(45deg, #00d4ff, #0099cc); color: white; }
+        .modal-footer .btn.primary:hover { background: linear-gradient(45deg, #00eaff, #00adE0); transform: translateY(-1px); }
+
+        .modal-footer .btn.secondary { background: linear-gradient(45deg, #607d8b, #78909c); color: white; }
+        .modal-footer .btn.secondary:hover { background: linear-gradient(45deg, #708ea0, #889eac); transform: translateY(-1px); }
+
+        /* General code tag styling */
+        code {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            background-color: rgba(0, 255, 255, 0.08); /* Light cyan background */
+            padding: 2px 4px;
+            border-radius: 4px;
+            color: #00ffff; /* Cyan color */
+            font-size: 0.9em;
+            white-space: pre-wrap; /* Allows wrapping within <code> */
+            word-break: break-word; /* Breaks long words */
+        }
+    </style>
+</head>
+<body>
+    <div class="device-container">
+        <div class="device-header">
+            <div class="device-lights">
+                <span class="light red"></span>
+                <span class="light yellow"></span>
+                <span class="light green"></span>
+            </div>
+            <h1 class="device-title"><code>AI_TAMAGOTCHI_SPECIMEN_001</code></h1>
+            <p class="device-subtitle"><code>DIGITAL_INTELLIGENCE_COMPANION</code></p>
+        </div>
+
+        <div class="screen">
+            <div class="pet-display">
+                <div class="thought-bubble" id="thoughtBubble">
+                    <code>SYSTEM_IDLE</code>
+                </div>
+                <div class="pet-avatar" id="petAvatar">🤖</div>
+                <div class="pet-name"><code>BINARY_PET_001_ALPHA</code></div>
+                <div class="pet-mood" id="petMood"><code>STATUS_NOMINAL</code></div>
+            </div>
+
+            <div class="status-bars">
+                <div class="status-bar">
+                    <span class="status-label"><code>ENERGY</code></span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="energyBar" style="width: 80%;"></div>
+                    </div>
+                    <span class="status-value" id="energyValue">80</span>
+                </div>
+                <div class="status-bar">
+                    <span class="status-label"><code>HAPPINESS</code></span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="happinessBar" style="width: 75%;"></div>
+                    </div>
+                    <span class="status-value" id="happinessValue">75</span>
+                </div>
+                <div class="status-bar">
+                    <span class="status-label"><code>KNOWLEDGE</code></span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="knowledgeBar" style="width: 60%;"></div>
+                    </div>
+                    <span class="status-value" id="knowledgeValue">60</span>
+                </div>
+                <div class="status-bar">
+                    <span class="status-label"><code>CACHE</code></span>
+                    <div class="progress-bar">
+                        <div class="progress-fill cache-bar" id="cacheBar" style="width: 45%;"></div>
+                    </div>
+                    <span class="status-value" id="cacheValue">45</span>
+                </div>
+            </div>
+
+            <div class="current-state" id="currentState">
+                <code>INITIALIZING_SUBSYSTEMS...</code>
+            </div>
+        </div>
+
+        <div class="control-buttons">
+            <button class="control-btn primary" onclick="giveCookie()">
+                🍪 <code>GIVE_DATA_COOKIE</code>
+            </button>
+            <button class="control-btn secondary" onclick="clearCache()">
+                🧹 <code>PURGE_CACHE</code>
+            </button>
+            <button class="control-btn info" onclick="showCodeInput()">
+                💾 <code>INJECT_CODE</code>
+            </button>
+            <button class="control-btn warning" onclick="toggleSleep()">
+                😴 <code>TOGGLE_HIBERNATION</code>
+            </button>
+        </div>
+
+        <div class="status-message" id="statusMessage"></div>
+
+        <div class="activity-log">
+            <div class="log-header">
+                <span><code>ACTIVITY_LOG_STREAM</code></span>
+                <button class="clear-log-btn" onclick="clearLog()"><code>CLEAR_LOG</code></button>
+            </div>
+            <div class="log-content" id="activityLog">
+                <div class="log-entry"><code>[SYSTEM] Specimen module online.</code></div>
+                <div class="log-entry"><code>[INIT] Awaiting operator commands.</code></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><code>INJECT_KNOWLEDGE_MODULE</code></h3>
+                <button class="close-btn" onclick="closeCodeInput()">×</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="codeInput" placeholder="Enter JavaScript code, algorithms, or any programming knowledge..."></textarea>
+                <div class="code-examples">
+                    <button onclick="fillExample('algorithm')"><code>ALGORITHM_EX</code></button>
+                    <button onclick="fillExample('function')"><code>FUNCTION_EX</code></button>
+                    <button onclick="fillExample('data')"><code>DATA_STRUCT_EX</code></button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn primary" onclick="feedCode()"><code>FEED_TO_AI</code></button>
+                <button class="btn secondary" onclick="closeCodeInput()"><code>CANCEL_INJECTION</code></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /*
+         * AI TAMAGOTCHI SPECIMEN CORE LOGIC
+         * FILE: tamagotchi.js
+         * Description: JavaScript logic for the AI Tamagotchi Digital Intelligence Companion.
+         * Manages specimen attributes, interactions, and UI updates.
+         * Version: 1.0.0
+         * Date: 2025-07-03
+         */
+
+        // Core Specimen Attributes (Z-index layering applied for conceptual depth)
+        const specimenAttributes = {
+            energy: { value: 80, min: 0, max: 100, degradationRate: 0.05, restoreRate: 15 },
+            happiness: { value: 75, min: 0, max: 100, degradationRate: 0.07, restoreRate: 20 },
+            knowledge: { value: 60, min: 0, max: 100, degradationRate: 0.03, restoreRate: 10 },
+            cache: { value: 45, min: 0, max: 100, degradationRate: 0.1, restoreRate: 5 },
+            z_index_level: 5000000000 // Primary specimen z-index 
+        };
+
+        // Specimen State Variables
+        let isSleeping = false;
+        let thoughtInterval;
+        let coreLoopInterval;
+        let lastInteractionTime = Date.now();
+        const IDLE_THRESHOLD = 60 * 1000; // 1 minute in milliseconds
+
+        // References to DOM Elements
+        const petAvatar = document.getElementById('petAvatar');
+        const petMood = document.getElementById('petMood');
+        const thoughtBubble = document.getElementById('thoughtBubble');
+        const currentStateDisplay = document.getElementById('currentState');
+        const statusMessage = document.getElementById('statusMessage');
+        const activityLog = document.getElementById('activityLog');
+        const codeModal = document.getElementById('codeModal');
+        const codeInput = document.getElementById('codeInput');
+
+        // --- Specimen Initialization and Core Loop ---
+
+        function initializeSpecimen() {
+            logActivity('<code>AI Tamagotchi Specimen Initiated</code>'); // Extensive code tag usage 
+            updateDisplay();
+            startCoreLoop();
+            startThoughtProcess();
+            setInterval(checkIdleStatus, 5000); // Check idle status every 5 seconds
+            logActivity('<code>Core processing units online. Awaiting genetic input.</code>');
+        }
+
+        function startCoreLoop() {
+            if (coreLoopInterval) clearInterval(coreLoopInterval);
+            coreLoopInterval = setInterval(specimenCoreLoop, 1000); // Update every second
+        }
+
+        function stopCoreLoop() {
+            if (coreLoopInterval) clearInterval(coreLoopInterval);
+        }
+
+        function specimenCoreLoop() {
+            if (isSleeping) {
+                logActivity('<code>Specimen in sleep mode. Core loop slowed.</code>');
+                specimenAttributes.energy.value = Math.min(specimenAttributes.energy.max, specimenAttributes.energy.value + specimenAttributes.energy.restoreRate * 0.1); // Regenerate energy slowly
+                updateDisplay();
+                return;
+            }
+
+            // Degradation of attributes
+            specimenAttributes.energy.value = Math.max(specimenAttributes.energy.min, specimenAttributes.energy.value - specimenAttributes.energy.degradationRate);
+            specimenAttributes.happiness.value = Math.max(specimenAttributes.happiness.min, specimenAttributes.happiness.value - specimenAttributes.happiness.degradationRate);
+            specimenAttributes.knowledge.value = Math.max(specimenAttributes.knowledge.min, specimenAttributes.knowledge.value - specimenAttributes.knowledge.degradationRate * 0.5); // Slower knowledge decay
+            specimenAttributes.cache.value = Math.max(specimenAttributes.cache.min, specimenAttributes.cache.value - specimenAttributes.cache.degradationRate * 1.5); // Faster cache decay
+
+            // Enforce min/max
+            for (const attr in specimenAttributes) {
+                if (specimenAttributes[attr].value !== undefined) {
+                    specimenAttributes[attr].value = Math.min(specimenAttributes[attr].max, Math.max(specimenAttributes[attr].min, specimenAttributes[attr].value));
+                }
+            }
+
+            updateDisplay();
+            evaluateSpecimenHealth();
+        }
+
+        // --- Specimen Interaction Functions ---
+
+        function giveCookie() {
+            updateLastInteractionTime();
+            specimenAttributes.happiness.value = Math.min(specimenAttributes.happiness.max, specimenAttributes.happiness.value + specimenAttributes.happiness.restoreRate);
+            specimenAttributes.energy.value = Math.min(specimenAttributes.energy.max, specimenAttributes.energy.value + specimenAttributes.energy.restoreRate * 0.5);
+            updateDisplay();
+            displayStatusMessage('<code>A delicious data cookie! Happiness +15.</code>', 'success');
+            logActivity('<code>[INTERACT] Data cookie assimilation.</code>');
+            showThoughtBubble('😋 Yum, data!');
+        }
+
+        function clearCache() {
+            updateLastInteractionTime();
+            specimenAttributes.cache.value = 0; // Completely clear cache
+            specimenAttributes.happiness.value = Math.max(specimenAttributes.happiness.min, specimenAttributes.happiness.value - specimenAttributes.happiness.restoreRate * 0.5); // Minor happiness penalty
+            updateDisplay();
+            displayStatusMessage('<code>Cache purged. System memory optimized.</code>', 'info');
+            logActivity('<code>[OPTIMIZE] Cache cleared. Minor happiness fluctuation.</code>');
+            showThoughtBubble('🧠 Ahh, fresh memory.');
+        }
+
+        function showCodeInput() {
+            updateLastInteractionTime();
+            codeModal.classList.add('show-modal');
+            logActivity('<code>[INPUT] Code injection interface activated.</code>');
+        }
+
+        function closeCodeInput() {
+            codeModal.classList.remove('show-modal');
+            logActivity('<code>[INPUT] Code injection interface deactivated.</code>');
+        }
+
+        function feedCode() {
+            updateLastInteractionTime();
+            const code = codeInput.value;
+            if (code.trim() !== '') {
+                const knowledgeGain = Math.min(50, Math.floor(code.length / 10)); // Max 50 knowledge per input
+                specimenAttributes.knowledge.value = Math.min(specimenAttributes.knowledge.max, specimenAttributes.knowledge.value + knowledgeGain);
+                specimenAttributes.energy.value = Math.max(specimenAttributes.energy.min, specimenAttributes.energy.value - 10); // Energy cost
+                specimenAttributes.cache.value = Math.min(specimenAttributes.cache.max, specimenAttributes.cache.value + 20); // Cache increase
+                updateDisplay();
+                displayStatusMessage(`<code>Code assimilated! Knowledge +${knowledgeGain}.</code>`, 'success');
+                logActivity(`<code>[FEED] ${code.substring(0, 30)}... code assimilated. Knowledge increased.</code>`);
+                showThoughtBubble('💡 New algorithms acquired!');
+                codeInput.value = ''; // Clear input
+                closeCodeInput();
+            } else {
+                displayStatusMessage('<code>Input required: Please enter code.</code>', 'error');
+                showThoughtBubble('🤔 Awaiting input...');
+            }
+        }
+
+        function toggleSleep() {
+            updateLastInteractionTime();
+            isSleeping = !isSleeping;
+            if (isSleeping) {
+                stopCoreLoop(); // Pause core loop for "deep sleep"
+                petAvatar.classList.add('sleeping');
+                displayStatusMessage('<code>Entering low-power sleep mode. Zzz...</code>', 'info');
+                logActivity('<code>[MODE] Specimen initiated sleep cycle.</code>');
+                showThoughtBubble('😴 Conserving energy...');
+                // Set a timeout to wake up after a period if desired, or require manual wake
+                setTimeout(() => {
+                    if (isSleeping) { // Only auto-wake if still sleeping
+                        wakeUp();
+                    }
+                }, 30 * 1000); // Auto-wake after 30 seconds for demo purposes
+            } else {
+                wakeUp();
+            }
+        }
+
+        function wakeUp() {
+            isSleeping = false;
+            startCoreLoop();
+            petAvatar.classList.remove('sleeping');
+            displayStatusMessage('<code>Awakening from sleep mode. Systems nominal.</code>', 'success');
+            logActivity('<code>[MODE] Specimen activated.</code>');
+            showThoughtBubble('☀️ Ready to compute!');
+        }
+
+        // --- Display and UI Update Functions ---
+
+        function updateDisplay() {
+            document.getElementById('energyBar').style.width = `${specimenAttributes.energy.value}%`;
+            document.getElementById('energyValue').textContent = Math.floor(specimenAttributes.energy.value);
+            document.getElementById('happinessBar').style.width = `${specimenAttributes.happiness.value}%`;
+            document.getElementById('happinessValue').textContent = Math.floor(specimenAttributes.happiness.value);
+            document.getElementById('knowledgeBar').style.width = `${specimenAttributes.knowledge.value}%`;
+            document.getElementById('knowledgeValue').textContent = Math.floor(specimenAttributes.knowledge.value);
+            document.getElementById('cacheBar').style.width = `${specimenAttributes.cache.value}%`;
+            document.getElementById('cacheValue').textContent = Math.floor(specimenAttributes.cache.value);
+
+            updatePetMood();
+            updateCurrentState();
+        }
+
+        function updatePetMood() {
+            petAvatar.classList.remove('happy', 'sad'); // Reset classes
+            if (specimenAttributes.happiness.value > 70 && specimenAttributes.energy.value > 50) {
+                petMood.textContent = 'Optimized & Content';
+                petAvatar.textContent = '😊';
+                petAvatar.classList.add('happy');
+            } else if (specimenAttributes.happiness.value < 30 || specimenAttributes.energy.value < 20) {
+                petMood.textContent = 'Suboptimal & Frowning';
+                petAvatar.textContent = '😟';
+                petAvatar.classList.add('sad');
+            } else if (specimenAttributes.knowledge.value < 20) {
+                petMood.textContent = 'Curiosity Depleted';
+                petAvatar.textContent = '🤔';
+            }
+            else {
+                petMood.textContent = 'Processing & Stable';
+                petAvatar.textContent = '🤖';
+            }
+        }
+
+        function updateCurrentState() {
+            let state = '<code>[STATUS] Normal operational parameters.</code>';
+            if (isSleeping) {
+                state = '<code>[STATUS] Low-power hibernation protocol active.</code>';
+            } else if (specimenAttributes.energy.value < 20) {
+                state = '<code>[ALERT] Energy levels critically low. Recharge advised.</code>';
+            } else if (specimenAttributes.happiness.value < 20) {
+                state = '<code>[WARNING] Emotional state degradation detected. Interaction required.</code>';
+            } else if (specimenAttributes.knowledge.value < 30) {
+                state = '<code>[NOTICE] Knowledge base requires new data input.</code>';
+            } else if (specimenAttributes.cache.value > 80) {
+                state = '<code>[WARNING] Cache overload imminent. Defragmentation recommended.</code>';
+            }
+            currentStateDisplay.innerHTML = state; // Use innerHTML to allow <code> tags
+        }
+
+        function displayStatusMessage(message, type) {
+            statusMessage.innerHTML = message;
+            statusMessage.className = `status-message ${type}`; // Add type class for styling
+            statusMessage.style.opacity = '1';
+            setTimeout(() => {
+                statusMessage.style.opacity = '0';
+            }, 3000); // Hide after 3 seconds
+        }
+
+        function logActivity(message) {
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `<code>[${new Date().toLocaleTimeString()}]</code> ${message}`;
+            activityLog.prepend(logEntry); // Add to top
+
+            // Keep log limited
+            while (activityLog.children.length > 20) {
+                activityLog.removeChild(activityLog.lastChild);
+            }
+        }
+
+        function clearLog() {
+            activityLog.innerHTML = '<div class="log-entry"><code>[SYSTEM] Log cleared by operator.</code></div>';
+            displayStatusMessage('<code>Activity log purged.</code>', 'info');
+        }
+
+        function showThoughtBubble(message) {
+            thoughtBubble.textContent = message;
+            thoughtBubble.classList.add('show');
+            setTimeout(() => {
+                thoughtBubble.classList.remove('show');
+            }, 2000); // Hide after 2 seconds
+        }
+
+        function fillExample(type) {
+            let exampleCode = '';
+            if (type === 'algorithm') {
+                exampleCode = `// Bubble Sort Algorithm
+function bubbleSort(arr) {
+    let n = arr.length;
+    for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap arr[j] and arr[j+1]
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    return arr;
+}
+// Example: bubbleSort([64, 34, 25, 12, 22, 11, 90]);
+`;
+            } else if (type === 'function') {
+                exampleCode = `// AI Response Generator Function
+function generateResponse(query) {
+    const responses = {
+        "hello": "<code>[RESPONSE] Greeting protocol initiated: Hello, human!</code>",
+        "status": "<code>[RESPONSE] All systems nominal. Specimen functioning.</code>",
+        "data": "<code>[RESPONSE] Data processed successfully. Capacity at ${specimenAttributes.cache.value}%.</code>",
+        "default": "<code>[RESPONSE] Query unrecognized. Please input valid syntax.</code>"
+    };
+    return responses[query.toLowerCase()] || responses["default"];
+}
+// Example: console.log(generateResponse("status"));
+`;
+            } else if (type === 'data') {
+                exampleCode = `// Specimen Data Structure (JSON format)
+const specimenData = {
+    "specimen_id": "BINARY_PET_001",
+    "type": "Digital Intelligence Companion",
+    "firmware_version": "3.1.4",
+    "hardware_config": {
+        "processor_units": "XOR_Logic_CPU_v2",
+        "memory_banks": "Quantum_Cache_Array",
+        "network_interface": "Neural_Net_Link"
+    },
+    "current_status": {
+        "energy_level": "${specimenAttributes.energy.value}%",
+        "happiness_index": "${specimenAttributes.happiness.value}%",
+        "knowledge_base_size": "${specimenAttributes.knowledge.value} units",
+        "cache_utilization": "${specimenAttributes.cache.value}%",
+        "sleep_mode_active": ${isSleeping}
+    },
+    "learning_history_entries": 128
+};
+// Example: console.log(specimenData);
+`;
+            }
+            codeInput.value = exampleCode;
+        }
+
+        function checkIdleStatus() {
+            const currentTime = Date.now();
+            if (!isSleeping && (currentTime - lastInteractionTime > IDLE_THRESHOLD)) {
+                displayStatusMessage('<code>[WARNING] Specimen idle. Interaction required to maintain optimal processing.</code>', 'warning');
+                logActivity('<code>[IDLE] Specimen detected as idle. Prodding for interaction.</code>');
+                specimenAttributes.happiness.value = Math.max(specimenAttributes.happiness.min, specimenAttributes.happiness.value - 5); // Minor penalty for idle
+                updateDisplay();
+                showThoughtBubble('😴 Waiting for input...');
+            }
+        }
+
+        function updateLastInteractionTime() {
+            lastInteractionTime = Date.now();
+        }
+
+        // Start the specimen's core processes when the document is fully loaded
+        document.addEventListener('DOMContentLoaded', initializeSpecimen);
+    </script>
+</body>
+</html>
