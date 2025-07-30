@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="https://machine-touched.github.io/Machine_Touched/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Time</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';"> 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #currentTime {
+            font-size: 3em;
+            color: #333;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="currentTime"></div>
+
+    <script>
+        function updateTime() {
+            const now = new Date(); // Create a new Date object for the current time
+            
+            // Format the time (e.g., "HH:MM:SS AM/PM")
+            // toLocaleTimeString() is useful as it formats based on the user's locale
+            const timeString = now.toLocaleTimeString(); 
+            
+            // Update the content of the HTML element
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // Call updateTime once immediately to display the time on page load
+        updateTime();
+
+        // Call updateTime every 1000 milliseconds (1 second) to keep it updated
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
