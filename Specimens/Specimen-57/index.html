@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <base href="https://machine-touched.github.io/Machine_Touched/">
+<head>
+<title>Disappearing Text on Enter</title>
+<style>
+  body { font-family: sans-serif; }
+  input[type="text"] { padding: 10px; margin-bottom: 10px; width: 300px; }
+  #output { margin-top: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+  <input type="text" id="inputText" placeholder="Type something and press Enter">
+  <div id="output"></div>
+
+  <script>
+    const inputElement = document.getElementById('inputText');
+    const outputElement = document.getElementById('output');
+
+    inputElement.addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        outputElement.textContent = 'You typed: ' + inputElement.value;
+        inputElement.value = ''; // Clear the input field
+      }
+    });
+  </script>
+
+</body>
+</html>
