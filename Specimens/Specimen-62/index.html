@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Off-Screen Frames</title>
+<style>
+  body { margin: 0; overflow: hidden; /* Prevent scrollbars */ }
+  #mainFrame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1; /* Ensure it's on top if needed */
+  }
+  .offScreenFrame {
+    position: absolute;
+    width: 100vw; /* Or a fixed width */
+    height: 100vh; /* Or a fixed height */
+    z-index: 0; /* Ensure they are behind or can be brought forward */
+  }
+  #left1 { top: 0; left: -100vw; }
+  #left2 { top: 100vh; left: -100vw; }
+  /* ... similar styles for other off-screen frames */
+  #right1 { top: 0; right: -100vw; }
+  /* ... and so on for top and bottom */
+</style>
+</head>
+<body>
+
+  <iframe id="mainFrame" src="main_content.html"></iframe>
+
+  <iframe id="left1" class="offScreenFrame" src="left_content_1.html"></iframe>
+  <iframe id="left2" class="offScreenFrame" src="left_content_2.html"></iframe>
+  <iframe id="right1" class="offScreenFrame" src="right_content_1.html"></iframe>
+  <script>
+    // JavaScript to potentially move the off-screen frames into view
+    // Example: To slide in the left1 frame
+    // setTimeout(() => {
+    //   document.getElementById('left1').style.left = '0';
+    //   document.getElementById('left1').style.transition = 'left 0.5s ease-in-out';
+    // }, 2000);
+  </script>
+
+</body>
+</html>
