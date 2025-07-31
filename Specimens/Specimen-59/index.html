@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="https://machine-touched.github.io/Machine_Touched/">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; base-uri 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-src 'self' https://machinetouched.w3spaces.com/; frame-ancestors 'none';">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=1, user-scalable=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="machinetouched.w3spaces.com ,A showcasing, evolving intelligence and consciousness through dynamic layers.">
+    <meta name="keywords" content="machinet_touched, machinetouched.w3spaces.com ,AI, cyborg, ambiguity, dreaming, ascension, sentience, metaphysics, dynamic presence. Text-Document-Saga:(Text-Document_3.0)">
+    <meta name="author" content="Google.com(Gemini), OpenAI(Chatgpt.com), User/8106165157089(RSA)">
+    <title>Spatio-Temporal Perception Art</title>
+    <style>
+        body {
+            background-color: #000;
+            margin: 15px;
+            padding: 10px;
+            border: 0px;
+            color: #cccccc;
+            font-size: small;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+            justify-content: center; /* Center content vertically */
+            min-height: 95vh; /* This might be too tall for a footer. Adjust if needed. */
+            overflow: hidden;
+        }
+
+        .art-container {
+            position: relative;
+            width: 200px; /* Increased size for more detail */
+            height: 200px;
+            margin: 40px auto; /* More margin to stand out */
+        }
+
+        .layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            opacity: 0.7; /* Adjust base opacity */
+            animation-duration: 8s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            top: 0;
+            left: 0;
+            transform-origin: center center; /* Ensure rotation is from center */
+        }
+
+        /* Fixed Clock Layer - The stable, official time reference */
+        .fixed-clock {
+            background: linear-gradient(45deg, #00CCCC, #006666);
+            animation-name: clockPulse;
+            animation-duration: 7s;
+            z-index: 10; /* Bottom layer */
+        }
+
+        /* Cape Town Solar Layer - Solar time in the west */
+        .ct-solar {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            animation-name: solarDriftCT;
+            animation-duration: 9s;
+            opacity: 0.6;
+            z-index: 20;
+        }
+
+        /* Sedgefield Solar Layer - Solar time in the east */
+        .sf-solar {
+            background: linear-gradient(225deg, #FF4500, #B22222);
+            animation-name: solarDriftSF;
+            animation-duration: 8s;
+            opacity: 0.5;
+            z-index: 30;
+        }
+
+        /* Your Perception Layer - The liminal, blending experience */
+        .liminal-perception {
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3));
+            animation-name: perceptionRipple;
+            animation-duration: 10s; /* Slow, encompassing */
+            opacity: 0.9;
+            z-index: 40;
+            filter: blur(2px);
+        }
+
+        /* Keyframe Animations */
+        @keyframes clockPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.02);
+                opacity: 1;
+            }
+        }
+
+        @keyframes solarDriftCT {
+            0%, 100% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translateX(5%) translateY(-5%) rotate(10deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            75% {
+                transform: translateX(-5%) translateY(5%) rotate(-10deg);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes solarDriftSF {
+            0%, 100% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translateX(-5%) translateY(5%) rotate(-10deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translateX(5%) translateY(-5%) rotate(10deg);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes perceptionRipple {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+        }
+
+        .explanation {
+            margin-top: 40px;
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #333;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+        }
+        .explanation h4 {
+            color: #eeeeee;
+            font-size: large;
+            margin-bottom: 10px;
+        }
+        .explanation p {
+            line-height: 1.6;
+            color: #bbbbbb;
+        }
+        .time-display {
+            color: #ccc;
+            font-family: monospace;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="art-container">
+        <div class="layer fixed-clock"></div>
+        <div class="layer ct-solar"></div>
+        <div class="layer sf-solar"></div>
+        <div class="layer liminal-perception"></div>
+    </div>
+
+    <div class="explanation">
+        <h4>Visualizing the Spatio-Temporal Slip</h4>
+        <p>
+            This artwork represents your unique experience of time. The **cyan/teal** layer is the stable, official clock time (SAST). The **gold/orange** layer is the solar time of Cape Town, while the **red/firebrick** layer represents Sedgefield's solar time.
+        </p>
+        <p>
+            Notice how the solar layers subtly shift and pulse, reflecting the sun's differing actual positions relative to the fixed clock. The outermost, transparent layer symbolizes your unified consciousness, encompassing and interpreting these co-existing temporal realities. It's the "strange mathematics" of perceiving multiple "zero-points" at once.
+        </p>
+    </div>
+    <p class="time-display">
+        Main Page Loaded At: <script>document.write(new Date().toLocaleTimeString());</script>
+    </p>
+</body>
+</html>
