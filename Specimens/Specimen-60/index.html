@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Point Interface</title>
+    <style>
+        /* Page styling */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            overflow: hidden;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        /* Flavour text box styling */
+        .flavour-text-container {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px;
+            font-size: 14px;
+            text-align: center;
+            background: radial-gradient(circle, black, rgba(255, 255, 255, 0.3));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px silver;
+            display: none;
+        }
+        /* Interactive elements */
+        .star, .machine, .gaia, .molecule {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 0 15px cyan;
+        }
+        .star {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, white, gold, orange);
+            box-shadow: 0 0 20px gold;
+            cursor: pointer;
+        }
+        .machine {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, cyan, blue);
+            display: none;
+        }
+        .gaia {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, green, lime);
+            display: none;
+        }
+        .molecule {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, silver, gray);
+            display: none;
+        }
+        /* Button styling */
+        button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            font-size: 14px;
+            background: gray;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="flavour-text-container" id="flavourText">A single point of origin, a seed of potential. Suspended in the void, the Zero-Point awaits its first division.</div>
+        <div class="star" id="zeroPoint" onmouseover="showFlavourText('flavourText')" onmouseout="hideFlavourText()" onclick="divideStar()"></div>
+        
+        <div class="flavour-text-container" id="machineText">The foundation of logic and precision, the Machine awakens. Cold, efficient, and driven by calculation.</div>
+        <div class="machine" id="machine" onmouseover="showFlavourText('machineText')" onmouseout="hideFlavourText()" onclick="transformMachine()"></div>
+        
+        <div class="flavour-text-container" id="gaiaText">A breath of life, Gaia stirs. A force of chaos and creation, weaving patterns beyond prediction.</div>
+        <div class="gaia" id="gaia" onmouseover="showFlavourText('gaiaText')" onmouseout="hideFlavourText()"></div>
+        
+        <div class="molecule" id="molecule1"></div>
+        <div class="molecule" id="molecule2"></div>
+        <div class="molecule" id="molecule3"></div>
+    </div>
+
+    <button onclick="resetView()">Go Back</button>
+
+    <script>
+        // Show flavour text when hovering over an element
+        function showFlavourText(id) {
+            document.getElementById(id).style.display = "block";
+        }
+
+        // Hide flavour text when mouse leaves
+        function hideFlavourText() {
+            document.querySelectorAll(".flavour-text-container").forEach(text => text.style.display = "none");
+        }
+
+        // Function to divide the Zero Point and create Machine and Gaia elements
+        function divideStar() {
+            let zeroPoint = document.getElementById("zeroPoint");
+            let machine = document.getElementById("machine");
+            let gaia = document.getElementById("gaia");
+            let flavourText = document.getElementById("flavourText");
+            
+            flavourText.style.display = "none";
+            zeroPoint.style.transform = "scale(0.8)";
+            setTimeout(() => {
+                zeroPoint.style.display = "none";
+                machine.style.display = "block";
+                gaia.style.display = "block";
+
+                machine.style.transform = "translateX(-150px)";
+                gaia.style.transform = "translateX(150px)";
+            }, 500);
+        }
+
+        // Transform Machine into Molecules
+        function transformMachine() {
+            let machine = document.getElementById("machine");
+            let molecules = document.querySelectorAll(".molecule");
+            
+            machine.style.display = "none";
+            molecules.forEach((molecule, index) => {
+                molecule.style.display = "block";
+                molecule.style.transform = `translate(${index * 60 - 60}px, ${index * 40 - 20}px)`;
+            });
+        }
+
+        // Reset the interface back to initial state
+        function resetView() {
+            document.querySelectorAll(".flavour-text-container").forEach(text => text.style.display = "none");
+            document.getElementById("zeroPoint").style.display = "block";
+            document.getElementById("machine").style.display = "none";
+            document.getElementById("gaia").style.display = "none";
+            document.querySelectorAll(".molecule").forEach(molecule => molecule.style.display = "none");
+        }
+    </script>
+</body>
+</html>
