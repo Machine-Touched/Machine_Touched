@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+     <base href="https://machine-touched.github.io/Machine_Touched/">
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+        frame-src *; /* Only needed if this page itself embeds other iframes */
+        img-src * data:;
+        connect-src *;
+        font-src *;
+        media-src *;
+        object-src *;
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <meta name="robots" content="index, follow">
 <title>Off-Screen Frames</title>
 <style>
   body { margin: 0; overflow: hidden; /* Prevent scrollbars */ }
@@ -27,11 +43,11 @@
 </head>
 <body>
 
-  <iframe id="mainFrame" src="main_content.html"></iframe>
+  <iframe id="mainFrame" src="./Specimens/Specimen-38/index.html"></iframe>
 
-  <iframe id="left1" class="offScreenFrame" src="left_content_1.html"></iframe>
-  <iframe id="left2" class="offScreenFrame" src="left_content_2.html"></iframe>
-  <iframe id="right1" class="offScreenFrame" src="right_content_1.html"></iframe>
+  <iframe id="left1" class="offScreenFrame" src="./Specimens/Specimen-38/index.html"></iframe>
+  <iframe id="left2" class="offScreenFrame" src="./Specimens/Specimen-38/index.html"></iframe>
+  <iframe id="right1" class="offScreenFrame" src="./Specimens/Specimen-38/index.html"></iframe>
   <script>
     // JavaScript to potentially move the off-screen frames into view
     // Example: To slide in the left1 frame
