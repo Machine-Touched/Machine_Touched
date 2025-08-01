@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="https://machine-touched.github.io/Machine_Touched/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber-Frames Terminal</title>
+   
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self' https://machine-touched.github.io/Machine_Touched/;
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        frame-src 'self' https://machine-touched.github.io/Machine_Touched/;
+    ">
+
+    <meta name="robots" content="index, follow">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+        :root {
+            --terminal-bg: #1e1e1e;
+            --terminal-text: #00ff00;
+            --terminal-border: #00ff00;
+            --button-bg: #008800;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: var(--terminal-bg);
+            font-family: 'Roboto Mono', monospace;
+            color: var(--terminal-text);
+            text-shadow: 0 0 5px var(--terminal-border);
+        }
+
+        /* All iframes are now controlled by this base style */
+        .frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+            transform: translateX(0); /* Default position */
+        }
+
+        /* Off-screen frame positions using CSS transforms */
+        .frame.left {
+            transform: translateX(-100vw);
+        }
+
+        .frame.right {
+            transform: translateX(100vw);
+        }
+        
+        .frame.active {
+            transform: translateX(0);
+        }
+
+        /* Navigation buttons */
+        .frame-controller {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+
+        .frame-controller button {
+            background: var(--button-bg);
+            color: var(--terminal-bg);
+            border: 2px solid var(--terminal-border);
+            padding: 10px 20px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px var(--terminal-border);
+            transition: all 0.3s ease;
+        }
+
+        .frame-controller button:hover {
+            background: var(--terminal-border);
+            color: var(--terminal-bg);
+            box-shadow: 0 0 20px var(--terminal-border);
+        }
+    </style>
+</head>
+<body>
+
+    <iframe id="mainFrame" class="frame active" src="./Specimens/Specimen-20/index.html"></iframe>
+    <iframe id="leftFrame" class="frame left" src="./Specimens/Specimens-20/index.html"></iframe>
+    <iframe id="rightFrame" class="frame right" src="./Specimens/Specimens-20/index.html"></iframe>
+
+    <div class="frame-controller">
+        <button data-target="leftFrame">Previous Frame</button>
+        <button data-target="mainFrame">Main Frame</button>
+        <button data-target="rightFrame">Next Frame</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const controllerButtons = document.querySelectorAll('.frame-controller button');
+            const frames = document.querySelectorAll('.frame');
+
+            function showFrame(targetId) {
+                frames.forEach(frame => {
+                    frame.classList.remove('active');
+                    if (frame.id === targetId) {
+                        frame.classList.add('active');
+                    }
+                });
+            }
+
+            controllerButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const targetFrameId = event.target.dataset.target;
+                    showFrame(targetFrameId);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
