@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pirate Kata – Gate 1</title>
+  <style>
+    body {
+      background-color: #0b0c10;
+      color: #d4af37;
+      font-family: "Courier New", monospace;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .kata-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-size: 24px;
+    }
+
+    .step {
+      padding: 10px;
+      border: 2px solid #d4af37;
+      border-radius: 8px;
+      width: fit-content;
+      box-shadow: 0 0 10px rgba(255, 223, 186, 0.6);
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step:nth-child(1) { animation-delay: 1s; }
+    .step:nth-child(2) { animation-delay: 2s; }
+    .step:nth-child(3) { animation-delay: 3s; }
+    .step:nth-child(4) { animation-delay: 4s; }
+  </style>
+</head>
+<body>
+
+  <h1>☠️ Pirate Kata – Gate 1 ☠️</h1>
+  
+  <div class="kata-container">
+    <div class="step">🏴‍☠️ Start Here: Ready Stance</div>
+    <div class="step">⚓ Step 1: Anchor (Hold Position)</div>
+    <div class="step">🏴‍☠️ Step 2: Cross the Tide (Shift Left & Right)</div>
+    <div class="step">☠️ Step 3: X Marks the Spot (Pivot to Final Stance)</div>
+    <div class="step">⚔️ End Pose: Draw Blades, Face the Wind ⚔️</div>
+  </div>
+
+</body>
+</html>
+
