@@ -76,7 +76,22 @@
             color: white;
             box-shadow: 0 0 25px #ff00ff, inset 0 0 10px #ff00ff;
         }
-
+        @-moz-keyframes pulse-core {
+            from { -moz-transform: scale(1); box-shadow: 0 0 25px #ff00ff, inset 0 0 10px #ff00ff; }
+            to { -moz-transform: scale(1.05); box-shadow: 0 0 40px #ff00ff, inset 0 0 20px #ff00ff; }
+}
+        @-moz-keyframes pulse-core {
+            from { transform: scale(1); box-shadow: 0 0 25px #ff00ff, inset 0 0 10px #ff00ff; }
+            to { transform: scale(1.05); box-shadow: 0 0 40px #ff00ff, inset 0 0 20px #ff00ff; }
+        }
+        @-o-keyframes pulse-core {
+            from { transform: scale(1); box-shadow: 0 0 25px #ff00ff, inset 0 0 10px #ff00ff; }
+            to { transform: scale(1.05); box-shadow: 0 0 40px #ff00ff, inset 0 0 20px #ff00ff; }
+        }
+        @-ms-keyframes pulse-core {
+            from { transform: scale(1); box-shadow: 0 0 25px #ff00ff, inset 0 0 10px #ff00ff; }
+            to { transform: scale(1.05); box-shadow: 0 0 40px #ff00ff, inset 0 0 20px #ff00ff; }
+        }
         @keyframes pulse-core {
             from { transform: scale(1); box-shadow: 0 0 25px #ff00ff, inset 0 0 10px #ff00ff; }
             to { transform: scale(1.05); box-shadow: 0 0 40px #ff00ff, inset 0 0 20px #ff00ff; }
@@ -172,6 +187,22 @@
             animation: fadeIn 1s ease-out;
         }
 
+        @-webkit-keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @-moz-keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @-o-keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @-ms-keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
