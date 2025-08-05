@@ -1,0 +1,6 @@
+/* For older browsers to recognize an html 5 tag */
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
