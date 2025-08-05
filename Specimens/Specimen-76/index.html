@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player from RSS Feed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main application container -->
+    <div class="bg-gray-800 text-white p-8 rounded-xl shadow-lg w-full max-w-lg text-center">
+        <h1 class="text-3xl font-bold mb-4">RSS Podcast Player</h1>
+        <p id="status-message" class="mb-4 text-gray-400">Loading audio from the RSS feed...</p>
+
+        <!-- Audio Player element with controls -->
+        <audio id="backgroundMusic" controls class="w-full mb-4 rounded-lg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script>
+        // Use a self-invoking async function to handle the async operations
+        (async function() {
+            // Define the RSS feed URL
+            const rssUrl = "https://feeds.megaphone.fm/ADV9362943796";
+            const statusMessage = document.getElementById('status-message');
+            const audioPlayer = document.getElementById('backgroundMusic');
+
+            /**
+             * Fetches an RSS feed, parses it, and finds the first audio enclosure URL.
+             * @param {string} url The URL of the RSS feed.
+             * @returns {Promise<string|null>} A promise that resolves with the audio URL or null if not found.
+             */
+            async function getAudioUrlFromRss(url) {
+                try {
+                    // Fetch the RSS feed content
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch RSS feed: ${response.statusText}`);
+                    }
+                    const text = await response.text();
+
+                    // Parse the text as an XML document
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(text, "application/xml");
+
+                    // Find the first <enclosure> tag, which contains the audio link
+                    const enclosure = xmlDoc.querySelector('enclosure');
+                    
+                    if (enclosure && enclosure.getAttribute('url')) {
+                        return enclosure.getAttribute('url');
+                    } else {
+                        // Log an error if the enclosure tag is not found
+                        console.error("Could not find an <enclosure> tag in the RSS feed.");
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("Error fetching or parsing RSS feed:", error);
+                    return null;
+                }
+            }
+
+            // Execute the function when the page loads
+            const audioUrl = await getAudioUrlFromRss(rssUrl);
+            
+            if (audioUrl) {
+                // If a URL is found, set the audio player's source
+                audioPlayer.src = audioUrl;
+                statusMessage.textContent = "Audio loaded! Press play to listen.";
+
+                // You could optionally start playing the audio, but modern browsers often
+                // block autoplay, so it's better to let the user press play.
+                // audioPlayer.play();
+            } else {
+                // If no URL is found, display an error message
+                statusMessage.textContent = "Failed to load audio from the RSS feed.";
+                statusMessage.classList.add('text-red-500');
+            }
+        })();
+    </script>
+
+</body>
+</html>
