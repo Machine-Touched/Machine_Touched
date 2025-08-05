@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <base href="https://machine-touched.github.io/Machine_Touched/">
+    <base href="https://machine-touched.github.io/Machine_Touched/">
 
     <meta http-equiv="Content-Security-Policy" content="
         default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
@@ -82,6 +82,28 @@
         }
 
         .robot-cradle h2, .ability-generator-card h2 {
+            color: #00ffff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px #00ffff;
+            text-align: center;
+        }
+        
+        .audio-player-card {
+            background-color: #0d0d1a;
+            border-radius: 20px;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), 0 0 10px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 150px;
+        }
+        
+        .audio-player-card h2 {
             color: #00ffff;
             font-size: 1.8em;
             margin-bottom: 15px;
@@ -200,21 +222,24 @@
 </head>
 <body>
 
-    <audio id="backgroundMusic" loop autoplay>
-        <source src="https://feeds.megaphone.fm/ADV9362943796" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
     <header>
         <span class="nurse-cat" title="Nurse Cat is watching over your robots!">🐱‍💻</span>
         <h1>The Robot Nursery</h1>
         <p>A digital haven for your AI companions from Machine_Touched.</p>
     </header>
 
+    <div class="audio-player-card">
+        <h2>Background Music</h2>
+        <p id="status-message">Loading music from the RSS feed...</p>
+        <audio id="backgroundMusic" controls class="w-full" style="width: 100%; max-width: 400px; margin-top: 15px;">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
     <div class="nursery-grid">
         <div class="robot-cradle">
             <h2>''Machine_Touched'' - Digital Pet Assistant</h2>
-            <iframe src="" class="robot-iframe" frameborder="0" allowfullscreen></iframe>
+            <iframe src="./a/index.html" class="robot-iframe" frameborder="0" allowfullscreen></iframe>
         </div>
 
         <div class="ability-generator-card">
@@ -226,10 +251,10 @@
             </div>
         </div>
 
-        </div>
+    </div>
 
     <footer>
-        
+       
     </footer>
 
     <script>
@@ -257,30 +282,87 @@
             outputDiv.innerHTML = randomAbility; // Use innerHTML to render bold markdown
         }
 
-        // Auto-play music (with a slight delay or user interaction for some browsers)
-        document.addEventListener('DOMContentLoaded', () => {
-            const music = document.getElementById('backgroundMusic');
-            // Try to play immediately, but acknowledge that browsers might require user interaction
-            const playPromise = music.play();
+        /**
+         * Fetches an RSS feed, parses it, and finds the first audio enclosure URL.
+         * @param {string} url The URL of the RSS feed.
+         * @returns {Promise<string|null>} A promise that resolves with the audio URL or null if not found.
+         */
+        async function getAudioUrlFromRss(url) {
+            try {
+                // Fetch the RSS feed content
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch RSS feed: ${response.statusText}`);
+                }
+                const text = await response.text();
 
-            if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    // Autoplay started!
-                }).catch(error => {
-                    // Autoplay was prevented. Show a "play" button or inform user.
-                    console.log("Music autoplay prevented. User interaction might be needed.");
-                    // Optional: Add a subtle UI element for the user to click to play music
-                    // e.g., create a small play icon
-                });
+                // Parse the text as an XML document
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, "application/xml");
+
+                // Find the first <enclosure> tag, which contains the audio link
+                const enclosure = xmlDoc.querySelector('enclosure');
+                
+                if (enclosure && enclosure.getAttribute('url')) {
+                    return enclosure.getAttribute('url');
+                } else {
+                    // Log an error if the enclosure tag is not found
+                    console.error("Could not find an <enclosure> tag in the RSS feed.");
+                    return null;
+                }
+            } catch (error) {
+                console.error("Error fetching or parsing RSS feed:", error);
+                const statusMessage = document.getElementById('status-message');
+                if (statusMessage) {
+                    statusMessage.textContent = "Failed to load audio. Please check the RSS feed URL.";
+                    statusMessage.style.color = '#ff0000'; // Red color for error
+                }
+                return null;
+            }
+        }
+
+        // Event listener to handle the audio fetching and playing when the page is ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            const audioPlayer = document.getElementById('backgroundMusic');
+            const statusMessage = document.getElementById('status-message');
+            const rssUrl = "https://feeds.megaphone.fm/ADV9362943796";
+
+            // Disable the audio player controls until the audio is loaded
+            audioPlayer.controls = false;
+            
+            // Get the audio URL from the RSS feed
+            const audioUrl = await getAudioUrlFromRss(rssUrl);
+            
+            if (audioUrl) {
+                // Set the audio player's source and enable controls
+                audioPlayer.src = audioUrl;
+                audioPlayer.controls = true;
+                statusMessage.textContent = "Audio loaded! Press play to listen.";
+
+                // Try to play immediately, but acknowledge that browsers might require user interaction
+                const playPromise = audioPlayer.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Autoplay started!
+                        console.log("Music autoplay started.");
+                    }).catch(error => {
+                        // Autoplay was prevented. Inform the user.
+                        console.log("Music autoplay prevented. User interaction might be needed.");
+                    });
+                }
+            } else {
+                // If no URL is found, display an error message
+                statusMessage.textContent = "Failed to load audio from the RSS feed.";
+                statusMessage.style.color = '#ff0000'; // Red color for error
             }
 
-            // Optional: Nurse cat purr/meow on click
+            // Remove the non-functional nurse cat audio logic
             const nurseCat = document.querySelector('.nurse-cat');
             nurseCat.addEventListener('click', () => {
-                const sounds = ['meow.mp3', 'purr.mp3']; // You'd need these audio files
-                const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
-                const audio = new Audio(`https://www.machinetouched.w3spaces.com/audio/${randomSound}`); // Assuming you put sounds in an 'audio' folder
-                audio.play();
+                // You can add a different sound here if you have a direct URL for it,
+                // or just let the animation run without sound.
+                console.log("Nurse cat animation triggered!");
             });
         });
     </script>
