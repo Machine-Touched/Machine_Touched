@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page with Five Frames</title>
+    <style>
+        iframe {
+            border: 1px solid green;
+            margin: 5px;
+            padding: 5px;
+            width: 300px;
+            height: 120px;
+            display: block; /* Makes each iframe appear on its own line */
+        }
+    </style>
+</head>
+<body>
+    <h1>My Main Page - Showing 5 Instances</h1>
+
+    <p>Here are five different instances of content loaded from the <strong>same HTML file</strong>:</p>
+
+    <iframe src="my-reusable-content.html"></iframe>
+    <iframe src="my-reusable-content.html"></iframe>
+    <iframe src="my-reusable-content.html"></iframe>
+    <iframe src="my-reusable-content.html"></iframe>
+    <iframe src="my-reusable-content.html"></iframe>
+
+    <p>As you can see, each iframe independently loads and displays the content from `my-reusable-content.html`.</p>
+
+</body>
+</html>
