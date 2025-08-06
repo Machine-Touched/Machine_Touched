@@ -1,0 +1,86 @@
+ body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+}
+
+.calculator {
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    overflow: hidden; /* Ensures display corners are rounded */
+    width: 300px; /* Fixed width for the calculator */
+    background-color: #333; /* Dark background for the calculator body */
+}
+
+.calculator-display {
+    width: calc(100% - 40px); /* Adjust for padding */
+    padding: 20px;
+    background-color: #222;
+    color: #fff;
+    font-size: 2.5em;
+    text-align: right;
+    border: none;
+    outline: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.calculator-keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns, equal width */
+    grid-gap: 1px; /* Small gap between buttons */
+    background-color: #444; /* Background for the grid itself */
+    padding: 1px; /* Creates the grid gap visual effect */
+}
+
+.calculator-keys button {
+    height: 60px;
+    background-color: #666; /* Default button color */
+    color: #fff;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 0; /* Remove default border-radius */
+}
+
+.calculator-keys button:hover {
+    background-color: #777;
+}
+
+.key-operator {
+    background-color: #f1a33c; /* Orange for operators */
+}
+
+.key-operator:hover {
+    background-color: #ffb75d;
+}
+
+.key-equal {
+    background-color: #28a745; /* Green for equals */
+    grid-column: span 2; /* Make equals button span 2 columns */
+}
+
+.key-equal:hover {
+    background-color: #31c456;
+}
+
+.key-clear {
+    background-color: #d9534f; /* Red for clear */
+}
+
+.key-clear:hover {
+    background-color: #e36a66;
+}
+
+/* Optional: Make decimal button consistent with others */
+.key-decimal {
+    background-color: #666;
+}
+.key-decimal:hover {
+    background-color: #777;
+}
