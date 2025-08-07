@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPROM Awakening</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a2e; /* Dark background for tech feel */
+            overflow: hidden;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            color: #00ff41;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #00ff41;
+            text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            letter-spacing: 3px;
+        }
+
+        .eprom-container {
+            position: relative;
+            width: 300px; /* Base width for the EPROM */
+            height: 200px; /* Base height */
+            transform: scale(1); /* Initial scale */
+            transition: transform 0.5s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* EPROM Body */
+        .eprom-body {
+            position: relative;
+            width: 250px;
+            height: 120px;
+            background: linear-gradient(145deg, #333, #555, #333);
+            border: 2px solid #222;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* EPROM Quartz Window */
+        .eprom-window {
+            position: absolute;
+            width: 80px;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00ff41;
+            border-radius: 5px;
+            box-shadow: 0 0 15px #00ff41, inset 0 0 5px #00ff41;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            animation: glow 2s infinite alternate ease-in-out; /* Pulsating glow */
+        }
+
+        .eprom-window::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 65, 0.5) 0%, transparent 70%);
+            animation: inner-glow 2s infinite alternate ease-in-out;
+        }
+
+        /* Internal chip details */
+        .eprom-window::after {
+            content: '01010101'; /* Binary data representation */
+            position: absolute;
+            color: rgba(0, 255, 65, 0.7);
+            font-size: 0.7em;
+            animation: data-scroll 5s linear infinite; /* Scrolling data */
+            white-space: nowrap;
+        }
+
+        /* EPROM Pins */
+        .eprom-pins {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .pin-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;
+        }
+
+        .pin {
+            width: 15px;
+            height: 3px;
+            background-color: #888;
+            border-radius: 2px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            margin: 0 5px;
+            animation: pin-pulse 1.5s infinite alternate; /* Subtle pin activity */
+        }
+
+        .pin:nth-child(even) {
+            animation-delay: 0.2s; /* Stagger animation */
+        }
+
+        /* Activity Indicators / LEDs */
+        .activity-indicator {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ff0040; /* Red for warning/activity */
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040;
+            opacity: 0;
+            animation: activity-blink 1s infinite alternate;
+        }
+
+        .indicator-top-left { top: 10px; left: 10px; }
+        .indicator-top-right { top: 10px; right: 10px; }
+        .indicator-bottom-left { bottom: 10px; left: 10px; }
+        .indicator-bottom-right { bottom: 10px; right: 10px; }
+
+        /* Data lines/streams */
+        .data-stream {
+            position: absolute;
+            width: 2px;
+            height: 0px; /* Starts hidden */
+            background: linear-gradient(to bottom, transparent, #00ffff, transparent);
+            opacity: 0;
+            animation: data-flow 3s linear infinite;
+        }
+
+        .stream-1 { left: 40px; top: 0; animation-delay: 0.5s; }
+        .stream-2 { right: 40px; bottom: 0; animation-delay: 1.5s; transform: rotate(180deg); }
+
+
+        /* Keyframe Animations */
+        @keyframes glow {
+            0% { box-shadow: 0 0 15px #00ff41, inset 0 0 5px #00ff41; }
+            100% { box-shadow: 0 0 25px #00ff41, 0 0 40px #00ff41, inset 0 0 10px #00ff41; }
+        }
+
+        @keyframes inner-glow {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        @keyframes data-scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes pin-pulse {
+            0% { background-color: #888; }
+            100% { background-color: #fff; box-shadow: 0 0 8px #00ffff; }
+        }
+
+        @keyframes activity-blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes data-flow {
+            0% { height: 0; opacity: 0; transform: translateY(0); }
+            20% { height: 50px; opacity: 1; }
+            80% { height: 50px; opacity: 1; }
+            100% { height: 0; opacity: 0; transform: translateY(100px); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            .eprom-container {
+                width: 250px;
+                height: 180px;
+            }
+            .eprom-body {
+                width: 200px;
+                height: 100px;
+            }
+            .eprom-window {
+                width: 70px;
+                height: 25px;
+            }
+            .pin {
+                width: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>EPROM: Awakening</h1>
+    <div class="eprom-container">
+        <div class="eprom-body">
+            <div class="eprom-window"></div>
+            <!-- Activity Indicators -->
+            <div class="activity-indicator indicator-top-left"></div>
+            <div class="activity-indicator indicator-top-right"></div>
+            <div class="activity-indicator indicator-bottom-left"></div>
+            <div class="activity-indicator indicator-bottom-right"></div>
+
+            <!-- Data Streams -->
+            <div class="data-stream stream-1"></div>
+            <div class="data-stream stream-2"></div>
+        </div>
+        <div class="eprom-pins">
+            <div class="pin-side left-pins">
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+            </div>
+            <div class="pin-side right-pins">
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+                <div class="pin"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
