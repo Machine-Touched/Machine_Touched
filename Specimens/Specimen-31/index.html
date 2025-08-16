@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Machine Touched (Laboratories)</title>
+  <style>
+    body {
+      background: #0b0b0b;
+      color: #d4d4d4;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    h1 {
+      color: #9acd32;
+      text-shadow: 0 0 8px #228b22;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 0.25rem 0;
+      cursor: pointer;
+    }
+    li:hover {
+      color: #00ffcc;
+    }
+    .dossier {
+      margin-left: 1.5rem;
+      padding: 0.5rem;
+      border-left: 2px solid #555;
+      display: none;
+    }
+    .highlight {
+      color: #ff4444;
+      font-weight: bold;
+      text-shadow: 0 0 6px #ff0000;
+    }
+    .status {
+      margin-top: 2rem;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Machine Touched (Laboratories)</h1>
+  <ul>
+    <!-- Specimens 1–26 -->
+    <li>Specimen(1)</li>
+    <li>Specimen(2)</li>
+    <li>Specimen(3)</li>
+    <li>Specimen(4)</li>
+    <li>Specimen(5)</li>
+    <li>Specimen(6)</li>
+    <li>Specimen(7)</li>
+    <li>Specimen(8)</li>
+    <li>Specimen(9)</li>
+    <li>Specimen(10)</li>
+    <li>Specimen(11)</li>
+    <li>Specimen(12)</li>
+    <li>Specimen(13)</li>
+    <li>Specimen(14)</li>
+    <li>Specimen(15)</li>
+    <li>Specimen(16)</li>
+    <li>Specimen(17)</li>
+    <li>Specimen(18)</li>
+    <li>Specimen(19)</li>
+    <li>Specimen(20)</li>
+    <li>Specimen(21)</li>
+    <li>Specimen(22)</li>
+    <li>Specimen(23)</li>
+    <li>Specimen(24)</li>
+    <li>Specimen(25)</li>
+    <li>Specimen(26)</li>
+
+    <!-- Special Specimen 27 -->
+    <li id="spec27" class="highlight">Specimen(27) — [ACTIVE DOSSIER]</li>
+    <div id="spec27-dossier" class="dossier">
+      <p><strong>Codename:</strong> The Garden Louse</p>
+      <p><strong>Status:</strong> Incubating — signal interference detected.</p>
+      <p><strong>Notes:</strong> Subject displays anomalous resonance with <em>ja and the jar</em> protocol. Exhibits faint luminescence under EM-scan. Handle with caution.</p>
+    </div>
+
+    <!-- Continue specimens 28–110 -->
+    <li>Specimen(28)</li>
+    <li>Specimen(29)</li>
+    <li>Specimen(30)</li>
+    <!-- … continue pattern … -->
+    <li>Specimen(110)</li>
+  </ul>
+
+  <div class="status">
+    <p id="system-status">System Status: ASSEMBLING | Machine_Touch(Laboratories): Protocols Implementing</p>
+    <p id="load-time"></p>
+  </div>
+
+  <script>
+    // Toggle dossier visibility for Specimen 27
+    document.getElementById("spec27").onclick = () => {
+      const dossier = document.getElementById("spec27-dossier");
+      dossier.style.display = dossier.style.display === "block" ? "none" : "block";
+    };
+
+    // Display load time
+    document.getElementById("load-time").textContent = "Main Page Loaded At: " + new Date().toLocaleString();
+  </script>
+</body>
+</html>
