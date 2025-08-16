@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Machine_Touched — Dual Iframe Wrapper (BG + FG)</title>
+  <meta name="description" content="One page. Two frames. Background world and foreground scout." />
+  <style>
+    :root{
+      --neon: #00ff41;
+      --rasta-red: #d72638;
+      --rasta-gold: #ffcc33;
+      --rasta-green: #2ecc71;
+      --bg-opacity: 1;
+      --bg-blur: 0px;
+      --fg-opacity: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0; background:#0b0f12; color:#e6ffe6;
+      font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      overflow: hidden;
+    }
+
+    /* BACKGROUND FRAME (full-bleed) */
+    #bgFrame{
+      position: fixed; inset: 0;
+      width: 100vw; height: 100vh; border: 0;
+      z-index: 0; pointer-events: none; /* clicks pass through to FG */
+      opacity: var(--bg-opacity);
+      filter: blur(var(--bg-blur));
+      background: #000;
+    }
+
+    /* FOREGROUND WINDOW */
+    .fg-window{
+      position: fixed; top: 6rem; left: 6rem; width: min(90vw, 920px); height: min(75vh, 560px);
+      display: flex; flex-direction: column;
+      z-index: 3; border-radius: 18px; overflow: hidden;
+      border: 1px solid rgba(0,255,65,0.35);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 24px rgba(0,255,65,0.25);
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
+    }
+    .fg-window.fullscreen{ top:0; left:0; width:100vw; height:100vh; border-radius:0; }
+
+    .titlebar{
+      height: 40px; display:flex; align-items:center; gap:.5rem; padding:0 .75rem;
+      cursor: move; user-select:none;
+      background: linear-gradient(90deg, var(--rasta-red), var(--rasta-gold), var(--rasta-green));
+      color:#111; font-weight:700; letter-spacing:.02em;
+      border-bottom: 1px solid rgba(0,0,0,0.35);
+    }
+    .titlebar .spacer{ flex:1; }
+
+    .btn{
+      border:1px solid rgba(0,0,0,0.25); background:#111; color:#e6ffe6;
+      padding:.35rem .6rem; border-radius:10px; cursor:pointer; font-size:.8rem;
+      transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 6px 14px rgba(0,0,0,.35); }
+    .btn.ghost{ background: rgba(0,255,65,.1); border-color: rgba(0,255,65,.35); }
+
+    #fgFrame{ flex:1; border:0; width:100%; height:100%; opacity: var(--fg-opacity); background:#000; }
+
+    /* HUD (controls) */
+    .hud{
+      position: fixed; top: 10px; left: 10px; z-index: 4; width: min(92vw, 780px);
+      display: grid; grid-template-columns: 1fr auto; gap:.5rem 1rem; align-items:center;
+      padding: .75rem; border-radius: 14px; border:1px solid rgba(0,255,65,0.25);
+      background: rgba(4,8,10,0.7); box-shadow: 0 10px 30px rgba(0,0,0,.45);
+      backdrop-filter: blur(8px);
+    }
+    .hud label{ font-size:.8rem; opacity:.85; }
+    .hud input[type="url"]{
+      width:100%; padding:.55rem .65rem; border-radius:10px; border:1px solid rgba(0,255,65,.25);
+      background:#0c1214; color:#e6ffe6; font-family:inherit;
+    }
+    .hud .row{ display: contents; }
+    .hud .controls{ display:flex; gap:.5rem; flex-wrap:wrap; }
+    .hud .range{ display:flex; align-items:center; gap:.5rem; }
+    .hud input[type="range"]{ width: 120px; }
+
+    /* Tiny status dot */
+    .dot{ width:10px; height:10px; border-radius:50%; background: var(--neon); box-shadow:0 0 10px var(--neon); display:inline-block; }
+
+    /* Helpful message footer */
+    .footer{
+      position: fixed; right: 10px; bottom: 10px; z-index: 2;
+      font-size:.8rem; opacity:.7; background: rgba(0,0,0,.45);
+      padding:.3rem .6rem; border:1px solid rgba(0,255,65,.25); border-radius:10px;
+    }
+
+    /* Scrollbar quiet */
+    ::-webkit-scrollbar{ width:10px; height:10px; }
+    ::-webkit-scrollbar-thumb{ background: rgba(0,255,65,.25); border-radius:10px; }
+    ::-webkit-scrollbar-track{ background: transparent; }
+  </style>
+</head>
+<body>
+  <!-- Background iframe (non-interactive, full page) -->
+  <iframe id="bgFrame" title="Background Frame" allowfullscreen loading="lazy" referrerpolicy="no-referrer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+
+  <!-- Foreground draggable window with an iframe inside -->
+  <section class="fg-window" id="fgWindow" aria-label="Foreground window">
+    <header class="titlebar" id="dragBar">
+      <span class="dot" aria-hidden="true"></span>
+      <span id="title">Foreground Frame</span>
+      <div class="spacer"></div>
+      <button class="btn" id="toggleFullscreen" title="Toggle Foreground Fullscreen (F)">Fullscreen</button>
+      <button class="btn ghost" id="toggleGhost" title="Click-through Foreground (E)">Ghost</button>
+    </header>
+    <iframe id="fgFrame" title="Foreground Frame" allowfullscreen allowtransparency="true" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-same-origin allow-scripts allow-forms allow-popups"></iframe>
+  </section>
+
+  <!-- Controls HUD -->
+  <form class="hud" id="hud" onsubmit="return false;">
+    <div class="row">
+      <label for="bgUrl">Background URL</label>
+      <div class="controls">
+        <input type="url" id="bgUrl" placeholder="https://example.com/background.html" />
+        <button class="btn" id="loadBg">Load BG</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="fgUrl">Foreground URL</label>
+      <div class="controls">
+        <input type="url" id="fgUrl" placeholder="https://example.com/foreground.html" />
+        <button class="btn" id="loadFg">Load FG</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <label>Quick Ops</label>
+      <div class="controls">
+        <button class="btn" id="swap">Swap BG⇄FG</button>
+        <a class="btn" id="openBg" target="_blank" rel="noopener">Open BG</a>
+        <a class="btn" id="openFg" target="_blank" rel="noopener">Open FG</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <label>Visuals</label>
+      <div class="controls">
+        <div class="range"><span>BG blur</span><input type="range" id="bgBlur" min="0" max="16" step="1" value="0"><span>px</span></div>
+        <div class="range"><span>BG opacity</span><input type="range" id="bgOpacity" min="0" max="1" step="0.05" value="1"></div>
+        <div class="range"><span>FG opacity</span><input type="range" id="fgOpacity" min="0.2" max="1" step="0.05" value="1"></div>
+      </div>
+    </div>
+  </form>
+
+  <div class="footer">Tip: add <code>?bg=URL&fg=URL</code> to this page to auto-load. Hotkeys: <kbd>F</kbd> fullscreen, <kbd>E</kbd> ghost (click-through).</div>
+
+  <script>
+    // ——— Malazan-grade helper: get params safely ———
+    const qs = new URLSearchParams(location.search);
+    const $ = (sel) => document.querySelector(sel);
+
+    const defaults = {
+      bg: qs.get('bg') || 'https://machinetouched.w3spaces.com/garden.html',
+      fg: qs.get('fg') || 'https://machinetouched.w3spaces.com/louse.html'
+    };
+
+    const bgFrame = $('#bgFrame');
+    const fgFrame = $('#fgFrame');
+    const fgWindow = $('#fgWindow');
+    const dragBar = $('#dragBar');
+
+    const bgUrl = $('#bgUrl');
+    const fgUrl = $('#fgUrl');
+
+    // Load defaults
+    function loadInitial(){
+      bgUrl.value = defaults.bg; fgUrl.value = defaults.fg;
+      bgFrame.src = defaults.bg; fgFrame.src = defaults.fg;
+      $('#openBg').href = defaults.bg; $('#openFg').href = defaults.fg;
+    }
+
+    // HUD buttons
+    $('#loadBg').addEventListener('click', () => {
+      if(bgUrl.value) { bgFrame.src = bgUrl.value; $('#openBg').href = bgUrl.value; }
+    });
+    $('#loadFg').addEventListener('click', () => {
+      if(fgUrl.value) { fgFrame.src = fgUrl.value; $('#openFg').href = fgUrl.value; }
+    });
+    $('#swap').addEventListener('click', () => {
+      const a = bgFrame.src; const b = fgFrame.src;
+      bgFrame.src = b; fgFrame.src = a;
+      bgUrl.value = bgFrame.src; fgUrl.value = fgFrame.src;
+      $('#openBg').href = bgFrame.src; $('#openFg').href = fgFrame.src;
+    });
+
+    // Visual sliders
+    $('#bgBlur').addEventListener('input', (e)=>{
+      document.documentElement.style.setProperty('--bg-blur', e.target.value + 'px');
+    });
+    $('#bgOpacity').addEventListener('input', (e)=>{
+      document.documentElement.style.setProperty('--bg-opacity', e.target.value);
+    });
+    $('#fgOpacity').addEventListener('input', (e)=>{
+      document.documentElement.style.setProperty('--fg-opacity', e.target.value);
+    });
+
+    // Ghost mode (click-through FG)
+    const toggleGhostBtn = $('#toggleGhost');
+    let ghost = false;
+    function setGhost(state){
+      ghost = state; fgFrame.style.pointerEvents = ghost ? 'none' : 'auto';
+      toggleGhostBtn.textContent = ghost ? 'Solid' : 'Ghost';
+      toggleGhostBtn.classList.toggle('ghost', ghost);
+      $('#title').textContent = ghost ? 'Foreground (Click-through)' : 'Foreground Frame';
+    }
+    toggleGhostBtn.addEventListener('click', ()=> setGhost(!ghost));
+
+    // Fullscreen FG
+    const toggleFullscreenBtn = $('#toggleFullscreen');
+    let full = false;
+    function setFull(state){
+      full = state; fgWindow.classList.toggle('fullscreen', full);
+      toggleFullscreenBtn.textContent = full ? 'Windowed' : 'Fullscreen';
+    }
+    toggleFullscreenBtn.addEventListener('click', ()=> setFull(!full));
+
+    // Keyboard shortcuts
+    window.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase() === 'f'){ setFull(!full); }
+      if(e.key.toLowerCase() === 'e'){ setGhost(!ghost); }
+    });
+
+    // Drag logic (simple, soldier-proof)
+    (function makeDraggable(){
+      let dragging = false, offX = 0, offY = 0;
+      dragBar.addEventListener('mousedown', (e)=>{
+        dragging = true;
+        const rect = fgWindow.getBoundingClientRect();
+        offX = e.clientX - rect.left; offY = e.clientY - rect.top;
+        document.body.style.userSelect = 'none';
+      });
+      window.addEventListener('mousemove', (e)=>{
+        if(!dragging || full) return;
+        let x = e.clientX - offX; let y = e.clientY - offY;
+        const maxX = window.innerWidth - fgWindow.offsetWidth;
+        const maxY = window.innerHeight - fgWindow.offsetHeight;
+        x = Math.max(0, Math.min(maxX, x));
+        y = Math.max(0, Math.min(maxY, y));
+        fgWindow.style.left = x + 'px'; fgWindow.style.top = y + 'px';
+      });
+      window.addEventListener('mouseup', ()=>{ dragging = false; document.body.style.userSelect = ''; });
+      window.addEventListener('resize', ()=>{ /* keep within bounds */
+        const rect = fgWindow.getBoundingClientRect();
+        const maxX = window.innerWidth - fgWindow.offsetWidth;
+        const maxY = window.innerHeight - fgWindow.offsetHeight;
+        if(rect.left > maxX) fgWindow.style.left = Math.max(0, maxX) + 'px';
+        if(rect.top > maxY) fgWindow.style.top = Math.max(0, maxY) + 'px';
+      });
+    })();
+
+    // Init
+    loadInitial();
+  </script>
+
+  <!--
+    NOTE on louseVariants (inside your louse.html):
+    Update that file directly — you can't patch arrays across cross-origin iframes safely.
+
+    Example on-theme expansion including some smileys:
+    const louseVariants = ['🦠','🐛','🔬','⚡','🤖','📡','🧬','⚙️','🌿','💡','🌀','👾','🫥','👁️','🌐','🙂','😶\u200d🌫️','🫡','😼'];
+  -->
+</body>
+</html>
