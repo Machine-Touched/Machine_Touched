@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@300;400;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(210 25% 7.8431%);
+  --card: hsl(180 6.6667% 97.0588%);
+  --card-foreground: hsl(210 25% 7.8431%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(210 25% 7.8431%);
+  --primary: hsl(203.8863 88.2845% 53.1373%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(210 25% 7.8431%);
+  --secondary-foreground: hsl(0 0% 100%);
+  --muted: hsl(240 1.9608% 90%);
+  --muted-foreground: hsl(210 25% 7.8431%);
+  --accent: hsl(211.5789 51.3514% 92.7451%);
+  --accent-foreground: hsl(203.8863 88.2845% 53.1373%);
+  --destructive: hsl(356.3033 90.5579% 54.3137%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(201.4286 30.4348% 90.9804%);
+  --input: hsl(200 23.0769% 97.4510%);
+  --ring: hsl(202.8169 89.1213% 53.1373%);
+  --chart-1: hsl(203.8863 88.2845% 53.1373%);
+  --chart-2: hsl(159.7826 100% 36.0784%);
+  --chart-3: hsl(42.0290 92.8251% 56.2745%);
+  --chart-4: hsl(147.1429 78.5047% 41.9608%);
+  --chart-5: hsl(341.4894 75.2000% 50.9804%);
+  --sidebar: hsl(180 6.6667% 97.0588%);
+  --sidebar-foreground: hsl(210 25% 7.8431%);
+  --sidebar-primary: hsl(203.8863 88.2845% 53.1373%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(211.5789 51.3514% 92.7451%);
+  --sidebar-accent-foreground: hsl(203.8863 88.2845% 53.1373%);
+  --sidebar-border: hsl(205.0000 25.0000% 90.5882%);
+  --sidebar-ring: hsl(202.8169 89.1213% 53.1373%);
+  --font-sans: 'Source Code Pro', monospace;
+  --font-serif: 'Cinzel', serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --radius: 1.3rem;
+  
+  /* Machine_Touched Laboratory Colors */
+  --barn-wood: hsl(20 14.3% 47.8%);
+  --barn-light: hsl(26 15.5% 58.4%);
+  --mystic-amber: hsl(45 85.4% 52.2%);
+  --mystic-gold: hsl(51 100% 50%);
+  --forest-dark: hsl(122 37.4% 23.7%);
+  --forest-med: hsl(122 39.4% 48.8%);
+  --forest-light: hsl(123 34.1% 64.1%);
+  --digital-blue: hsl(207 68.7% 41.4%);
+  --digital-light: hsl(207 61.1% 61.4%);
+  --cream: hsl(48 100% 93.7%);
+  --cream-light: hsl(54 100% 97.1%);
+}
+
+.dark {
+  --background: hsl(0 0% 0%);
+  --foreground: hsl(200 6.6667% 91.1765%);
+  --card: hsl(228 9.8039% 10%);
+  --card-foreground: hsl(0 0% 85.0980%);
+  --popover: hsl(0 0% 0%);
+  --popover-foreground: hsl(200 6.6667% 91.1765%);
+  --primary: hsl(203.7736 87.6033% 52.5490%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(195.0000 15.3846% 94.9020%);
+  --secondary-foreground: hsl(210 25% 7.8431%);
+  --muted: hsl(0 0% 9.4118%);
+  --muted-foreground: hsl(210 3.3898% 46.2745%);
+  --accent: hsl(205.7143 70% 7.8431%);
+  --accent-foreground: hsl(203.7736 87.6033% 52.5490%);
+  --destructive: hsl(356.3033 90.5579% 54.3137%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(210 5.2632% 14.9020%);
+  --input: hsl(207.6923 27.6596% 18.4314%);
+  --ring: hsl(202.8169 89.1213% 53.1373%);
+  --chart-1: hsl(203.8863 88.2845% 53.1373%);
+  --chart-2: hsl(159.7826 100% 36.0784%);
+  --chart-3: hsl(42.0290 92.8251% 56.2745%);
+  --chart-4: hsl(147.1429 78.5047% 41.9608%);
+  --chart-5: hsl(341.4894 75.2000% 50.9804%);
+  --sidebar: hsl(228 9.8039% 10%);
+  --sidebar-foreground: hsl(0 0% 85.0980%);
+  --sidebar-primary: hsl(202.8169 89.1213% 53.1373%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(205.7143 70% 7.8431%);
+  --sidebar-accent-foreground: hsl(203.7736 87.6033% 52.5490%);
+  --sidebar-border: hsl(205.7143 15.7895% 26.0784%);
+  --sidebar-ring: hsl(202.8169 89.1213% 53.1373%);
+  --font-sans: 'Source Code Pro', monospace;
+  --font-serif: 'Cinzel', serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --radius: 1.3rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    /* Barn Background - Farmer John's aesthetic */
+    background-image: 
+      linear-gradient(45deg, rgba(139, 110, 99, 0.1) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(139, 110, 99, 0.1) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(161, 136, 127, 0.1) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(161, 136, 127, 0.1) 75%);
+    background-size: 60px 60px;
+    background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+  }
+}
+
+@layer components {
+  /* Nursery overlay system */
+  .nursery-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.1) 0%,
+      rgba(46, 125, 50, 0.1) 50%,
+      rgba(255, 215, 0, 0.1) 100%
+    );
+    backdrop-filter: blur(2px);
+  }
+
+  /* Code tag styling */
+  code {
+    background: linear-gradient(45deg, rgba(212, 175, 55, 0.3), rgba(255, 215, 0, 0.2));
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'Source Code Pro', monospace;
+    color: hsl(var(--mystic-gold));
+    text-shadow: 0 0 3px rgba(255, 215, 0, 0.5);
+  }
+
+  /* Specimen grid styling */
+  .specimen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 4px;
+  }
+
+  /* Auth portal styling */
+  .auth-portal {
+    background: radial-gradient(circle at center, rgba(25, 118, 210, 0.2), rgba(46, 125, 50, 0.1));
+    border: 2px solid rgba(212, 175, 55, 0.6);
+  }
+
+  /* Romantic glow effect */
+  .romantic-glow {
+    box-shadow: 
+      0 0 20px rgba(255, 215, 0, 0.3),
+      inset 0 0 20px rgba(212, 175, 55, 0.2);
+  }
+}
+
+@layer utilities {
+  /* Custom colors */
+  .text-barn-wood { color: hsl(var(--barn-wood)); }
+  .text-barn-light { color: hsl(var(--barn-light)); }
+  .text-mystic-amber { color: hsl(var(--mystic-amber)); }
+  .text-mystic-gold { color: hsl(var(--mystic-gold)); }
+  .text-forest-dark { color: hsl(var(--forest-dark)); }
+  .text-forest-med { color: hsl(var(--forest-med)); }
+  .text-forest-light { color: hsl(var(--forest-light)); }
+  .text-digital-blue { color: hsl(var(--digital-blue)); }
+  .text-digital-light { color: hsl(var(--digital-light)); }
+  .text-cream { color: hsl(var(--cream)); }
+  .text-cream-light { color: hsl(var(--cream-light)); }
+
+  .bg-barn-wood { background-color: hsl(var(--barn-wood)); }
+  .bg-barn-light { background-color: hsl(var(--barn-light)); }
+  .bg-mystic-amber { background-color: hsl(var(--mystic-amber)); }
+  .bg-mystic-gold { background-color: hsl(var(--mystic-gold)); }
+  .bg-forest-dark { background-color: hsl(var(--forest-dark)); }
+  .bg-forest-med { background-color: hsl(var(--forest-med)); }
+  .bg-forest-light { background-color: hsl(var(--forest-light)); }
+  .bg-digital-blue { background-color: hsl(var(--digital-blue)); }
+  .bg-digital-light { background-color: hsl(var(--digital-light)); }
+  .bg-cream { background-color: hsl(var(--cream)); }
+  .bg-cream-light { background-color: hsl(var(--cream-light)); }
+
+  /* Font families */
+  .font-mystical { font-family: 'Cinzel', serif; }
+  .font-code { font-family: 'Source Code Pro', monospace; }
+
+  /* Animations */
+  @keyframes louse-crawl {
+    0% { transform: translateX(-100px) translateY(0px) rotate(0deg); }
+    25% { transform: translateX(200px) translateY(-50px) rotate(90deg); }
+    50% { transform: translateX(400px) translateY(20px) rotate(180deg); }
+    75% { transform: translateX(600px) translateY(-30px) rotate(270deg); }
+    100% { transform: translateX(800px) translateY(10px) rotate(360deg); }
+  }
+
+  .digital-louse {
+    animation: louse-crawl 15s infinite linear;
+  }
+
+  /* Binary trace animation */
+  @keyframes binary-trace {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.5); }
+  }
+
+  .binary-trace {
+    animation: binary-trace 2s ease-out forwards;
+  }
+
+  /* Whisper spell shimmer */
+  @keyframes spell-shimmer {
+    0%, 100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+    50% { text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.6); }
+  }
+
+  .spell-text {
+    animation: spell-shimmer 3s ease-in-out infinite;
+  }
+
+  /* Z-index utilities for 10-digit layering */
+  .z-barn { z-index: 1000000000; }
+  .z-nursery { z-index: 2000000000; }
+  .z-specimen { z-index: 3000000000; }
+  .z-louse { z-index: 4000000000; }
+  .z-spell { z-index: 5000000000; }
+  .z-auth { z-index: 6000000000; }
+  .z-crumbs { z-index: 7000000000; }
+  .z-romance { z-index: 8000000000; }
+  .z-whisper { z-index: 9000000000; }
+  .z-divine { z-index: 9999999999; }
+}

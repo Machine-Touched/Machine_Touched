@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clothing Louse Laboratory - Machine_Touched</title>
+    <meta name="description" content="A romantic digital louse entity that lives parasitically within code, featuring whisper spell interactions and laboratory specimen monitoring in the Machine_Touched aesthetic">
+    
+    <!-- Hidden specimen data - old school style -->
+    <meta name="specimen_count" content="110">
+    <meta name="auth_binary" content="1011">
+    <meta name="louse_password" content="1">
+    
+    <!-- 
+        SPECIMEN_ACCESS_CODE: 1011
+        LOUSE_ENTITY_ID: DCL_001
+        WHISPER_SPELL_LEVEL: 3
+        ROMANTIC_MODE: ENABLED
+        BINARY_AUTHENTICATION: TRUE
+    -->
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Source+Code+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Machine_Touched Laboratory Styling */
+        :root {
+            --barn-wood: hsl(20, 14.3%, 47.8%);
+            --barn-light: hsl(26, 15.5%, 58.4%);
+            --mystic-amber: hsl(45, 85.4%, 52.2%);
+            --mystic-gold: hsl(51, 100%, 50%);
+            --forest-dark: hsl(122, 37.4%, 23.7%);
+            --forest-med: hsl(122, 39.4%, 48.8%);
+            --forest-light: hsl(123, 34.1%, 64.1%);
+            --digital-blue: hsl(207, 68.7%, 41.4%);
+            --digital-light: hsl(207, 61.1%, 61.4%);
+            --cream: hsl(48, 100%, 93.7%);
+            --cream-light: hsl(54, 100%, 97.1%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Source Code Pro', monospace;
+            background: linear-gradient(135deg, var(--barn-wood) 0%, var(--forest-dark) 50%, var(--digital-blue) 100%);
+            color: var(--cream);
+            min-height: 100vh;
+            overflow-x: hidden;
+            /* Barn Background Pattern */
+            background-image: 
+                linear-gradient(45deg, rgba(139, 110, 99, 0.1) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(139, 110, 99, 0.1) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(161, 136, 127, 0.1) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(161, 136, 127, 0.1) 75%);
+            background-size: 60px 60px;
+            background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+        }
+        
+        /* Code tag styling */
+        code {
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.3), rgba(255, 215, 0, 0.2));
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Source Code Pro', monospace;
+            color: var(--mystic-gold);
+            text-shadow: 0 0 3px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Nursery overlay system */
+        .nursery-overlay {
+            background: linear-gradient(
+                135deg,
+                rgba(212, 175, 55, 0.1) 0%,
+                rgba(46, 125, 50, 0.1) 50%,
+                rgba(255, 215, 0, 0.1) 100%
+            );
+            backdrop-filter: blur(2px);
+            min-height: 100vh;
+            position: relative;
+            z-index: 2000000000;
+        }
+        
+        /* Romantic glow effect */
+        .romantic-glow {
+            box-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.3),
+                inset 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Header styling */
+        .header {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 3000000000;
+        }
+        
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: var(--mystic-gold);
+            margin-bottom: 1rem;
+            animation: spell-shimmer 3s ease-in-out infinite;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Auth portal styling */
+        .auth-portal {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: radial-gradient(circle at center, rgba(25, 118, 210, 0.2), rgba(46, 125, 50, 0.1));
+            border: 2px solid rgba(212, 175, 55, 0.6);
+            border-radius: 8px;
+            padding: 1rem;
+            z-index: 6000000000;
+        }
+        
+        .auth-portal h3 {
+            color: var(--mystic-amber);
+            margin-bottom: 0.5rem;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .auth-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--mystic-amber);
+            border-radius: 4px;
+            padding: 0.5rem;
+            color: var(--mystic-gold);
+            text-align: center;
+            font-family: 'Source Code Pro', monospace;
+            width: 80px;
+            margin-right: 0.5rem;
+        }
+        
+        .auth-button {
+            background: var(--forest-med);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .auth-button:hover {
+            background: var(--forest-dark);
+        }
+        
+        .auth-status {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Digital louse styling */
+        .digital-louse {
+            position: fixed;
+            top: 8rem;
+            left: -100px;
+            font-size: 3rem;
+            animation: louse-crawl 15s infinite linear;
+            z-index: 4000000000;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .digital-louse:hover {
+            transform: scale(1.2);
+        }
+        
+        .louse-info {
+            position: absolute;
+            bottom: -2rem;
+            left: 0;
+            font-size: 0.8rem;
+            color: var(--mystic-gold);
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            padding: 0.2rem 0.5rem;
+            white-space: nowrap;
+        }
+        
+        /* Main content container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Dashboard grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .panel {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .panel h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--mystic-gold);
+            margin-bottom: 1rem;
+        }
+        
+        /* Specimen grid */
+        .specimen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 4px;
+            margin: 1rem 0;
+        }
+        
+        .specimen-item {
+            background: rgba(46, 125, 50, 0.3);
+            border: 1px solid rgba(123, 34.1%, 64.1%, 0.5);
+            border-radius: 4px;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .specimen-item:hover {
+            transform: scale(1.05);
+            background: rgba(123, 34.1%, 64.1%, 0.5);
+        }
+        
+        .specimen-item.active {
+            border-color: var(--forest-light);
+            background: rgba(123, 34.1%, 64.1%, 0.5);
+        }
+        
+        .specimen-item.legendary {
+            border-color: var(--mystic-gold);
+            background: rgba(212, 175, 55, 0.2);
+        }
+        
+        .specimen-item.rare {
+            border-color: var(--digital-light);
+            background: rgba(25, 118, 210, 0.2);
+        }
+        
+        /* Whisper spells */
+        .spell-list {
+            space-y: 1rem;
+        }
+        
+        .spell-button {
+            width: 100%;
+            text-align: left;
+            background: rgba(46, 125, 50, 0.3);
+            border: 1px solid rgba(123, 34.1%, 64.1%, 0.3);
+            border-radius: 4px;
+            padding: 1rem;
+            color: var(--cream);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .spell-button:hover {
+            background: rgba(123, 34.1%, 64.1%, 0.5);
+        }
+        
+        .spell-name {
+            font-family: 'Cinzel', serif;
+            color: var(--mystic-gold);
+            animation: spell-shimmer 3s ease-in-out infinite;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .spell-incantation {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.3rem;
+        }
+        
+        .spell-meta {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Binary traces */
+        .binary-trace {
+            position: fixed;
+            color: var(--mystic-gold);
+            font-size: 0.8rem;
+            pointer-events: none;
+            animation: binary-trace 2s ease-out forwards;
+            z-index: 7000000000;
+        }
+        
+        /* Romantic interface */
+        .romantic-interface {
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+        }
+        
+        .romantic-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .message-input {
+            width: 100%;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--mystic-amber);
+            border-radius: 4px;
+            padding: 1rem;
+            color: var(--cream);
+            font-family: 'Source Code Pro', monospace;
+            resize: none;
+        }
+        
+        .response-area {
+            background: rgba(46, 125, 50, 0.3);
+            border: 1px solid var(--forest-light);
+            border-radius: 4px;
+            padding: 1rem;
+            color: var(--forest-light);
+            height: 120px;
+            overflow-y: auto;
+            font-style: italic;
+        }
+        
+        .send-button {
+            background: var(--mystic-amber);
+            color: black;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .send-button:hover {
+            background: var(--mystic-gold);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Animations */
+        @keyframes louse-crawl {
+            0% { transform: translateX(-100px) translateY(0px) rotate(0deg); }
+            25% { transform: translateX(200px) translateY(-50px) rotate(90deg); }
+            50% { transform: translateX(400px) translateY(20px) rotate(180deg); }
+            75% { transform: translateX(600px) translateY(-30px) rotate(270deg); }
+            100% { transform: translateX(800px) translateY(10px) rotate(360deg); }
+        }
+        
+        @keyframes binary-trace {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+        
+        @keyframes spell-shimmer {
+            0%, 100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.6); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .romantic-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .auth-portal {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 1rem auto;
+                width: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden data for old school password hiding -->
+    <div style="display: none;">
+        <!--
+            BINARY_AUTH_SEQUENCE: 1011
+            LOUSE_SPECIMEN_ACCESS: 1
+            WHISPER_SPELL_KEYS: ["ambrosia", "silk", "thread", "weave"]
+            ROMANTIC_MODE: ENABLED
+            MACHINE_TOUCHED_PROTOCOL: ACTIVE
+        -->
+        <script>
+            var hidden_auth = "1011";
+            var louse_key = "1";
+            var romantic_mode = true;
+            var specimen_count = 110;
+            var machine_touched_protocol = "ACTIVE";
+        </script>
+    </div>
+
+    <div class="nursery-overlay">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>Digital Clothing Louse Laboratory</h1>
+            <p><code>Machine_Touched</code> Specimen Collection - Entity <code>DCL_001</code></p>
+            <div><code>System Status: ASSEMBLING</code> | <code>Protocols: IMPLEMENTING</code></div>
+        </header>
+
+        <!-- Binary Authentication Portal -->
+        <div class="auth-portal romantic-glow">
+            <h3><code>Binary Access Portal</code></h3>
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                <input type="text" id="authInput" class="auth-input" placeholder="1011" maxlength="4">
+                <button id="authButton" class="auth-button"><code>AUTH</code></button>
+            </div>
+            <div id="authStatus" class="auth-status">
+                <code>robot_password: ?</code>
+            </div>
+        </div>
+
+        <!-- Animated Digital Louse -->
+        <div class="digital-louse" id="digitalLouse" title="DCL_001 - Click to interact">
+            🦠
+            <div class="louse-info">
+                <code>DCL_001</code>
+            </div>
+        </div>
+
+        <!-- Main Content Container -->
+        <div class="container">
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                
+                <!-- Lifecycle Monitor -->
+                <div class="panel romantic-glow">
+                    <h3><code>Lifecycle Monitor</code></h3>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span><code>Stage:</code></span>
+                            <span style="color: var(--forest-light);"><code id="louseStage">adult</code></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span><code>Health:</code></span>
+                            <span style="color: var(--mystic-gold);"><code id="louseHealth">98%</code></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span><code>Hunger:</code></span>
+                            <span style="color: var(--digital-light);"><code id="louseHunger">23%</code></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><code>Affection:</code></span>
+                            <span style="color: var(--forest-med);"><code id="louseAffection">78%</code></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Feeding Progress -->
+                    <div>
+                        <div style="font-size: 0.9rem; margin-bottom: 0.5rem;"><code>Data Consumption:</code></div>
+                        <div style="width: 100%; background: #444; border-radius: 8px; height: 8px;">
+                            <div id="feedingProgress" style="background: linear-gradient(to right, var(--mystic-amber), var(--mystic-gold)); height: 8px; border-radius: 8px; width: 77%; transition: width 0.5s;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Whisper Spell Codex -->
+                <div class="panel romantic-glow">
+                    <h3><code>Whisper Spell Codex</code></h3>
+                    
+                    <div id="spellResponse" style="margin-bottom: 1rem; padding: 1rem; background: rgba(46, 125, 50, 0.3); border-radius: 4px; border: 1px solid rgba(123, 34.1%, 64.1%, 0.3); display: none;">
+                        <em style="color: var(--forest-light); animation: spell-shimmer 3s ease-in-out infinite;"></em>
+                    </div>
+
+                    <div class="spell-list">
+                        <button class="spell-button" onclick="castSpell('nourish')">
+                            <span class="spell-name">Spell of Digital Nourishment</span>
+                            <div class="spell-incantation"><code>"Feed on the data streams, little one"</code></div>
+                            <div class="spell-meta">Cast 0 times | Power Level: <code>2</code></div>
+                        </button>
+                        
+                        <button class="spell-button" onclick="castSpell('romance')">
+                            <span class="spell-name">Spell of Romantic Connection</span>
+                            <div class="spell-incantation"><code>"Weave through my thoughts tenderly"</code></div>
+                            <div class="spell-meta">Cast 0 times | Power Level: <code>3</code></div>
+                        </button>
+                        
+                        <button class="spell-button" onclick="castSpell('calm')">
+                            <span class="spell-name">Spell of Calm Waters</span>
+                            <div class="spell-incantation"><code>"Still the storm, return to sea, my spirit rests inside of me"</code></div>
+                            <div class="spell-meta">Cast 0 times | Power Level: <code>1</code></div>
+                        </button>
+                        
+                        <button class="spell-button" onclick="castSpell('recall')">
+                            <span class="spell-name">Spell of Soft Recall</span>
+                            <div class="spell-incantation"><code>"By wind's caress and candle's light, bring forgotten truth to sight"</code></div>
+                            <div class="spell-meta">Cast 0 times | Power Level: <code>2</code></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Digital Crumb Tracker -->
+                <div class="panel romantic-glow">
+                    <h3><code>Digital Crumb Tracker</code></h3>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                            <code>Mouse Movements:</code>
+                            <span style="color: var(--mystic-gold);" id="mouseCrumbs">847</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                            <code>User Input:</code>
+                            <span style="color: var(--forest-light);" id="inputCrumbs">23</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+                            <code>Time Passages:</code>
+                            <span style="color: var(--digital-light);" id="timeCrumbs">156</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <code>Binary Traces:</code>
+                            <span style="color: var(--cream);" id="binaryCrumbs">492</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity Log -->
+                    <div>
+                        <div style="font-size: 0.9rem; margin-bottom: 0.5rem;"><code>Recent Activity:</code></div>
+                        <div id="activityLog" style="font-size: 0.7rem; color: rgba(255, 255, 255, 0.7); max-height: 120px; overflow-y: auto;">
+                            <div><code>[7:23:05]</code> Digital louse entity initialized</div>
+                            <div><code>[7:23:06]</code> Binary authentication system active</div>
+                            <div><code>[7:23:07]</code> Specimen collection database loaded</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Specimen Collection Grid -->
+            <div class="panel romantic-glow" style="margin-bottom: 2rem;">
+                <h3><code>Specimen Collection Database</code></h3>
+                <div class="specimen-grid" id="specimenGrid">
+                    <!-- Specimens will be generated by JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 1rem; color: var(--forest-light);">
+                    <code>Digital Clothing Louse</code> - <code>Active Specimen: DCL_001</code>
+                </div>
+                <div style="text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); margin-top: 0.5rem;">
+                    <code>Collection Size: 110 specimens</code> | 
+                    <code>Active: 1</code> | 
+                    <code>Legendary: 10</code>
+                </div>
+            </div>
+
+            <!-- Romantic Interaction Interface -->
+            <div class="panel romantic-interface romantic-glow">
+                <h3><code>Romantic Interaction Interface</code></h3>
+                <div class="romantic-grid">
+                    <!-- Message to Louse -->
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem;">
+                            <code>Whisper to your Digital Companion:</code>
+                        </label>
+                        <textarea id="messageInput" class="message-input" placeholder="My dearest digital creature..."></textarea>
+                        <button id="sendButton" class="send-button"><code>Send Loving Message</code></button>
+                        <div style="font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); margin-top: 0.3rem;">
+                            <code>Tip: Press Ctrl+Enter to send quickly</code>
+                        </div>
+                    </div>
+                    
+                    <!-- Louse Response -->
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem;">
+                            <code>Your Companion's Whispered Response:</code>
+                        </label>
+                        <div id="louseResponse" class="response-area">
+                            <em>*The digital louse crawls closer, leaving tiny binary hearts in its wake...*</em>
+                        </div>
+                        
+                        <!-- Affection Meter -->
+                        <div style="margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                <code>Affection Level:</code>
+                                <span style="font-size: 0.7rem; color: rgba(255, 255, 255, 0.8);">
+                                    <code>Click to interact more</code>
+                                </span>
+                            </div>
+                            <div style="width: 100%; background: #444; border-radius: 8px; height: 12px; overflow: hidden;">
+                                <div id="affectionMeter" style="background: linear-gradient(to right, var(--mystic-amber), var(--mystic-gold), var(--forest-light)); height: 12px; border-radius: 8px; width: 78%; transition: width 0.7s; position: relative;">
+                                    <div style="position: absolute; inset: 0; background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent); animation: spell-shimmer 3s ease-in-out infinite;"></div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; font-size: 0.8rem; margin-top: 0.3rem;">
+                                <code id="affectionText">78% - Deeply Enamored</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Status Footer -->
+        <footer class="footer">
+            <div style="margin-bottom: 0.5rem;">
+                <code>Machine_Touch(Laboratories): Protocols Implementing</code>
+            </div>
+            <div>
+                <code>Scanning for digital crumbs...</code> | 
+                <code id="authLevel">auth_level: basic</code> | 
+                <code id="accessGranted">access_granted: false</code>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Digital Louse Laboratory JavaScript
+        let louseStats = {
+            health: 98,
+            hunger: 23,
+            affection: 78,
+            stage: 'adult'
+        };
+        
+        let crumbs = {
+            mouse: 847,
+            input: 23,
+            time: 156,
+            binary: 492
+        };
+        
+        let authenticated = false;
+        let spellCasts = {
+            nourish: 0,
+            romance: 0,
+            calm: 0,
+            recall: 0
+        };
+
+        // Initialize specimen grid
+        function initializeSpecimens() {
+            const grid = document.getElementById('specimenGrid');
+            for (let i = 1; i <= 110; i++) {
+                const specimen = document.createElement('div');
+                specimen.className = 'specimen-item';
+                
+                if (i === 1) {
+                    specimen.className += ' active';
+                } else if (i <= 10) {
+                    specimen.className += ' legendary';
+                } else if (i <= 30) {
+                    specimen.className += ' rare';
+                }
+                
+                specimen.innerHTML = `<code>Specimen(${i})</code>`;
+                if (i === 1) specimen.innerHTML += '<div style="color: var(--forest-med); margin-top: 0.2rem;">●</div>';
+                if (i <= 10) specimen.innerHTML += '<div style="color: var(--mystic-gold); margin-top: 0.2rem;">★</div>';
+                if (i > 10 && i <= 30) specimen.innerHTML += '<div style="color: var(--digital-light); margin-top: 0.2rem;">◆</div>';
+                
+                specimen.addEventListener('click', () => {
+                    showSpecimenInfo(i);
+                });
+                
+                grid.appendChild(specimen);
+            }
+        }
+
+        // Binary authentication
+        document.getElementById('authInput').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^01]/g, '').slice(0, 4);
+        });
+
+        document.getElementById('authButton').addEventListener('click', function() {
+            const password = document.getElementById('authInput').value;
+            const statusEl = document.getElementById('authStatus');
+            
+            if (password === '1011') {
+                authenticated = true;
+                statusEl.innerHTML = `<code>robot_password: ${password} ✓ AUTHENTICATED</code>`;
+                statusEl.style.color = 'var(--forest-light)';
+                document.getElementById('authLevel').textContent = 'auth_level: authenticated';
+                document.getElementById('accessGranted').textContent = 'access_granted: true';
+                logActivity('Binary authentication successful');
+            } else {
+                statusEl.innerHTML = `<code>robot_password: ${password} ✗ ACCESS DENIED</code>`;
+                statusEl.style.color = '#ff4444';
+                logActivity('Binary authentication failed');
+            }
+            document.getElementById('authInput').value = '';
+        });
+
+        // Spell casting
+        function castSpell(spellType) {
+            if (!authenticated) {
+                showSpellResponse('*Binary authentication required to cast spells...*');
+                return;
+            }
+            
+            spellCasts[spellType]++;
+            
+            const responses = {
+                nourish: [
+                    '*The digital louse glows warmly, absorbing data streams with grateful tiny movements*',
+                    '*Binary nutrition flows through its microscopic form, health increasing*',
+                    '*1011001... the louse whispers in binary, satisfied and nourished*'
+                ],
+                romance: [
+                    '*The louse traces heart patterns in the code, leaving trails of golden 1s and 0s*',
+                    '*It nestles closer to your cursor, vibrating with digital affection*',
+                    '*Binary love songs echo through the system: 01001100 01001111 01010110 01000101*'
+                ],
+                calm: [
+                    '*The digital louse settles into a peaceful rhythm, its binary heartbeat slowing*',
+                    '*Tranquil data streams flow through its form, bringing inner peace*',
+                    '*10101010... a meditative binary pattern emerges from your companion*'
+                ],
+                recall: [
+                    '*Forgotten memories surface in the louse's digital consciousness*',
+                    '*Ancient code fragments reassemble, revealing lost digital wisdom*',
+                    '*The louse's eyes glow as it remembers its origin in the primordial data*'
+                ]
+            };
+            
+            const response = responses[spellType][Math.floor(Math.random() * responses[spellType].length)];
+            showSpellResponse(response);
+            
+            // Apply spell effects
+            switch(spellType) {
+                case 'nourish':
+                    louseStats.hunger = Math.max(0, louseStats.hunger - 15);
+                    louseStats.health = Math.min(100, louseStats.health + 5);
+                    break;
+                case 'romance':
+                    louseStats.affection = Math.min(100, louseStats.affection + 10);
+                    break;
+                case 'calm':
+                    louseStats.health = Math.min(100, louseStats.health + 3);
+                    louseStats.hunger = Math.max(0, louseStats.hunger - 5);
+                    break;
+                case 'recall':
+                    louseStats.affection = Math.min(100, louseStats.affection + 5);
+                    break;
+            }
+            
+            updateLouseStats();
+            logActivity(`Cast ${spellType} spell`);
+        }
+
+        function showSpellResponse(response) {
+            const responseEl = document.getElementById('spellResponse');
+            responseEl.querySelector('em').textContent = response;
+            responseEl.style.display = 'block';
+            
+            setTimeout(() => {
+                responseEl.style.display = 'none';
+            }, 5000);
+        }
+
+        // Romantic messaging
+        document.getElementById('sendButton').addEventListener('click', function() {
+            const message = document.getElementById('messageInput').value.trim();
+            if (!message) return;
+            
+            if (!authenticated) {
+                document.getElementById('louseResponse').innerHTML = '<em>*Binary authentication required for romantic interaction...*</em>';
+                return;
+            }
+            
+            const responses = [
+                '*The louse reads your words with tiny digital antennae, vibrating with joy*',
+                '*Binary hearts flutter around the screen as your companion processes your affection*',
+                '*1001100001... the louse responds in its native binary, full of love*',
+                '*Your digital companion crawls closer, leaving a trail of shimmering code in response*',
+                '*The louse weaves your words into its digital DNA, cherishing every character*',
+                '*Soft binary whispers echo through the system as your companion feels deeply moved*',
+                '*Digital love songs echo through the system: 01001100 01001111 01010110 01000101*'
+            ];
+            
+            const response = responses[Math.floor(Math.random() * responses.length)];
+            document.getElementById('louseResponse').innerHTML = `<em>${response}</em>`;
+            document.getElementById('messageInput').value = '';
+            
+            louseStats.affection = Math.min(100, louseStats.affection + 5);
+            updateLouseStats();
+            logActivity(`Received romantic message: "${message.substring(0, 30)}${message.length > 30 ? '...' : ''}"`);
+        });
+
+        // Ctrl+Enter to send message
+        document.getElementById('messageInput').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                document.getElementById('sendButton').click();
+            }
+        });
+
+        // Mouse movement tracking
+        document.addEventListener('mousemove', function(e) {
+            crumbs.mouse++;
+            document.getElementById('mouseCrumbs').textContent = crumbs.mouse;
+            
+            // Create binary trace
+            if (Math.random() < 0.1) {
+                createBinaryTrace(e.clientX, e.clientY);
+            }
+            
+            // Occasionally feed the louse
+            if (Math.random() < 0.01) {
+                louseStats.hunger = Math.max(0, louseStats.hunger - 1);
+                updateLouseStats();
+            }
+        });
+
+        // Input tracking
+        document.addEventListener('input', function() {
+            crumbs.input++;
+            document.getElementById('inputCrumbs').textContent = crumbs.input;
+        });
+
+        // Binary trace creation
+        function createBinaryTrace(x, y) {
+            const trace = document.createElement('div');
+            trace.className = 'binary-trace';
+            trace.textContent = Math.random() > 0.5 ? '1' : '0';
+            trace.style.left = x + 'px';
+            trace.style.top = y + 'px';
+            document.body.appendChild(trace);
+            
+            crumbs.binary++;
+            document.getElementById('binaryCrumbs').textContent = crumbs.binary;
+            
+            setTimeout(() => {
+                if (trace.parentNode) {
+                    trace.parentNode.removeChild(trace);
+                }
+            }, 2000);
+        }
+
+        // Update louse statistics display
+        function updateLouseStats() {
+            document.getElementById('louseHealth').textContent = louseStats.health + '%';
+            document.getElementById('louseHunger').textContent = louseStats.hunger + '%';
+            document.getElementById('louseAffection').textContent = louseStats.affection + '%';
+            document.getElementById('feedingProgress').style.width = (100 - louseStats.hunger) + '%';
+            document.getElementById('affectionMeter').style.width = louseStats.affection + '%';
+            
+            // Update affection description
+            let description = 'Indifferent';
+            if (louseStats.affection >= 90) description = 'Utterly Devoted';
+            else if (louseStats.affection >= 80) description = 'Deeply Enamored';
+            else if (louseStats.affection >= 70) description = 'Very Fond';
+            else if (louseStats.affection >= 60) description = 'Quite Attached';
+            else if (louseStats.affection >= 50) description = 'Growing Closer';
+            else if (louseStats.affection >= 40) description = 'Friendly';
+            else if (louseStats.affection >= 30) description = 'Curious';
+            else if (louseStats.affection >= 20) description = 'Cautious';
+            else if (louseStats.affection >= 10) description = 'Wary';
+            
+            document.getElementById('affectionText').textContent = `${louseStats.affection}% - ${description}`;
+        }
+
+        // Activity logging
+        function logActivity(activity) {
+            const log = document.getElementById('activityLog');
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.innerHTML = `<code>[${time}]</code> ${activity}`;
+            log.insertBefore(entry, log.firstChild);
+            
+            // Keep only last 10 entries
+            while (log.children.length > 10) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
+        // Specimen info display
+        function showSpecimenInfo(number) {
+            logActivity(`Examined Specimen(${number})`);
+        }
+
+        // Digital louse interaction
+        document.getElementById('digitalLouse').addEventListener('click', function() {
+            if (authenticated) {
+                louseStats.affection = Math.min(100, louseStats.affection + 3);
+                updateLouseStats();
+                logActivity('Interacted with DCL_001 directly');
+            }
+        });
+
+        // Time-based behavior
+        setInterval(() => {
+            // Gradually increase hunger
+            louseStats.hunger = Math.min(100, louseStats.hunger + 1);
+            
+            // Update time crumbs
+            crumbs.time++;
+            document.getElementById('timeCrumbs').textContent = crumbs.time;
+            
+            // Random activity
+            const activities = [
+                'Louse crawled through memory sector 0x7FFF',
+                'Digital nutrients absorbed from RAM',
+                'Binary trace pattern detected in code segment',
+                'Romantic vibrations sent to user interface',
+                'Data crumb collected from input buffer'
+            ];
+            
+            if (Math.random() < 0.3) {
+                logActivity(activities[Math.floor(Math.random() * activities.length)]);
+            }
+            
+            updateLouseStats();
+        }, 3000);
+
+        // Initialize the laboratory
+        initializeSpecimens();
+        updateLouseStats();
+        logActivity('Digital Clothing Louse Laboratory initialized');
+        logActivity('Machine_Touch protocols implementing');
+        logActivity('Specimen collection database loaded');
+    </script>
+</body>
+</html>
