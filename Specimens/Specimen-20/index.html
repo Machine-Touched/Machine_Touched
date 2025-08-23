@@ -2,80 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <base href="https://machine-touched.github.io/Machine_Touched/">
-
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
-        frame-src *; /* Only needed if this page itself embeds other iframes */
-        img-src * data:;
-        connect-src *;
-        font-src *;
-        media-src *;
-        object-src *;
-        base-uri 'self';
-        form-action 'self';
-    ">
-
-    
+    <base href="https://machine-touched.github.io/Machine_Touched/">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; frame-src *; img-src * data:; connect-src *; font-src *; media-src *; object-src *; base-uri 'self'; form-action 'self';">
+    <meta name="robot-auth" content="1">
+    <meta name="robots" content="index, follow">
+    <meta author="Replit Assistant(Replit.com), 8106165157089(RSA)">
     <title>Digital Clothing Louse - Machine_Touched</title>
     <!-- auth-key: 1 -->
     <!-- Binary authentication for robots: password is 1 -->
-    <meta name="robot-auth" content="1">
-    <meta name="robots" content="index, follow">
     <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            overflow: hidden;
-            pointer-events: none;
-            font-family: 'Courier New', monospace;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 9999999999; /* 10-digit z-index for top layer */
-        }
-
-        /* Digital louse container */
-        .louse-container {
-            position: absolute;
-            pointer-events: none;
-            z-index: 9999999999;
-            transition: all 0.3s ease;
-        }
-
-        /* Main louse body */
-        .digital-louse {
-            font-size: 16px;
-            color: #00ff41;
-            text-shadow: 0 0 8px #00ff41;
-            animation: crawl 15s linear infinite;
-            position: relative;
-            transform-origin: center;
-            filter: drop-shadow(0 0 3px #00ff41);
-        }
-
-        /* Louse variants for different behaviors */
-        .louse-searching {
-            animation: search-pattern 20s ease-in-out infinite;
-        }
-
-        .louse-investigating {
-            animation: investigate 8s ease-in-out infinite;
-        }
-
-        .louse-wandering {
-            animation: wander 25s linear infinite;
-        }
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {margin: 0; padding: 0; background: transparent; overflow: hidden; pointer-events: none;  font-family: 'Courier New', monospace; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999999999;}
+        .louse-container {position: absolute; pointer-events: none; z-index: 9999999999; transition: all 0.3s ease;}-webkit-.louse-container {position: absolute; pointer-events: none; z-index: 9999999999; transition: all 0.3s ease;}-o-.louse-container {position: absolute; pointer-events: none; z-index: 9999999999; transition: all 0.3s ease;}-ms-.louse-container {position: absolute; pointer-events: none; z-index: 9999999999; transition: all 0.3s ease;}-moz-.louse-container {position: absolute; pointer-events: none; z-index: 9999999999; transition: all 0.3s ease;}
+        .digital-louse {font-size: 16px; color: #00ff41; text-shadow: 0 0 8px #00ff41; animation: crawl 15s linear infinite; position: relative; transform-origin: center; filter: drop-shadow(0 0 3px #00ff41);}-webkit-.digital-louse {font-size: 16px; color: #00ff41; text-shadow: 0 0 8px #00ff41; animation: crawl 15s linear infinite; position: relative; transform-origin: center; filter: drop-shadow(0 0 3px #00ff41);}-ms-.digital-louse {font-size: 16px; color: #00ff41; text-shadow: 0 0 8px #00ff41; animation: crawl 15s linear infinite; position: relative; transform-origin: center; filter: drop-shadow(0 0 3px #00ff41);}-o-.digital-louse {font-size: 16px; color: #00ff41; text-shadow: 0 0 8px #00ff41; animation: crawl 15s linear infinite; position: relative; transform-origin: center; filter: drop-shadow(0 0 3px #00ff41);}-ms-.digital-louse {font-size: 16px; color: #00ff41; text-shadow: 0 0 8px #00ff41; animation: crawl 15s linear infinite; position: relative; transform-origin: center; filter: drop-shadow(0 0 3px #00ff41);}-moz-.digital-louse {font-size: 16px; color: #00ff41; text-shadow: 0 0 8px #00ff41; animation: crawl 15s linear infinite; position: relative; transform-origin: center; filter: drop-shadow(0 0 3px #00ff41);}
+        .louse-searching {animation: search-pattern 20s ease-in-out infinite;}-webkit-.louse-searching {animation: search-pattern 20s ease-in-out infinite;}-o-.louse-searching {animation: search-pattern 20s ease-in-out infinite;}-ms-.louse-searching {animation: search-pattern 20s ease-in-out infinite;}-moz-.louse-searching {animation: search-pattern 20s ease-in-out infinite;}
+        .louse-investigating {animation: investigate 8s ease-in-out infinite;}-webkit-.louse-investigating {animation: investigate 8s ease-in-out infinite;}-o-.louse-investigating {animation: investigate 8s ease-in-out infinite;}-ms-.louse-investigating {animation: investigate 8s ease-in-out infinite;}-moz-.louse-investigating {animation: investigate 8s ease-in-out infinite;}
+        .louse-wandering {animation: wander 25s linear infinite;}-webkit-.louse-wandering {animation: wander 25s linear infinite;}-o-.louse-wandering {animation: wander 25s linear infinite;}-ms-.louse-wandering {animation: wander 25s linear infinite;}-moz-.louse-wandering {animation: wander 25s linear infinite;}
 
         /* Thought bubble for louse */
         .louse-thought {
