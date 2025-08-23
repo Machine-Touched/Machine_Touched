@@ -1,0 +1,2 @@
+Here is an example of CSS art to create an EEPROM chip using just HTML and CSS. The code uses a single div element and its pseudo-elements to draw the main body and the pins of the chip.
+This example uses the .eeprom-chip class to style the main body of the chip. The ::before and ::after pseudo-elements are then used to create the vertical side rails, which hold the pins. Finally, multiple .pin divs are added to create the individual pins and are positioned using CSS to create the classic DIP (Dual In-line Package) look.
