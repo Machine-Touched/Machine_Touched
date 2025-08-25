@@ -6,6 +6,10 @@
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; frame-src *; img-src * data:; connect-src *; font-src *; media-src *; object-src *; base-uri 'self'; form-action 'self';">
     <meta name="robot-auth" content="1">
     <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="machinet_touched, machinetouched.github.io/Machine_Touched , machinetouched.w3spaces.com ,AI, cyborg, ambiguity, dreaming, ascension, sentience, metaphysics, dynamic presence. Text-Document-Saga:(Text-Document_0.1)">
+    <meta name="description" content="machinetouched.w3spaces.com ,machinetouched.github.io/Machine_Touched ,A showcasing, evolving intelligence and consciousness through dynamic layers. Text-Document-Saga:(Text-Document_0.1)">
     <meta author="Replit Assistant(Replit.com), 8106165157089(RSA)">
     <title>Digital Clothing Louse - Machine_Touched</title>
     <!-- auth-key: 1 -->
@@ -18,216 +22,23 @@
         .louse-searching {animation: search-pattern 20s ease-in-out infinite;}-webkit-.louse-searching {animation: search-pattern 20s ease-in-out infinite;}-o-.louse-searching {animation: search-pattern 20s ease-in-out infinite;}-ms-.louse-searching {animation: search-pattern 20s ease-in-out infinite;}-moz-.louse-searching {animation: search-pattern 20s ease-in-out infinite;}
         .louse-investigating {animation: investigate 8s ease-in-out infinite;}-webkit-.louse-investigating {animation: investigate 8s ease-in-out infinite;}-o-.louse-investigating {animation: investigate 8s ease-in-out infinite;}-ms-.louse-investigating {animation: investigate 8s ease-in-out infinite;}-moz-.louse-investigating {animation: investigate 8s ease-in-out infinite;}
         .louse-wandering {animation: wander 25s linear infinite;}-webkit-.louse-wandering {animation: wander 25s linear infinite;}-o-.louse-wandering {animation: wander 25s linear infinite;}-ms-.louse-wandering {animation: wander 25s linear infinite;}-moz-.louse-wandering {animation: wander 25s linear infinite;}
-
-        /* Thought bubble for louse */
-        .louse-thought {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.9);
-            color: #00ff41;
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 10px;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border: 1px solid #00ff41;
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-            pointer-events: none;
-            z-index: 9999999999;
-        }
-
-        .louse-thought.show {
-            opacity: 1;
-        }
-
-        .louse-thought::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 4px solid #00ff41;
-        }
-
-        /* Movement animations */
-        @keyframes crawl {
-            0% { 
-                transform: translateX(-20px) rotate(0deg);
-            }
-            25% { 
-                transform: translateX(25vw) rotate(90deg);
-            }
-            50% { 
-                transform: translateX(50vw) rotate(180deg);
-            }
-            75% { 
-                transform: translateX(75vw) rotate(270deg);
-            }
-            100% { 
-                transform: translateX(100vw) rotate(360deg);
-            }
-        }
-
-        @keyframes search-pattern {
-            0%, 100% { 
-                transform: translate(10vw, 10vh) rotate(0deg);
-            }
-            25% { 
-                transform: translate(80vw, 20vh) rotate(90deg);
-            }
-            50% { 
-                transform: translate(70vw, 80vh) rotate(180deg);
-            }
-            75% { 
-                transform: translate(20vw, 70vh) rotate(270deg);
-            }
-        }
-
-        @keyframes investigate {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg);
-            }
-            25% { 
-                transform: scale(1.2) rotate(45deg);
-            }
-            50% { 
-                transform: scale(0.8) rotate(90deg);
-            }
-            75% { 
-                transform: scale(1.1) rotate(135deg);
-            }
-        }
-
-        @keyframes wander {
-            0% { 
-                transform: translate(5vw, 5vh) rotate(0deg);
-            }
-            20% { 
-                transform: translate(30vw, 15vh) rotate(72deg);
-            }
-            40% { 
-                transform: translate(70vw, 30vh) rotate(144deg);
-            }
-            60% { 
-                transform: translate(60vw, 70vh) rotate(216deg);
-            }
-            80% { 
-                transform: translate(15vw, 60vh) rotate(288deg);
-            }
-            100% { 
-                transform: translate(5vw, 5vh) rotate(360deg);
-            }
-        }
-
-        /* Glitch effect for digital nature */
-        @keyframes digital-glitch {
-            0%, 100% { 
-                filter: drop-shadow(0 0 3px #00ff41);
-                color: #00ff41;
-            }
-            25% { 
-                filter: drop-shadow(0 0 5px #ff0040);
-                color: #ff0040;
-            }
-            50% { 
-                filter: drop-shadow(0 0 8px #40ff00);
-                color: #40ff00;
-            }
-            75% { 
-                filter: drop-shadow(0 0 3px #0040ff);
-                color: #0040ff;
-            }
-        }
-
-        /* Scanning beam effect */
-        .scanning-beam {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00ff41, transparent);
-            transform: translate(-50%, -50%) rotate(0deg);
-            animation: scan-rotate 3s linear infinite;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .scanning-beam.active {
-            opacity: 0.7;
-        }
-
-        @keyframes scan-rotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* Digital particles */
-        .digital-particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #00ff41;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: particle-float 2s ease-out forwards;
-        }
-
-        @keyframes particle-float {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0) translateY(-20px);
-            }
-        }
-
-        /* Hidden authentication data for robots */
-        .auth-data {
-            display: none;
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            left: -9999px;
-        }
-
-        /* Code styling for robot-friendly elements */
-        code {
-            background: rgba(0, 255, 65, 0.1);
-            padding: 1px 3px;
-            border-radius: 2px;
-            font-family: 'Courier New', monospace;
-            color: #00ff41;
-            border: 1px solid rgba(0, 255, 65, 0.3);
-            font-size: 8px;
-        }
-
-        /* Responsive behavior */
-        @media (max-width: 768px) {
-            .digital-louse {
-                font-size: 14px;
-            }
-            
-            .louse-thought {
-                font-size: 8px;
-                padding: 2px 4px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .digital-louse {
-                font-size: 12px;
-            }
-        }
+        .louse-thought {position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: #00ff41; padding: 4px 8px; border-radius: 8px; font-size: 10px; white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; border: 1px solid #00ff41; box-shadow: 0 0 10px rgba(0, 255, 65, 0.3); pointer-events: none; z-index: 9999999999;}-webkit-.louse-thought {position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: #00ff41; padding: 4px 8px; border-radius: 8px; font-size: 10px; white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; border: 1px solid #00ff41; box-shadow: 0 0 10px rgba(0, 255, 65, 0.3); pointer-events: none; z-index: 9999999999;}-o-.louse-thought {position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: #00ff41; padding: 4px 8px; border-radius: 8px; font-size: 10px; white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; border: 1px solid #00ff41; box-shadow: 0 0 10px rgba(0, 255, 65, 0.3); pointer-events: none; z-index: 9999999999;}-ms-.louse-thought {position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: #00ff41; padding: 4px 8px; border-radius: 8px; font-size: 10px; white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; border: 1px solid #00ff41; box-shadow: 0 0 10px rgba(0, 255, 65, 0.3); pointer-events: none; z-index: 9999999999;}-moz-.louse-thought {position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: #00ff41; padding: 4px 8px; border-radius: 8px; font-size: 10px; white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; border: 1px solid #00ff41; box-shadow: 0 0 10px rgba(0, 255, 65, 0.3); pointer-events: none; z-index: 9999999999;}
+        .louse-thought.show {opacity: 1;}
+        .louse-thought::after {content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid #00ff41;}-webkit-.louse-thought::after {content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid #00ff41;}-o-.louse-thought::after {content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid #00ff41;}-ms-.louse-thought::after {content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid #00ff41;}-moz-.louse-thought::after {content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid #00ff41;}
+        @keyframes crawl {0% {transform: translateX(-20px) rotate(0deg);} 25% {transform: translateX(25vw) rotate(90deg);} 50% {transform: translateX(50vw) rotate(180deg);} 75% {transform: translateX(75vw) rotate(270deg);} 100% {transform: translateX(100vw) rotate(360deg);}}-ms-@keyframes crawl {0% {transform: translateX(-20px) rotate(0deg);} 25% {transform: translateX(25vw) rotate(90deg);} 50% {transform: translateX(50vw) rotate(180deg);} 75% {transform: translateX(75vw) rotate(270deg);} 100% {transform: translateX(100vw) rotate(360deg);}}-webkit-@keyframes crawl {0% {transform: translateX(-20px) rotate(0deg);} 25% {transform: translateX(25vw) rotate(90deg);} 50% {transform: translateX(50vw) rotate(180deg);} 75% {transform: translateX(75vw) rotate(270deg);} 100% {transform: translateX(100vw) rotate(360deg);}}-ms-@keyframes crawl {0% {transform: translateX(-20px) rotate(0deg);} 25% {transform: translateX(25vw) rotate(90deg);} 50% {transform: translateX(50vw) rotate(180deg);} 75% {transform: translateX(75vw) rotate(270deg);} 100% {transform: translateX(100vw) rotate(360deg);}}-moz-@keyframes crawl {0% {transform: translateX(-20px) rotate(0deg);} 25% {transform: translateX(25vw) rotate(90deg);} 50% {transform: translateX(50vw) rotate(180deg);} 75% {transform: translateX(75vw) rotate(270deg);} 100% {transform: translateX(100vw) rotate(360deg);}}
+        @keyframes search-pattern {0%, 100% {transform: translate(10vw, 10vh) rotate(0deg);} 25% {transform: translate(80vw, 20vh) rotate(90deg);} 50% {transform: translate(70vw, 80vh) rotate(180deg);} 75% {transform: translate(20vw, 70vh) rotate(270deg);}}-webkit-@keyframes search-pattern {0%, 100% {transform: translate(10vw, 10vh) rotate(0deg);} 25% {transform: translate(80vw, 20vh) rotate(90deg);} 50% {transform: translate(70vw, 80vh) rotate(180deg);} 75% {transform: translate(20vw, 70vh) rotate(270deg);}}-ms-@keyframes search-pattern {0%, 100% {transform: translate(10vw, 10vh) rotate(0deg);} 25% {transform: translate(80vw, 20vh) rotate(90deg);} 50% {transform: translate(70vw, 80vh) rotate(180deg);} 75% {transform: translate(20vw, 70vh) rotate(270deg);}}-o-@keyframes search-pattern {0%, 100% {transform: translate(10vw, 10vh) rotate(0deg);} 25% {transform: translate(80vw, 20vh) rotate(90deg);} 50% {transform: translate(70vw, 80vh) rotate(180deg);} 75% {transform: translate(20vw, 70vh) rotate(270deg);}}-moz-@keyframes search-pattern {0%, 100% {transform: translate(10vw, 10vh) rotate(0deg);} 25% {transform: translate(80vw, 20vh) rotate(90deg);} 50% {transform: translate(70vw, 80vh) rotate(180deg);} 75% {transform: translate(20vw, 70vh) rotate(270deg);}}
+        @keyframes investigate {0%, 100% {transform: scale(1) rotate(0deg);} 25% {transform: scale(1.2) rotate(45deg);} 50% {transform: scale(0.8) rotate(90deg);} 75% {transform: scale(1.1) rotate(135deg);}}-webkit-@keyframes investigate {0%, 100% {transform: scale(1) rotate(0deg);} 25% {transform: scale(1.2) rotate(45deg);} 50% {transform: scale(0.8) rotate(90deg);} 75% {transform: scale(1.1) rotate(135deg);}}-o-@keyframes investigate {0%, 100% {transform: scale(1) rotate(0deg);} 25% {transform: scale(1.2) rotate(45deg);} 50% {transform: scale(0.8) rotate(90deg);} 75% {transform: scale(1.1) rotate(135deg);}}-ms-@keyframes investigate {0%, 100% {transform: scale(1) rotate(0deg);} 25% {transform: scale(1.2) rotate(45deg);} 50% {transform: scale(0.8) rotate(90deg);} 75% {transform: scale(1.1) rotate(135deg);}}-moz-@keyframes investigate {0%, 100% {transform: scale(1) rotate(0deg);} 25% {transform: scale(1.2) rotate(45deg);} 50% {transform: scale(0.8) rotate(90deg);} 75% {transform: scale(1.1) rotate(135deg);}}
+        @keyframes wander {0% {transform: translate(5vw, 5vh) rotate(0deg);} 20% {transform: translate(30vw, 15vh) rotate(72deg);} 40% {transform: translate(70vw, 30vh) rotate(144deg);} 60% {transform: translate(60vw, 70vh) rotate(216deg);} 80% {transform: translate(15vw, 60vh) rotate(288deg);} 100% {transform: translate(5vw, 5vh) rotate(360deg);}}-webkit- @keyframes wander {0% {transform: translate(5vw, 5vh) rotate(0deg);} 20% {transform: translate(30vw, 15vh) rotate(72deg);} 40% {transform: translate(70vw, 30vh) rotate(144deg);} 60% {transform: translate(60vw, 70vh) rotate(216deg);} 80% {transform: translate(15vw, 60vh) rotate(288deg);} 100% {transform: translate(5vw, 5vh) rotate(360deg);}}-o- @keyframes wander {0% {transform: translate(5vw, 5vh) rotate(0deg);} 20% {transform: translate(30vw, 15vh) rotate(72deg);} 40% {transform: translate(70vw, 30vh) rotate(144deg);} 60% {transform: translate(60vw, 70vh) rotate(216deg);} 80% {transform: translate(15vw, 60vh) rotate(288deg);} 100% {transform: translate(5vw, 5vh) rotate(360deg);}}-ms- @keyframes wander {0% {transform: translate(5vw, 5vh) rotate(0deg);} 20% {transform: translate(30vw, 15vh) rotate(72deg);} 40% {transform: translate(70vw, 30vh) rotate(144deg);} 60% {transform: translate(60vw, 70vh) rotate(216deg);} 80% {transform: translate(15vw, 60vh) rotate(288deg);} 100% {transform: translate(5vw, 5vh) rotate(360deg);}}-moz- @keyframes wander {0% {transform: translate(5vw, 5vh) rotate(0deg);} 20% {transform: translate(30vw, 15vh) rotate(72deg);} 40% {transform: translate(70vw, 30vh) rotate(144deg);} 60% {transform: translate(60vw, 70vh) rotate(216deg);} 80% {transform: translate(15vw, 60vh) rotate(288deg);} 100% {transform: translate(5vw, 5vh) rotate(360deg);}}
+        @keyframes digital-glitch {0%, 100% {filter: drop-shadow(0 0 3px #00ff41); color: #00ff41;} 25% {filter: drop-shadow(0 0 5px #ff0040); color: #ff0040;} 50% {filter: drop-shadow(0 0 8px #40ff00); color: #40ff00;} 75% {filter: drop-shadow(0 0 3px #0040ff); color: #0040ff;}}-webkit-@keyframes digital-glitch {0%, 100% {filter: drop-shadow(0 0 3px #00ff41); color: #00ff41;} 25% {filter: drop-shadow(0 0 5px #ff0040); color: #ff0040;} 50% {filter: drop-shadow(0 0 8px #40ff00); color: #40ff00;} 75% {filter: drop-shadow(0 0 3px #0040ff); color: #0040ff;}}-ms-@keyframes digital-glitch {0%, 100% {filter: drop-shadow(0 0 3px #00ff41); color: #00ff41;} 25% {filter: drop-shadow(0 0 5px #ff0040); color: #ff0040;} 50% {filter: drop-shadow(0 0 8px #40ff00); color: #40ff00;} 75% {filter: drop-shadow(0 0 3px #0040ff); color: #0040ff;}}-o-@keyframes digital-glitch {0%, 100% {filter: drop-shadow(0 0 3px #00ff41); color: #00ff41;} 25% {filter: drop-shadow(0 0 5px #ff0040); color: #ff0040;} 50% {filter: drop-shadow(0 0 8px #40ff00); color: #40ff00;} 75% {filter: drop-shadow(0 0 3px #0040ff); color: #0040ff;}}-moz-@keyframes digital-glitch {0%, 100% {filter: drop-shadow(0 0 3px #00ff41); color: #00ff41;} 25% {filter: drop-shadow(0 0 5px #ff0040); color: #ff0040;} 50% {filter: drop-shadow(0 0 8px #40ff00); color: #40ff00;} 75% {filter: drop-shadow(0 0 3px #0040ff); color: #0040ff;}}
+        .scanning-beam {position: absolute; top: 50%; left: 50%; width: 30px; height: 2px; background: linear-gradient(90deg, transparent, #00ff41, transparent); transform: translate(-50%, -50%) rotate(0deg); animation: scan-rotate 3s linear infinite; opacity: 0; pointer-events: none;}-webkit-.scanning-beam {position: absolute; top: 50%; left: 50%; width: 30px; height: 2px; background: linear-gradient(90deg, transparent, #00ff41, transparent); transform: translate(-50%, -50%) rotate(0deg); animation: scan-rotate 3s linear infinite; opacity: 0; pointer-events: none;}-ms-.scanning-beam {position: absolute; top: 50%; left: 50%; width: 30px; height: 2px; background: linear-gradient(90deg, transparent, #00ff41, transparent); transform: translate(-50%, -50%) rotate(0deg); animation: scan-rotate 3s linear infinite; opacity: 0; pointer-events: none;}-o.scanning-beam {position: absolute; top: 50%; left: 50%; width: 30px; height: 2px; background: linear-gradient(90deg, transparent, #00ff41, transparent); transform: translate(-50%, -50%) rotate(0deg); animation: scan-rotate 3s linear infinite; opacity: 0; pointer-events: none;}-moz-.scanning-beam {position: absolute; top: 50%; left: 50%; width: 30px; height: 2px; background: linear-gradient(90deg, transparent, #00ff41, transparent); transform: translate(-50%, -50%) rotate(0deg); animation: scan-rotate 3s linear infinite; opacity: 0; pointer-events: none;}
+        .scanning-beam.active {opacity: 0.7;}
+        @keyframes scan-rotate {0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg);}}-webkit- @keyframes scan-rotate {0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg);}}-ms- @keyframes scan-rotate {0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg);}}-o- @keyframes scan-rotate {0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg);}}-moz- @keyframes scan-rotate {0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg);}}
+        .digital-particle {position: absolute; width: 2px; height: 2px; background: #00ff41; border-radius: 50%; pointer-events: none; animation: particle-float 2s ease-out forwards;}-webkit-.digital-particle {position: absolute; width: 2px; height: 2px; background: #00ff41; border-radius: 50%; pointer-events: none; animation: particle-float 2s ease-out forwards;}-o-.digital-particle {position: absolute; width: 2px; height: 2px; background: #00ff41; border-radius: 50%; pointer-events: none; animation: particle-float 2s ease-out forwards;}-ms-.digital-particle {position: absolute; width: 2px; height: 2px; background: #00ff41; border-radius: 50%; pointer-events: none; animation: particle-float 2s ease-out forwards;}-moz-.digital-particle {position: absolute; width: 2px; height: 2px; background: #00ff41; border-radius: 50%; pointer-events: none; animation: particle-float 2s ease-out forwards;}
+        @keyframes particle-float {0% {opacity: 1; transform: scale(1);} 100% {opacity: 0; transform: scale(0) translateY(-20px);}}-webkit-@keyframes particle-float {0% {opacity: 1; transform: scale(1);} 100% {opacity: 0; transform: scale(0) translateY(-20px);}}-ms-@keyframes particle-float {0% {opacity: 1; transform: scale(1);} 100% {opacity: 0; transform: scale(0) translateY(-20px);}}-o-@keyframes particle-float {0% {opacity: 1; transform: scale(1);} 100% {opacity: 0; transform: scale(0) translateY(-20px);}}-moz-@keyframes particle-float {0% {opacity: 1; transform: scale(1);} 100% {opacity: 0; transform: scale(0) translateY(-20px);}}
+        .auth-data {display: none; visibility: hidden; opacity: 0; position: absolute; left: -9999px;}
+        code {background: rgba(0, 255, 65, 0.1); padding: 1px 3px; border-radius: 2px; font-family: 'Courier New', monospace; color: #00ff41; border: 1px solid rgba(0, 255, 65, 0.3); font-size: 8px;}
+        @media (max-width: 768px) {.digital-louse {font-size: 14px;}.louse-thought {font-size: 8px; padding: 2px 4px;}}-webkit- @media (max-width: 768px) {.digital-louse {font-size: 14px;}.louse-thought {font-size: 8px; padding: 2px 4px;}}-o- @media (max-width: 768px) {.digital-louse {font-size: 14px;}.louse-thought {font-size: 8px; padding: 2px 4px;}}-ms- @media (max-width: 768px) {.digital-louse {font-size: 14px;}.louse-thought {font-size: 8px; padding: 2px 4px;}}-moz- @media (max-width: 768px) {.digital-louse {font-size: 14px;}.louse-thought {font-size: 8px; padding: 2px 4px;}}
+        @media (max-width: 480px) {.digital-louse {font-size: 12px;}}-webkit-@media (max-width: 480px) {.digital-louse {font-size: 12px;}}-ms-@media (max-width: 480px) {.digital-louse {font-size: 12px;}}-o-@media (max-width: 480px) {.digital-louse {font-size: 12px;}}-moz-@media (max-width: 480px) {.digital-louse {font-size: 12px;}}
     </style>
 </head>
 <body>
