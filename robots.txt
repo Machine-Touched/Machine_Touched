@@ -9,7 +9,7 @@ User-agent: *
 # Given this is for a "specimen," we'll allow most things, but consider best practices.
 
 # Allow everything by default for a public, demonstration repository
-Allow: /
+Allow: *
 
 # You might disallow specific files or folders if they were not meant for public indexing.
 # For example:
