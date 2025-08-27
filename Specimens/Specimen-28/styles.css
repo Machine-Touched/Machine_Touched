@@ -1,0 +1,174 @@
+/*
+ * Gemini-style custom CSS for a futuristic, high-tech firewall UI.
+ */
+
+/* Fonts, Background & Theming */
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0d1117; /* Dark charcoal */
+    color: #e6edf3; /* Light gray */
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* General UI Elements with Glassmorphism */
+header, .control-panel, .firewall-layer, .stats-panel, .global-log-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.3s ease;
+}
+
+header:hover, .control-panel:hover, .firewall-layer:hover, .stats-panel:hover, .global-log-panel:hover {
+    box-shadow: 0 16px 64px 0 rgba(0, 0, 0, 0.4);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
+    transition: text-shadow 0.3s ease;
+}
+
+/* Control Panel & Buttons */
+.sim-btn {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sim-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: all 0.5s ease-in-out;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.sim-btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.sim-btn.legitimate {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.sim-btn.my-website {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+}
+
+.sim-btn.malware {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.sim-btn.ddos {
+    background: linear-gradient(45deg, #f39c12, #e67e22);
+    color: white;
+}
+
+.sim-btn.sql-injection {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+    color: white;
+}
+
+.sim-btn.phishing {
+    background: linear-gradient(45deg, #e67e22, #d35400);
+    color: white;
+}
+
+.sim-btn.port-scan {
+    background: linear-gradient(45deg, #34495e, #2c3e50);
+    color: white;
+}
+
+.sim-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Traffic Flow & Animation */
+.traffic-flow {
+    position: relative;
+    height: 60px;
+    margin: 20px 0;
+    background: #1d2b3a; /* Dark blue-gray */
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.traffic-packet {
+    position: absolute;
+    left: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); /* Glowing effect */
+    transition: all 1s ease-in-out;
+    z-index: 10;
+}
+
+.traffic-packet.moving {
+    left: calc(100% + 50px);
+}
+
+/* Layer Status & Colors */
+.layer-status {
+    font-family: 'Courier New', Courier, monospace;
+}
+.layer-1 .layer-status { color: #00d4ff; }
+.layer-2 .layer-status { color: #ff00ea; }
+.layer-3 .layer-status { color: #00ff66; }
+
+/* Log Colors */
+.log-entry.info { color: #81d4fa; }
+.log-entry.warning { color: #ffeb3b; }
+.log-entry.error { color: #ff4444; }
+.log-entry.blocked { color: #ff6666; }
+.log-entry.allowed { color: #66ff66; }
+
+.clear-log-btn {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.clear-log-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* Code Blocks */
+code {
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-weight: 500;
+}
