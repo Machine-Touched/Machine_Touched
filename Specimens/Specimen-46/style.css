@@ -1,0 +1,99 @@
+/* Image of Dr. Frank Drake and the Drake Equation */
+.image-1 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 300px; /* Adjust as needed */
+  height: 200px; /* Adjust as needed */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image of radio dishes under a starry sky */
+.image-2 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 300px;
+  height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image of a researcher in a lab with a solar system poster */
+.image-3 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 300px;
+  height: 400px; /* Adjust for portrait orientation */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image of Earth from space */
+.image-4 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 300px;
+  height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image of a person holding a SETI flag in a desert-like landscape */
+.image-5 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 300px;
+  height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Black and white image of two radio dishes */
+.image-6 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 300px;
+  height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  filter: grayscale(100%);
+}
+
+/* Image of the new moon S/2025 U1 orbiting Uranus */
+.image-7 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 400px;
+  height: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image of Dr. Mark Showalter */
+.image-8 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%; /* For a circular portrait */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image of Dr. Matthew Tiscareno */
+.image-9 {
+  background-image: url('data:image/jpeg;base64,...');
+  background-size: cover;
+  background-position: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
