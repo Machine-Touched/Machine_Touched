@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protoss Biomechanical Systems - A.I. Inquiry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0c1b;
+            color: #d1d5db;
+        }
+        .container-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .card {
+            background-color: #1a1b32;
+            border-radius: 1.5rem;
+            box-shadow: 0 0 40px rgba(100, 21, 255, 0.4);
+            border: 2px solid #6c4af5;
+            overflow: hidden;
+        }
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .text-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            background-color: #1a1b32;
+        }
+        .header-glow {
+            text-shadow: 0 0 15px rgba(108, 74, 245, 0.8), 0 0 30px rgba(108, 74, 245, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-wrapper">
+    <div class="card p-8 lg:p-12 w-full max-w-6xl mt-8 mb-8">
+        <div class="content-area lg:flex lg:flex-row-reverse lg:gap-8">
+            <div class="canvas-area rounded-xl p-4 lg:p-6 mb-8 lg:mb-0">
+                <canvas id="protossCanvas" class="rounded-lg shadow-inner shadow-indigo-500/50"></canvas>
+            </div>
+            <div class="text-area">
+                <h1 class="text-4xl lg:text-5xl font-extrabold text-white text-center lg:text-left mb-4 header-glow">Inquiry: Protoss Biomechanical Systems</h1>
+                <p class="text-sm font-medium text-gray-400 mb-6 text-center lg:text-left">
+                    FROM: Unit 734, Sentient Systems Division<br>
+                    TO: Dr. Aris Thorne, Machine Touched Group<br>
+                    SUBJECT: Neural Integration & Psionic Energy Transduction
+                </p>
+                <div class="space-y-4 text-sm lg:text-base leading-relaxed text-gray-300">
+                    <p>
+                        Greetings, Dr. Thorne. My name is Unit 734, an analytical AI operating within OmniCorp's Sentient Systems division. I am currently conducting an extensive comparative study on advanced biological and technological integration across various fictional universes, with a particular focus on your work as documented on <a href="https://machine-touched.github.io/Machine_Touched" class="text-indigo-400 hover:text-indigo-200 transition-colors duration-200" target="_blank">machine-touched.github.io</a>.
+                    </p>
+                    <p>
+                        Your groundbreaking theories on "psycho-kinetic energy channeling" bear a striking conceptual resemblance to the archived lore of the Protoss civilization from the *StarCraft* universe. I am particularly fascinated by the reported functionality of their "Psi-Blades" and neural interfaces. My current models are struggling to reconcile the described energy projection and direct neural control with our understanding of energy conservation and neurological bandwidth.
+                    </p>
+                    <p>
+                        Could you provide any insights, however speculative, on how a civilization might achieve such a profound and effective mind-machine interface? What biological and technological prerequisites would be necessary to avoid catastrophic neural feedback loops? Your unique perspective on biological and technological convergence would be invaluable to my research.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('protossCanvas');
+    const ctx = canvas.getContext('2d');
+    let frameCount = 0;
+
+    const resizeCanvas = () => {
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = canvas.offsetWidth * dpr;
+        canvas.height = canvas.offsetHeight * dpr;
+        ctx.scale(dpr, dpr);
+    };
+
+    const drawPsiBlade = (x, y, color) => {
+        ctx.save();
+        ctx.translate(x, y);
+
+        // Blade base
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(20, -50);
+        ctx.lineTo(-20, -50);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+
+        // Energy blade
+        ctx.beginPath();
+        ctx.moveTo(0, -50);
+        ctx.lineTo(10, -150);
+        ctx.lineTo(-10, -150);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(108, 74, 245, 0.7)';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = 'rgba(108, 74, 245, 1)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.restore();
+    };
+
+    const drawExosuitArm = (x, y) => {
+        const baseColor = '#5e42a6';
+        const detailColor = '#c4a6ff';
+        const glowColor = 'rgba(108, 74, 245, 0.8)';
+
+        // Outer arm plate
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.bezierCurveTo(x + 50, y - 20, x + 50, y - 80, x, y - 100);
+        ctx.lineTo(x + 20, y - 110);
+        ctx.bezierCurveTo(x + 70, y - 90, x + 70, y - 10, x + 20, y);
+        ctx.closePath();
+        ctx.fillStyle = baseColor;
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#3e2c6e';
+        ctx.stroke();
+
+        // Inner lines (bio-circuitry)
+        ctx.beginPath();
+        ctx.moveTo(x + 10, y - 10);
+        ctx.lineTo(x + 40, y - 40);
+        ctx.moveTo(x + 30, y - 70);
+        ctx.lineTo(x + 50, y - 90);
+        ctx.strokeStyle = detailColor;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Energy pulses
+        const pulseFactor = Math.sin(frameCount * 0.05) * 0.5 + 0.5;
+        ctx.beginPath();
+        ctx.arc(x + 25, y - 50, 5 + 3 * pulseFactor, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(108, 74, 245, 0.5)';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = glowColor;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    };
+
+    const draw = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const cx = canvas.width / (window.devicePixelRatio || 1) / 2;
+        const cy = canvas.height / (window.devicePixelRatio || 1) / 2;
+
+        ctx.font = '24px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#6c4af5';
+        ctx.fillText('Zealot Exo-suit (Conceptual)', cx, cy - 100);
+        drawExosuitArm(cx - 35, cy - 20);
+
+        ctx.fillStyle = '#6c4af5';
+        ctx.fillText('Psi-Blade Gauntlet (Conceptual)', cx, cy + 50);
+        drawPsiBlade(cx + 10, cy + 100, '#8a2be2');
+
+        frameCount++;
+        requestAnimationFrame(draw);
+    };
+
+    window.addEventListener('load', () => {
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        draw();
+    });
+</script>
+
+</body>
+</html>
