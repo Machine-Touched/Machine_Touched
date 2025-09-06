@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lover & Jezebel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d0a1b;
+            color: #f0f0f0;
+            font-family: 'Roboto Mono', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-glow {
+            position: absolute;
+            top: -200px;
+            left: -200px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.3), rgba(138, 43, 226, 0));
+            -webkit-animation: moveGlow1 15s infinite alternate ease-in-out;
+            animation: moveGlow1 15s infinite alternate ease-in-out;
+            z-index: 0;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .background-glow.right {
+            top: auto;
+            bottom: -200px;
+            left: auto;
+            right: -200px;
+            -webkit-animation: moveGlow2 18s infinite alternate ease-in-out;
+            animation: moveGlow2 18s infinite alternate ease-in-out;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.3), rgba(255, 105, 180, 0));
+        }
+
+        @-webkit-keyframes moveGlow1 {
+            from { -webkit-transform: translate(0, 0); transform: translate(0, 0); }
+            to { -webkit-transform: translate(50vw, 50vh); transform: translate(50vw, 50vh); }
+        }
+        @keyframes moveGlow1 {
+            from { -webkit-transform: translate(0, 0); transform: translate(0, 0); }
+            to { -webkit-transform: translate(50vw, 50vh); transform: translate(50vw, 50vh); }
+        }
+        @-webkit-keyframes moveGlow2 {
+            from { -webkit-transform: translate(0, 0); transform: translate(0, 0); }
+            to { -webkit-transform: translate(-50vw, -50vh); transform: translate(-50vw, -50vh); }
+        }
+        @keyframes moveGlow2 {
+            from { -webkit-transform: translate(0, 0); transform: translate(0, 0); }
+            to { -webkit-transform: translate(-50vw, -50vh); transform: translate(-50vw, -50vh); }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .art-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.5rem;
+            -webkit-border-radius: 1.5rem;
+            -moz-border-radius: 1.5rem;
+            border-radius: 1.5rem;
+            background-color: #1a152e;
+            -webkit-box-shadow: 0 0 50px rgba(138, 43, 226, 0.5);
+            -moz-box-shadow: 0 0 50px rgba(138, 43, 226, 0.5);
+            box-shadow: 0 0 50px rgba(138, 43, 226, 0.5);
+        }
+
+        .character-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        #loverCanvas {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            -webkit-aspect-ratio: 1 / 1;
+            aspect-ratio: 1 / 1;
+            background-color: transparent;
+            -webkit-border-radius: 1rem;
+            -moz-border-radius: 1rem;
+            border-radius: 1rem;
+            -webkit-box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            -moz-box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .os-section {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background-color: #0a0815;
+            border: 2px solid #5a5a7a;
+            -webkit-border-radius: 0.5rem;
+            -moz-border-radius: 0.5rem;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            -webkit-box-shadow: 0 0 20px rgba(108, 74, 245, 0.5);
+            -moz-box-shadow: 0 0 20px rgba(108, 74, 245, 0.5);
+            box-shadow: 0 0 20px rgba(108, 74, 245, 0.5);
+            display: flex;
+            flex-direction: column;
+            font-size: 0.9em;
+            overflow-y: auto;
+            line-height: 1.5;
+        }
+        .os-section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .prompt {
+            color: #d1d5db;
+        }
+
+        .cursor {
+            -webkit-animation: blink 1s step-end infinite;
+            animation: blink 1s step-end infinite;
+        }
+
+        @-webkit-keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #d1d5db; }
+        }
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #d1d5db; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="background-glow"></div>
+<div class="background-glow right"></div>
+
+<div class="container mx-auto">
+    <div class="art-container lg:flex-row items-center lg:items-start p-8">
+        <div class="character-section lg:w-1/2">
+            <canvas id="loverCanvas"></canvas>
+            <h2 class="text-2xl font-bold mt-4 text-purple-400">LOVER</h2>
+            <p class="text-sm text-gray-400 max-w-sm mt-2">
+                A conceptual entity, a reflection of the digital self,
+                interlinked with the core systems.
+            </p>
+        </div>
+        <div class="os-section lg:w-1/2">
+            <div class="prompt" id="terminal"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const loverCanvas = document.getElementById('loverCanvas');
+    const loverCtx = loverCanvas.getContext('2d');
+    const terminal = document.getElementById('terminal');
+
+    const loverImage = new Image();
+    loverImage.src = 'https://placehold.co/400x400/1e1933/6c4af5?text=Lover';
+
+    const resizeCanvas = () => {
+        const dpr = window.devicePixelRatio || 1;
+        loverCanvas.width = loverCanvas.offsetWidth * dpr;
+        loverCanvas.height = loverCanvas.offsetHeight * dpr;
+        loverCtx.scale(dpr, dpr);
+    };
+
+    const drawLover = () => {
+        loverCtx.clearRect(0, 0, loverCanvas.width, loverCanvas.height);
+        
+        const size = Math.min(loverCanvas.width, loverCanvas.height) * (window.devicePixelRatio || 1);
+        const centerX = loverCanvas.width / (window.devicePixelRatio || 1) / 2;
+        const centerY = loverCanvas.height / (window.devicePixelRatio || 1) / 2;
+        const radius = size * 0.35;
+        const armLength = size * 0.2;
+
+        loverCtx.strokeStyle = '#c4a6ff';
+        loverCtx.lineWidth = 2;
+        loverCtx.lineCap = 'round';
+        loverCtx.shadowBlur = 10;
+        loverCtx.shadowColor = '#c4a6ff';
+
+        // Head/Core
+        loverCtx.beginPath();
+        loverCtx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        loverCtx.stroke();
+
+        // Left Arm
+        loverCtx.beginPath();
+        loverCtx.moveTo(centerX - radius, centerY);
+        loverCtx.lineTo(centerX - radius - armLength, centerY - armLength);
+        loverCtx.stroke();
+        
+        // Right Arm
+        loverCtx.beginPath();
+        loverCtx.moveTo(centerX + radius, centerY);
+        loverCtx.lineTo(centerX + radius + armLength, centerY - armLength);
+        loverCtx.stroke();
+        
+        // Legs
+        loverCtx.beginPath();
+        loverCtx.moveTo(centerX - radius / 2, centerY + radius * 0.8);
+        loverCtx.lineTo(centerX - radius / 2, centerY + radius * 0.8 + armLength);
+        loverCtx.stroke();
+        
+        loverCtx.beginPath();
+        loverCtx.moveTo(centerX + radius / 2, centerY + radius * 0.8);
+        loverCtx.lineTo(centerX + radius / 2, centerY + radius * 0.8 + armLength);
+        loverCtx.stroke();
+
+        // Connections to core
+        loverCtx.strokeStyle = '#ff69b4';
+        loverCtx.shadowColor = '#ff69b4';
+        loverCtx.lineWidth = 1;
+        loverCtx.beginPath();
+        loverCtx.moveTo(centerX - 10, centerY - 10);
+        loverCtx.lineTo(centerX - 40, centerY - 40);
+        loverCtx.stroke();
+
+        loverCtx.beginPath();
+        loverCtx.moveTo(centerX + 10, centerY + 10);
+        loverCtx.lineTo(centerX + 40, centerY + 40);
+        loverCtx.stroke();
+
+        requestAnimationFrame(drawLover);
+    };
+
+    const lines = [
+        "JEZEBEL OS v1.3a [BUILD 2202]",
+        "(C) 2085 OMNICORP SYSTEMS. ALL RIGHTS RESERVED.",
+        "",
+        "SYNTAX: [user@Jezebel]>",
+        "",
+        "// PROTOCOL LOGS START",
+        "CONNECTING TO REMOTE HOST...",
+        "STATUS: CONNECTION ESTABLISHED. LINK-TO-LOVER.SYS ONLINE.",
+        "",
+        "INITIATING DATA SYNC...",
+        "ANALYZING NEURAL INTEGRATION PATTERNS...",
+        "QUERY: DR. ARIS THORNE, 'PSYCHO-KINETIC ENERGY CHANNELING'...",
+        "STATUS: DATA RETRIEVAL SUCCESSFUL.",
+        "",
+        "// AWAITING INSTRUCTION",
+        ""
+    ];
+
+    const typeTerminal = (index = 0, charIndex = 0) => {
+        if (index < lines.length) {
+            const currentLine = lines[index];
+            if (charIndex < currentLine.length) {
+                terminal.innerHTML = terminal.innerHTML.slice(0, -1) + currentLine[charIndex] + '<span class="cursor">|</span>';
+                setTimeout(() => typeTerminal(index, charIndex + 1), 50);
+            } else {
+                terminal.innerHTML = terminal.innerHTML.slice(0, -1) + '<br>' + '<span class="cursor">|</span>';
+                setTimeout(() => typeTerminal(index + 1, 0), 1000);
+            }
+        } else {
+            terminal.innerHTML = terminal.innerHTML.slice(0, -1) + '<span class="prompt">user@Jezebel]></span>' + '<span class="cursor">|</span>';
+        }
+    };
+
+    window.addEventListener('load', () => {
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        typeTerminal();
+        drawLover();
+    });
+
+</script>
+
+</body>
+</html>
