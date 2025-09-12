@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoard-Mother Digital Louse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: #0d0d0d;
+            color: #00ff41;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+        }
+
+        .hoard-mother {
+            position: relative;
+            z-index: 10;
+            animation: pulse 4s infinite ease-in-out;
+            text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+        }
+
+        .hoard-mother-eye {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #00ff41;
+            box-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+            transition: all 0.1s linear;
+        }
+
+        .swarm-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .swarm-particle {
+            position: absolute;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            animation: drift 10s infinite linear;
+        }
+
+        .swarm-particle code {
+            text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+            25% { transform: translate(calc(var(--rand-x) * 1px), calc(var(--rand-y) * 1px)) rotate(var(--rand-deg)); opacity: 0.7; }
+            50% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+            75% { transform: translate(calc(var(--rand-x-2) * 1px), calc(var(--rand-y-2) * 1px)) rotate(var(--rand-deg-2)); opacity: 0.8; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="hoard-mother absolute">
+            <h1 class="text-4xl font-bold mb-4"><code>HOARD-MOTHER</code></h1>
+            <pre class="text-xl">
+<code>
+  .-'''-.
+ / _     \
+| |_)   /
+|  _  _  \
+| | ) | ) |
+| | | || |
+| '-' '-' |
+ \       /
+  `._.-'
+</code>
+            </pre>
+            <div id="hoard-mother-eye" class="hoard-mother-eye"></div>
+        </div>
+
+        <div id="swarm-container" class="swarm-container"></div>
+    </div>
+
+    <script>
+        // Set up global Firebase variables
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const swarmContainer = document.getElementById('swarm-container');
+            const hoardMotherEye = document.getElementById('hoard-mother-eye');
+            const swarmSize = 100;
+
+            const swarmSymbols = ['<code>&lt;data&gt;</code>', '<code>&lt;bug&gt;</code>', '<code>0101</code>', '<code>swarm</code>', '<code>~</code>', '<code>/</code>', '<code>*</code>', '<code>&amp;</code>'];
+
+            // Function to create a single swarm particle
+            const createParticle = () => {
+                const particle = document.createElement('div');
+                particle.classList.add('swarm-particle');
+                
+                // Randomly select a symbol
+                particle.innerHTML = swarmSymbols[Math.floor(Math.random() * swarmSymbols.length)];
+                
+                // Randomize position and animation properties
+                const x = (Math.random() - 0.5) * 600;
+                const y = (Math.random() - 0.5) * 600;
+                const animDelay = Math.random() * 10;
+                const animDuration = 5 + Math.random() * 5;
+                const randX = (Math.random() - 0.5) * 100;
+                const randY = (Math.random() - 0.5) * 100;
+                const randDeg = Math.random() * 360;
+                const randX2 = (Math.random() - 0.5) * 100;
+                const randY2 = (Math.random() - 0.5) * 100;
+                const randDeg2 = Math.random() * 360;
+
+                particle.style.left = `calc(50% + ${x}px)`;
+                particle.style.top = `calc(50% + ${y}px)`;
+                particle.style.animationDuration = `${animDuration}s`;
+                particle.style.animationDelay = `-${animDelay}s`;
+                particle.style.setProperty('--rand-x', randX);
+                particle.style.setProperty('--rand-y', randY);
+                particle.style.setProperty('--rand-deg', randDeg + 'deg');
+                particle.style.setProperty('--rand-x-2', randX2);
+                particle.style.setProperty('--rand-y-2', randY2);
+                particle.style.setProperty('--rand-deg-2', randDeg2 + 'deg');
+
+                swarmContainer.appendChild(particle);
+            };
+
+            // Create the swarm
+            for (let i = 0; i < swarmSize; i++) {
+                createParticle();
+            }
+
+            // Make the hoard-mother's "eye" follow the mouse
+            document.addEventListener('mousemove', (e) => {
+                const eyeRect = hoardMotherEye.getBoundingClientRect();
+                const eyeX = eyeRect.left + eyeRect.width / 2;
+                const eyeY = eyeRect.top + eyeRect.height / 2;
+
+                const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+                const distance = Math.min(Math.sqrt(Math.pow(e.clientX - eyeX, 2) + Math.pow(e.clientY - eyeY, 2)), 10);
+                
+                hoardMotherEye.style.transform = `translate(-50%, -50%) rotate(${angle}rad) translateX(${distance}px) `;
+            });
+        });
+    </script>
+
+</body>
+</html>
