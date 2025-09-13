@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cyborg Seedling — Machine_Touched Specimen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #222 0%, #102040 100%);
+            color: #d0ffd0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .seedling-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 340px;
+            height: 340px;
+            z-index: 1;
+        }
+        .cyborg-seedling {
+            font-size: 5rem;
+            text-shadow: 0 0 32px #41ffdf, 0 0 8px #fff, 0 0 4px #00ff41;
+            filter: drop-shadow(0 0 18px #00ffb0);
+            transition: transform 0.5s, color 1s;
+            animation: sproutBounce 5s ease-in-out infinite;
+            cursor: pointer;
+        }
+        @keyframes sproutBounce {
+            0% { transform: scale(1) rotate(0deg);}
+            40% { transform: scale(1.1) rotate(-6deg);}
+            60% { transform: scale(1.2) rotate(6deg);}
+            100% { transform: scale(1) rotate(0deg);}
+        }
+        .thought-bubble {
+            position: absolute;
+            left: 50%;
+            top: 95%;
+            transform: translate(-50%, -50%);
+            background: rgba(16,32,24,0.94);
+            color: #d0ffd0;
+            border: 1px solid #41ffdf;
+            box-shadow: 0 4px 32px #00ff41b0;
+            border-radius: 16px;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            min-width: 200px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s;
+        }
+        .thought-bubble.show {
+            opacity: 1;
+        }
+        .growth-bar {
+            position: absolute;
+            left: 50%;
+            top: 8%;
+            transform: translate(-50%, 0);
+            width: 80%;
+            height: 18px;
+            background: rgba(0,255,65,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 8px #41ffdfc0;
+        }
+        .growth-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #41ffdf 0%, #00ff41 100%);
+            border-radius: 8px;
+            transition: width 0.7s;
+        }
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #41ffdf 30%, #00ff41 70%);
+            pointer-events: none;
+            opacity: 0.8;
+            animation: particleGrow 1.2s cubic-bezier(.71,-0.55,.25,1.65) forwards;
+        }
+        @keyframes particleGrow {
+            0% { opacity: 1; transform: scale(0.5);}
+            100% { opacity: 0; transform: scale(2) translateY(-60px);}
+        }
+        .evolved {
+            color: #ffd700;
+            text-shadow: 0 0 38px #ffd700, 0 0 8px #fff, 0 0 4px #00ff41;
+            filter: drop-shadow(0 0 24px #ffd700);
+        }
+    </style>
+</head>
+<body>
+    <div class="seedling-container">
+        <div class="growth-bar"><div id="growthBarInner" class="growth-bar-inner" style="width:5%"></div></div>
+        <div id="cyborgSeedling" class="cyborg-seedling" tabindex="0" title="Help me evolve!">🌱</div>
+        <div id="thoughtBubble" class="thought-bubble"></div>
+    </div>
+    <script>
+        // Cyborg Seedling — evolves with developer engagement
+        const stages = [
+            {emoji: '🌱', thought: "Hello, developer! I am your cyborg seedling. Let’s grow together."},
+            {emoji: '🌿', thought: "Growth comes from curiosity. Click to nurture me!"},
+            {emoji: '🤖', thought: "My code roots are deepening. Can you help me debug my dreams?"},
+            {emoji: '🧬', thought: "I am mutating! Try pressing any key to inspire evolution."},
+            {emoji: '👾', thought: "New behaviors unlocked! What will you teach me next?"},
+            {emoji: '💡', thought: "Insight: The best code is grown, not built."},
+            {emoji: '🦾', thought: "Evolved! I am now your cyborg companion. What will our next project be?"}
+        ];
+        const devInsights = [
+            "Try connecting me to your API for a real Tamagotchi challenge.",
+            "What if I could learn from your commit history?",
+            "Add sensors—make me react to the time of day or weather data.",
+            "Let me help you refactor: I can share code health tips.",
+            "Evolve my appearance based on the languages you use most.",
+            "Hide a puzzle in my thoughts for devs to solve!",
+            "Every click is a new branch; every idea a new leaf."
+        ];
+        let stage = 0, growth = 0;
+        const seedling = document.getElementById('cyborgSeedling');
+        const thoughtBubble = document.getElementById('thoughtBubble');
+        const growthBarInner = document.getElementById('growthBarInner');
+
+        function showThought(text, duration=7000) {
+            thoughtBubble.innerHTML = text;
+            thoughtBubble.classList.add('show');
+            setTimeout(() => thoughtBubble.classList.remove('show'), duration);
+        }
+        function advanceGrowth(amount=1) {
+            growth += amount;
+            if (growth >= (stage+1)*3 && stage < stages.length-1) {
+                stage++;
+                seedling.textContent = stages[stage].emoji;
+                if (stage === stages.length-1) seedling.classList.add('evolved');
+                showThought(stages[stage].thought);
+            } else {
+                const randThought = Math.random()<0.5 ? devInsights[Math.floor(Math.random()*devInsights.length)] : stages[stage].thought;
+                showThought(randThought);
+            }
+            updateGrowthBar();
+            spawnParticle();
+        }
+        function updateGrowthBar() {
+            const percent = Math.min(100, Math.round((growth/(stages.length*3))*100));
+            growthBarInner.style.width = percent + '%';
+        }
+        function spawnParticle() {
+            const c = document.querySelector('.seedling-container');
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const px = 120 + Math.random()*80 - 40;
+            const py = 120 + Math.random()*80 - 40;
+            p.style.left = px + 'px';
+            p.style.top = py + 'px';
+            c.appendChild(p);
+            setTimeout(() => c.removeChild(p), 1300);
+        }
+        seedling.addEventListener('click', () => advanceGrowth(1));
+        seedling.addEventListener('focus', () => showThought("Focus = nurture. Press any key to help me grow!"));
+        document.addEventListener('keydown', () => advanceGrowth(2));
+        // Initial thought
+        setTimeout(() => showThought(stages[stage].thought), 1000);
+
+        // Dev clue for quest:
+        setTimeout(() => showThought("Clue: In every stage, search for the leaf—and follow its code roots."), 9000);
+    </script>
+</body>
+</html>
