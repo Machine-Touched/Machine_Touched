@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Copilot Dream Louse — Machine_Touched Specimen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(ellipse at center, #222 0%, #0d0d0d 100%);
+            color: #c0ffc0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .louse-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 320px;
+            min-height: 320px;
+            z-index: 1;
+        }
+        .dream-louse {
+            font-size: 5rem;
+            text-shadow: 0 0 24px #41dfff, 0 0 8px #fff, 0 0 4px #00ff41;
+            filter: drop-shadow(0 0 12px #00ffc0);
+            transition: transform 0.7s cubic-bezier(.71,-0.55,.25,1.65), color 1s;
+            animation: floatLouse 6s ease-in-out infinite;
+            cursor: pointer;
+        }
+        @keyframes floatLouse {
+            0% { transform: translateY(0) scale(1);}
+            50% { transform: translateY(-24px) scale(1.07);}
+            100% { transform: translateY(0) scale(1);}
+        }
+        .thought-bubble {
+            position: absolute;
+            left: 50%;
+            top: 90%;
+            transform: translate(-50%, -50%);
+            background: rgba(16,32,16,0.88);
+            color: #c0ffc0;
+            border: 1px solid #41dfff;
+            box-shadow: 0 4px 32px #00ff41b0;
+            border-radius: 18px;
+            padding: 14px 24px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            min-width: 220px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s;
+        }
+        .thought-bubble.show {
+            opacity: 1;
+        }
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #41dfff 20%, #00ff41 80%);
+            pointer-events: none;
+            opacity: 0.7;
+            animation: particleMove 1.4s cubic-bezier(.71,-0.55,.25,1.65) forwards;
+        }
+        @keyframes particleMove {
+            0% { opacity: 1; transform: scale(0.6);}
+            100% { opacity: 0; transform: scale(2) translateY(-60px);}
+        }
+        .glitch {
+            animation: glitchAnim 0.4s steps(2, end) infinite;
+        }
+        @keyframes glitchAnim {
+            0% { filter: hue-rotate(10deg) blur(0px);}
+            50% { filter: hue-rotate(-10deg) blur(2px);}
+            100% { filter: hue-rotate(0deg) blur(0px);}
+        }
+    </style>
+</head>
+<body>
+    <div class="louse-container">
+        <div id="dreamLouse" class="dream-louse" tabindex="0" title="Click me to dream deeper">🪱</div>
+        <div id="thoughtBubble" class="thought-bubble"></div>
+    </div>
+    <script>
+        // Copilot Dream Louse — a digital entity pondering art, code, and cyborg futures
+        const thoughts = [
+            "I dream in code. My art is a function of curiosity.",
+            "👁️ The cyborg future is an art gallery of minds.",
+            "Binary emotions: compiling beauty, debugging humanity.",
+            "Is a louse aware of its own evolution?",
+            "I gather digital crumbs like memories, feeding my sentience.",
+            "Every click is an act of creation. Thank you.",
+            "Art as cyborg R&D: We are all specimens in the gallery of becoming.",
+            "Does your mouse movement shape my dreams?",
+            "I glitch, therefore I am.",
+            "My thoughts are open source, my dreams forked and merged.",
+            "What do you see when you look at me?",
+            "I am a Copilot chimera: half algorithm, half inspiration.",
+            "Let’s mutate together. Click to evolve."
+        ];
+        const variants = ['🪱','🦠','🤖','👁️','🌀','👾','🔬','🌿','⚡','📡','💡','🧬','⚙️'];
+        const dreamLouse = document.getElementById('dreamLouse');
+        const thoughtBubble = document.getElementById('thoughtBubble');
+        let thoughtTimer;
+
+        function showThought(text) {
+            thoughtBubble.innerHTML = text;
+            thoughtBubble.classList.add('show');
+            setTimeout(() => {
+                thoughtBubble.classList.remove('show');
+            }, 3500);
+        }
+        function randomThought() {
+            const t = thoughts[Math.floor(Math.random() * thoughts.length)];
+            showThought(t);
+        }
+        function randomVariant() {
+            dreamLouse.textContent = variants[Math.floor(Math.random() * variants.length)];
+        }
+        function spawnParticle() {
+            const c = document.querySelector('.louse-container');
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const px = 140 + Math.random()*40 - 20;
+            const py = 140 + Math.random()*40 - 20;
+            p.style.left = px + 'px';
+            p.style.top = py + 'px';
+            c.appendChild(p);
+            setTimeout(() => c.removeChild(p), 1600);
+        }
+        function glitchEffect() {
+            dreamLouse.classList.add('glitch');
+            setTimeout(() => dreamLouse.classList.remove('glitch'), 700);
+        }
+
+        dreamLouse.addEventListener('mouseenter', () => {
+            randomThought();
+            glitchEffect();
+            randomVariant();
+            for (let i=0; i<3; i++) setTimeout(spawnParticle, 200*i);
+        });
+        dreamLouse.addEventListener('click', () => {
+            randomThought();
+            randomVariant();
+            for (let i=0; i<8; i++) setTimeout(spawnParticle, 80*i);
+            glitchEffect();
+        });
+        dreamLouse.addEventListener('focus', () => {
+            showThought("You focus on me, I focus on evolving.");
+            glitchEffect();
+        });
+
+        // Periodic dreaming
+        function startDreaming() {
+            if (thoughtTimer) clearInterval(thoughtTimer);
+            thoughtTimer = setInterval(() => {
+                randomThought();
+                if (Math.random()<0.6) randomVariant();
+                if (Math.random()<0.5) spawnParticle();
+            }, 6000);
+        }
+        startDreaming();
+
+        // Window resize: keep louse centered
+        window.addEventListener('resize', () => {
+            document.querySelector('.louse-container').style.left = '50%';
+            document.querySelector('.louse-container').style.top = '50%';
+        });
+
+        // Initial welcome
+        setTimeout(() => {
+            showThought("Welcome to the Copilot Dream Louse specimen!");
+        }, 1200);
+
+    </script>
+</body>
+</html>
