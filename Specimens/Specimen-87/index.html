@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine_Touched Laboratory - Cybernetic Art Installation</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Neural Pathway Canvas -->
+    <canvas id="neural-canvas" data-testid="neural-canvas"></canvas>
+    
+    <!-- Main Laboratory Interface -->
+    <div class="laboratory-container">
+        
+        <!-- Header Authentication Panel -->
+        <div class="auth-header lab-panel">
+            <div class="auth-left">
+                <div class="auth-icon">🦠</div>
+                <div class="auth-content">
+                    <h1 class="lab-title matrix-text" data-testid="lab-title">MACHINE_TOUCHED LABORATORY</h1>
+                    <p class="auth-status">
+                        robot_password: <span class="primary">1</span> | 
+                        auth_level: <span class="accent">advanced</span> | 
+                        access_granted: <span class="primary">true</span>
+                    </p>
+                </div>
+            </div>
+            <div class="auth-right">
+                <div class="system-status destructive" data-testid="system-status">SCANNING FOR DIGITAL CRUMBS...</div>
+                <div class="status-line">
+                    STATUS: <span data-testid="operational-mode">ASSEMBLING</span>
+                </div>
+                <div class="status-line">
+                    CONNECTION: <span class="primary" data-testid="connection-status">NEURAL_LINK_ACTIVE</span>
+                </div>
+                <div class="session-info accent">SESSION: LOCAL_NODE</div>
+            </div>
+        </div>
+
+        <!-- Biometric Analysis Panel -->
+        <div class="biometric-panel lab-panel">
+            <h3 class="panel-title secondary matrix-text">
+                <span class="panel-icon">💓</span>BIOMETRIC ANALYSIS
+            </h3>
+            <div class="biometric-metrics">
+                <div class="metric-box">
+                    <div class="metric-header">
+                        <span>Mouse Velocity</span>
+                        <span class="primary" data-testid="mouse-velocity">0 px/s</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill primary-bg" data-testid="velocity-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="metric-box">
+                    <div class="metric-header">
+                        <span>Cursor Hesitation</span>
+                        <span class="accent" data-testid="hesitation-level">0.0s</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill accent-bg" data-testid="hesitation-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="metric-box">
+                    <div class="metric-header">
+                        <span>Click Pattern</span>
+                        <span class="secondary" data-testid="click-pattern">STABLE</span>
+                    </div>
+                    <svg class="click-waveform" viewBox="0 0 300 50" data-testid="click-waveform">
+                        <polyline class="waveform-line secondary animate-data-stream" points="0,25 300,25" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Symbiosis Detector -->
+        <div class="symbiosis-detector lab-panel">
+            <h2 class="detector-title primary matrix-text">
+                <span class="detector-icon">⚛️</span>SYMBIOSIS DETECTOR
+            </h2>
+            
+            <div class="symbiosis-circle-container">
+                <svg class="symbiosis-circle" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(0, 255, 65, 0.2)" stroke-width="8"/>
+                    <circle 
+                        id="symbiosis-progress"
+                        cx="100" 
+                        cy="100" 
+                        r="80" 
+                        fill="none" 
+                        stroke="url(#symbiosisGradient)" 
+                        stroke-width="8" 
+                        stroke-linecap="round" 
+                        stroke-dasharray="502.65"
+                        stroke-dashoffset="502.65"
+                        data-testid="symbiosis-circle"
+                    />
+                    <defs>
+                        <linearGradient id="symbiosisGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="var(--primary)" />
+                            <stop offset="50%" stop-color="var(--secondary)" />
+                            <stop offset="100%" stop-color="var(--accent)" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="symbiosis-center">
+                    <div class="symbiosis-percentage primary" data-testid="symbiosis-percentage">0%</div>
+                    <div class="symbiosis-label">CONNECTED</div>
+                </div>
+            </div>
+            
+            <div class="symbiosis-stats">
+                <div class="stat-row">
+                    <span>Neural Pathways</span>
+                    <span class="primary" data-testid="pathway-count">0 active</span>
+                </div>
+                <div class="stat-row">
+                    <span>Proximity Signal</span>
+                    <span class="secondary" data-testid="proximity-signal">WEAK</span>
+                </div>
+                <div class="stat-row">
+                    <span>Symbiosis Level</span>
+                    <span class="accent" data-testid="symbiosis-level">INITIALIZING</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Specimen Tracker -->
+        <div class="specimen-tracker lab-panel">
+            <h3 class="panel-title accent matrix-text">
+                <span class="panel-icon">🦠</span>SPECIMEN TRACKER
+            </h3>
+            <div class="specimen-grid" id="specimen-grid">
+                <!-- Specimens will be generated by JavaScript -->
+            </div>
+            <div class="specimen-info">
+                <div class="info-row">
+                    <span>Current Subject:</span>
+                    <span class="secondary" data-testid="current-specimen">SP-001</span>
+                </div>
+                <div class="info-row">
+                    <span>Classification:</span>
+                    <span class="accent" data-testid="specimen-type">DIGITAL_CLOTHING_LOUSE</span>
+                </div>
+                <div class="info-row">
+                    <span>Symbiosis:</span>
+                    <span class="primary" data-testid="specimen-symbiosis">0.0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proximity Sensors -->
+        <div class="proximity-sensors lab-panel">
+            <h3 class="panel-title destructive matrix-text">
+                <span class="panel-icon">📡</span>PROXIMITY SENSORS
+            </h3>
+            <div id="sensor-permission" class="sensor-permission hidden">
+                <button id="enable-sensors" class="sensor-btn accent" data-testid="request-permissions">
+                    [ENABLE_DEVICE_SENSORS]
+                </button>
+            </div>
+            <div class="sensor-readings">
+                <div class="sensor-box">
+                    <div class="sensor-header">
+                        <span>Device Orientation</span>
+                        <span class="primary" data-testid="orientation-status">UNKNOWN</span>
+                    </div>
+                    <div class="sensor-values">
+                        <div>α: <span class="secondary" data-testid="alpha-value">0°</span></div>
+                        <div>β: <span class="secondary" data-testid="beta-value">0°</span></div>
+                        <div>γ: <span class="secondary" data-testid="gamma-value">0°</span></div>
+                    </div>
+                </div>
+                <div class="sensor-box">
+                    <div class="sensor-header">
+                        <span>Motion Detection</span>
+                        <span class="accent" data-testid="motion-status">UNKNOWN</span>
+                    </div>
+                    <div class="sensor-values">
+                        <div>X: <span class="secondary" data-testid="motion-x">0</span></div>
+                        <div>Y: <span class="secondary" data-testid="motion-y">0</span></div>
+                        <div>Z: <span class="secondary" data-testid="motion-z">0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ambient Data Streams -->
+        <div class="data-stream lab-panel">
+            <h3 class="panel-title primary matrix-text">
+                <span class="panel-icon">📊</span>AMBIENT DATA STREAMS
+            </h3>
+            <div class="data-feed" data-testid="data-stream">
+                <div class="scrolling-data" id="scrolling-data">
+                    <!-- Data streams will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- System Logs -->
+        <div class="system-logs lab-panel">
+            <div class="logs-header">
+                <h4 class="logs-title">SYSTEM LOGS</h4>
+                <div class="timestamp primary" data-testid="timestamp"></div>
+            </div>
+            <div class="log-output" data-testid="log-output" id="log-output">
+                <div>Machine_Touch(Laboratories): Protocols Implementing</div>
+                <div>Symbiosis_Detector: STATUS_ONLINE</div>
+                <div>Neural_Network: PATHWAYS_MAPPING</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
