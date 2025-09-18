@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta author="Chatgpt.com(OpenAI), 8106165157089(RSA)" />
+  <title>Adeptus Mechanicus — Cyborg R&D Gallery</title>
+  <style>
+    :root{
+      --bg:#0b0b0b; --panel:#0f1113; --muted:#9aa1a6; --accent:#b33c00; --gold:#c9a24b; --glass:rgba(255,255,255,0.03);
+      --mono: 'Courier New', Courier, monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(179,60,0,0.04), transparent), var(--bg);
+      color:#e6e6e6; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    header{
+      display:flex; align-items:center; gap:18px; padding:20px 28px; border-bottom:1px solid rgba(255,255,255,0.03);
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    }
+    .logo{
+      width:56px; height:56px; display:grid; place-items:center; border-radius:8px; background:linear-gradient(135deg,var(--panel),#151617);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6) inset;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .logo .cog{font-family:var(--mono); font-weight:700; color:var(--gold)}
+    h1{font-size:20px; margin:0}
+    p.lead{margin:0; color:var(--muted); font-size:13px}
+
+    .layout{display:grid; grid-template-columns: 1fr 360px; gap:24px; padding:28px;}
+
+    .hero{
+      padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent); border:1px solid rgba(255,255,255,0.03);
+      display:flex; gap:16px; align-items:center; margin-bottom:20px;
+    }
+    .hero .title{font-family:var(--mono); color:var(--gold); font-size:14px; letter-spacing:1px}
+    .hero h2{margin:0; font-size:28px}
+    .hero .meta{color:var(--muted); font-size:13px}
+
+    .controls{display:flex; gap:8px; margin-left:auto}
+    .btn{background:var(--glass); border:1px solid rgba(255,255,255,0.03); padding:8px 12px; border-radius:8px; cursor:pointer; color:inherit; font-size:13px}
+    .btn.alt{background:transparent; border:1px dashed rgba(255,255,255,0.04)}
+
+    .gallery{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border-radius:10px; padding:12px; border:1px solid rgba(255,255,255,0.03); position:relative; overflow:hidden}
+    .thumb{height:160px; border-radius:8px; display:block; background-size:cover; background-position:center; margin-bottom:12px}
+    .card h3{margin:0; font-size:16px}
+    .card p{margin:6px 0 0; color:var(--muted); font-size:13px}
+    .card .tag{position:absolute; right:12px; top:12px; background:rgba(0,0,0,0.4); padding:4px 8px; border-radius:6px; font-size:12px; color:var(--gold); border:1px solid rgba(255,255,255,0.02)}
+
+    /* modal */
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:60}
+    .modal.show{display:flex}
+    .modal .sheet{width:min(900px,96vw); max-height:86vh; overflow:auto; background:linear-gradient(180deg,#0f1113, #0b0b0b); border-radius:12px; padding:20px; border:1px solid rgba(255,255,255,0.04)}
+    .sheet .top{display:flex; gap:12px}
+    .sheet .img{width:420px; height:280px; border-radius:8px; background-size:cover; background-position:center}
+    .sheet .info{flex:1}
+    .close{margin-left:auto}
+
+    /* codex sidebar */
+    aside{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border-radius:10px; padding:14px; border:1px solid rgba(255,255,255,0.03); height:calc(100vh - 150px); overflow:auto}
+    .tabs{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px}
+    .tab{padding:8px; border-radius:8px; background:transparent; border:1px solid rgba(255,255,255,0.02); text-align:center; cursor:pointer}
+    .tab.active{background:linear-gradient(90deg, rgba(179,60,0,0.08), rgba(201,162,75,0.02)); border-color:rgba(179,60,0,0.2); color:var(--gold)}
+    .codex{font-family:var(--mono); font-size:13px; line-height:1.5; color:var(--muted)}
+    .codex h4{color:var(--gold); margin-top:8px}
+
+    footer{padding:18px 28px; color:var(--muted); font-size:13px; border-top:1px solid rgba(255,255,255,0.03)}
+
+    /* small screens */
+    @media (max-width:900px){.layout{grid-template-columns:1fr} aside{height:auto}} 
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><div class="cog">⌘</div></div>
+    <div>
+      <h1>Adeptus Mechanicus — Cyborg R&D Gallery</h1>
+      <p class="lead">Curated artifacts & speculative specimens — devotion to the Machine, catalogued.</p>
+    </div>
+    <div class="controls">
+      <button class="btn" id="ambientToggle">Toggle Ambient</button>
+      <button class="btn alt" id="openCodex">Open Codex</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section>
+      <div class="hero">
+        <div>
+          <div class="title">Omnissiah Archive</div>
+          <h2>On sacred circuitry & the making of flesh</h2>
+          <div class="meta">A speculative gallery exploring creation myths, augmentation, and mutation — Genesis refracted through machine-religion.</div>
+        </div>
+      </div>
+
+      <div class="gallery" id="gallery"></div>
+
+    </section>
+
+    <aside id="codexPane" aria-hidden="false">
+      <div style="display:flex; align-items:center; gap:10px; justify-content:space-between; margin-bottom:12px">
+        <strong style="letter-spacing:1px">Codex — Genesis & The Fall</strong>
+        <small style="color:var(--muted)">Liturgical / Lab notes</small>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="gen1">Genesis 1</div>
+        <div class="tab" data-tab="gen2">Genesis 2</div>
+        <div class="tab" data-tab="fall">The Fall</div>
+      </div>
+
+      <div class="codex" id="codex">
+        <!-- content injected by JS -->
+      </div>
+    </aside>
+  </main>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+        <div style="font-family:var(--mono); color:var(--gold)">Specimen Codex</div>
+        <div style="color:var(--muted); font-size:13px">Detailed archival entry</div>
+        <button class="btn close" id="closeModal">Close</button>
+      </div>
+      <div class="top">
+        <div class="img" id="modalImg"></div>
+        <div class="info">
+          <h3 id="modalTitle"></h3>
+          <p id="modalDesc"></p>
+          <p style="color:var(--muted); margin-top:12px; font-size:13px" id="modalNotes"></p>
+          <div style="margin-top:14px; display:flex; gap:8px">
+            <button class="btn" id="downloadSpec">Export Spec</button>
+            <button class="btn alt" id="toggleAudioSpec">Playback Log</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div style="display:flex; justify-content:space-between; align-items:center">
+      <div>Curatorial synthesis: Machine-veneration, creation lore, and speculative mutagenesis.</div>
+      <div style="color:var(--muted)">Made for conceptual study — not literal theology.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Exhibit data
+    const exhibits = [
+      {
+        id:'omni-servo', title:'Omnissian Servo-skull', tag:'relic',
+        thumb:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="%230a0a0a"/><g fill="%23c9a24b"><circle cx="140" cy="120" r="36"/><rect x="100" y="160" width="80" height="120" rx="12"/></g></svg>',
+        desc:'A ritualized surveillance adjunct. Once pilfered prayers are encoded into its drive; its servos hum hymns when idle.',
+        notes:'Constructed from scavenged cogitator plates. Inscribed: "The Omnissiah observes."
+Observations: photoreceptors tuned to candlelight.'
+      },
+      {
+        id:'aug-limb', title:'Augmetic Limb Prototype', tag:'prototype',
+        thumb:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="%230b0b0b"/><g fill="%23b33c00"><rect x="120" y="80" width="420" height="60" rx="18"/><rect x="130" y="170" width="180" height="220" rx="20"/></g></svg>',
+        desc:'Hydraulic digits grafted to organic tendons; promised to return strength and closer communion with the machine.',
+        notes:'Trial subjects reported altered muscle memory and persistent hums in the residual limb. Ethical review flagged ritualized installation.'
+      },
+      {
+        id:'clothing-louse', title:'Clothing-louse (mutant)', tag:'mutant',
+        thumb:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="%230b0b0b"/><g fill="%239aa1a6"><ellipse cx="240" cy="150" rx="90" ry="56"/><circle cx="230" cy="120" r="12"/></g></svg>',
+        desc:'A speculative ectoparasite engineered to dwell in cloth fibers — syncretic symbiont and vector of memetic corrosion.',
+        notes:'Genomes show adhesive keratins adapted to textile weave. Appears to secrete oils that mimic worn fabric scents, increasing host attachment.'
+      },
+      {
+        id:'data-relic', title:'Cogitator Core — Data-Relic', tag:'archive',
+        thumb:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="%230b0b0b"/><g fill="%23c9a24b"><rect x="80" y="60" width="220" height="220" rx="16"/><circle cx="190" cy="170" r="42"/></g></svg>',
+        desc:'A failing processing core carved with liturgical diagrams. Its magnetic platters are etched with prayers and schematic fragments.',
+        notes:'Contains fragmented hymnal logs and several corrupted rites referencing the „making“ of man as a machine.'
+      },
+      {
+        id:'bioforge', title:'Bioforge Schematic', tag:'schematic',
+        thumb:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="%230b0b0b"/><g fill="%23b33c00"><path d="M60 120 h360 v180 h-360 z" rx="12"/></g></svg>',
+        desc:'An annotated diagram showing graft points, servo interfaces and sacral incantations used during augmentation rites.',
+        notes:'Schematic annotated in an old Imperial hand. Margins stained; tics mark forbidden nodes.'
+      }
+    ];
+
+    // render gallery
+    const gallery = document.getElementById('gallery');
+    exhibits.forEach(e=>{
+      const card = document.createElement('article'); card.className='card';
+      card.innerHTML = `
+        <div class="tag">${e.tag}</div>
+        <a href="#" data-id="${e.id}" class="openCard">
+          <div class="thumb" style="background-image:url('${e.thumb}')"></div>
+        </a>
+        <h3>${e.title}</h3>
+        <p>${e.desc}</p>
+      `;
+      gallery.appendChild(card);
+    });
+
+    // modal behavior
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalNotes = document.getElementById('modalNotes');
+    document.querySelectorAll('.openCard').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault(); const id = a.dataset.id; const ex = exhibits.find(x=>x.id===id);
+        modal.classList.add('show'); modal.setAttribute('aria-hidden','false');
+        modalImg.style.backgroundImage = `url('${ex.thumb}')`;
+        modalTitle.textContent = ex.title;
+        modalDesc.textContent = ex.desc;
+        modalNotes.textContent = ex.notes;
+      })
+    });
+    document.getElementById('closeModal').addEventListener('click', ()=>{modal.classList.remove('show'); modal.setAttribute('aria-hidden','true')});
+
+    // Ambient audio via WebAudio (no external files)
+    let audioCtx=null; let osc=null; let playing=false;
+    document.getElementById('ambientToggle').addEventListener('click', ()=>{
+      if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)();}
+      if(!playing){ osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type='sawtooth'; osc.frequency.value=55; gain.gain.value=0.02; osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); playing=true; document.getElementById('ambientToggle').textContent='Stop Ambient'}
+      else{ osc.stop(); playing=false; document.getElementById('ambientToggle').textContent='Toggle Ambient'}
+    });
+
+    // Codex content (Genesis 1, Genesis 2, The Fall) — KJV public domain passages
+    const codex = document.getElementById('codex');
+    const gen1 = `
+      <h4>Genesis — Chapter 1 (KJV)</h4>
+      <p>1 In the beginning God created the heaven and the earth. 2 And the earth was without form, and void; and darkness was upon the face of the deep...</p>
+      <p style="color:var(--muted); font-size:12px; margin-top:8px">(Full chapter available on request or embedded as a longer scroll.)</p>
+    `;
+    const gen2 = `
+      <h4>Genesis — Chapter 2 (KJV)</h4>
+      <p>1 Thus the heavens and the earth were finished, and all the host of them. 2 And on the seventh day God ended his work which he had made...</p>
+      <p style="color:var(--muted); font-size:12px; margin-top:8px">(Chapter 2 focuses on the shaping of man, the Garden, and the breath of life.)</p>
+    `;
+    const fall = `
+      <h4>The Fall (Genesis 3 — summary)</h4>
+      <p>Temptation, disobedience and exile: motifs resonant with augmentation. Where divine order relaxes, pride and curiosity produce consequences — a thematic mirror for R&D hubris.</p>
+      <p style="color:var(--muted); font-size:12px; margin-top:8px">(Use these passages as a narrative overlay: creation, intimate shaping, and the moral fracture that follows.)</p>
+    `;
+
+    codex.innerHTML = gen1;
+    document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active'); const which = t.dataset.tab; if(which==='gen1') codex.innerHTML=gen1; if(which==='gen2') codex.innerHTML=gen2; if(which==='fall') codex.innerHTML=fall; 
+    }));
+
+    // open codex focus
+    document.getElementById('openCodex').addEventListener('click', ()=>{ document.getElementById('codexPane').scrollIntoView({behavior:'smooth'}); });
+
+    // small export (downloads a JSON spec)
+    document.getElementById('downloadSpec').addEventListener('click', ()=>{
+      const payload = {title: modalTitle.textContent, desc: modalDesc.textContent, notes: modalNotes.textContent, id: Date.now()};
+      const blob = new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a'); a.href=url; a.download='specimen-'+payload.id+'.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // quick accessibility: close modal on Esc
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); }});
+
+    // initial small animation
+    window.addEventListener('load', ()=>{ document.querySelectorAll('.card').forEach((c,i)=>{ c.style.opacity=0; setTimeout(()=>c.style.transition='opacity .4s ease',50); setTimeout(()=>c.style.opacity=1, 120*i)});});
+  </script>
+</body>
+</html>
