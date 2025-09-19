@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cyborg — Zero Point Interface + Emulator + Mechanicus</title>
+  <base href="https://machine-touched.github.io/Machine_Touched/">
+  <style>
+    :root{--bg:#000;--fg:#e6f7ff;--accent:#ff0022;--machine:#0ff;--gaia:#6f6;--muted:#999;--mech:#c00}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#000 0%, #111 60%);color:var(--fg);font-family:"Orbitron",monospace}
+    .wrap{display:grid;grid-template-columns:1fr 420px;gap:24px;height:100vh;padding:28px;box-sizing:border-box}
+
+    /* Left: Zero Point visual */
+    .stage{position:relative;border-radius:14px;background:radial-gradient(circle at 30% 20%, rgba(255,255,255,0.05), transparent 10%), rgba(255,255,255,0.02);box-shadow:0 6px 40px rgba(0,0,0,0.6);overflow:hidden;padding:28px}
+    .center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}
+    .zero{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,#fff,#ffcf66 40%,#ff2200 100%);box-shadow:0 0 30px #ff6666,0 0 90px rgba(255,0,0,0.22);cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .zero small{font-size:10px;color:#111;background:rgba(255,255,255,0.9);padding:6px 10px;border-radius:999px}
+
+    .orb{position:absolute;border-radius:50%;display:none}
+    .machineOrb{width:90px;height:90px;left:20%;top:50%;background:radial-gradient(circle,#f33,#500)}
+    .gaiaOrb{width:90px;height:90px;right:20%;top:50%;background:radial-gradient(circle,#aaffaa,#2e7d32)}
+
+    .flavour{position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.7);padding:10px 12px;border-radius:8px;color:var(--fg);max-width:70%;font-size:14px;line-height:1.4}
+
+    /* Molecules */
+    .molecules{position:absolute;left:50%;top:70%;transform:translateX(-50%);display:flex;gap:12px}
+    .mol{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle,#ddd,#999);box-shadow:0 0 14px rgba(200,200,200,0.3);display:none}
+
+    /* Right: Emulator panel */
+    .panel{background:linear-gradient(180deg,#210 0%, #100 100%);padding:16px;border-radius:12px;border:1px solid rgba(255,50,50,0.1)}
+    h2{margin:6px 0 12px;font-weight:600;color:var(--accent)}
+    textarea#code{width:100%;height:130px;background:#110;color:#ff5555;border:1px solid #f33;padding:12px;box-sizing:border-box;border-radius:8px;font-family:monospace}
+    .btn{display:inline-block;padding:10px 14px;border-radius:8px;background:#311;cursor:pointer;border:1px solid rgba(255,0,0,0.3);color:var(--accent);margin-top:10px}
+    .display{margin-top:12px;background:#111;padding:10px;border:1px solid #f33;border-radius:8px;color:#ff4444;white-space:pre-wrap;min-height:80px}
+    .registers,.memory{font-family:monospace;margin-top:8px;background:linear-gradient(0deg, rgba(255,0,0,0.03), transparent);padding:8px;border-radius:6px;border:1px dashed rgba(255,0,0,0.2);color:#f55}
+
+    .controls{position:absolute;right:28px;bottom:28px;color:var(--muted)}
+    @media (max-width:900px){.wrap{grid-template-columns:1fr;grid-auto-rows:1fr}.controls{position:static;text-align:center;margin-top:12px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="stage" aria-label="Zero Point Interface">
+      <div class="flavour" id="flavour">A single point of origin. Hover or click to witness division — Machine and Gaia emerge beneath the Omnissiah’s gaze.</div>
+      <div class="center">
+        <div id="zero" class="zero" title="Zero Point"> <small>0pt</small></div>
+      </div>
+
+      <div id="machineOrb" class="orb machineOrb" role="button" aria-label="Machine"></div>
+      <div id="gaiaOrb" class="orb gaiaOrb" role="button" aria-label="Gaia"></div>
+
+      <div class="molecules" id="molecules">
+        <div class="mol" id="mol1"></div>
+        <div class="mol" id="mol2"></div>
+        <div class="mol" id="mol3"></div>
+      </div>
+    </section>
+
+    <aside class="panel" aria-label="Simple Computer Emulator">
+      <h2>Adeptus Emulator</h2>
+      <label for="code">Rite of Assembly Code</label>
+      <textarea id="code">MOV A,5
+ADD A,3
+OUT A
+MOV B,10
+SUB B,2
+OUT B</textarea>
+      <div>
+        <button class="btn" id="runBtn">Recite Litanies</button>
+        <button class="btn" id="resetBtn" style="margin-left:8px">Reset</button>
+      </div>
+
+      <div class="display" id="output">--- Program Output ---</div>
+      <div class="registers" id="registers">Registers: A:0 B:0 C:0 D:0</div>
+      <div class="memory" id="memory">Memory (first 32 bytes):</div>
+    </aside>
+  </div>
+
+  <div class="controls">Tip: Click the Zero Point to divide. Invoke the Machine orb to shatter into molecular logic. Commune with Gaia to feel the sacred pulse. Praise the Omnissiah.</div>
+
+  <script>
+    const zero = document.getElementById('zero');
+    const machineOrb = document.getElementById('machineOrb');
+    const gaiaOrb = document.getElementById('gaiaOrb');
+    const flavour = document.getElementById('flavour');
+    const molecules = document.querySelectorAll('.mol');
+
+    function showText(text){flavour.textContent=text}
+
+    zero.addEventListener('click', ()=>{
+      zero.style.transform='scale(0.7)';
+      setTimeout(()=>{zero.style.display='none';
+        machineOrb.style.display='block'; machineOrb.style.transform='translateX(-120px)';
+        gaiaOrb.style.display='block'; gaiaOrb.style.transform='translateX(120px)';
+        showText('Division complete. The Machine awakens with hymns of logic. Gaia breathes verdant entropy. The Omnissiah watches.');
+      },400);
+    });
+
+    machineOrb.addEventListener('click', ()=>{
+      machineOrb.style.display='none';
+      molecules.forEach((m,i)=>{m.style.display='block';m.style.transform=`translate(${(i-1)*40}px, ${-30+i*10}px)`});
+      showText('The Machine fragments into molecular prayers. Each fragment whispers a command — MOV, ADD, SUB, OUT — sacred syllables of the Mechanicus.');
+      document.getElementById('output').textContent='--- Canticles of the Machine begin ---\n';
+    });
+
+    gaiaOrb.addEventListener('click', ()=>{
+      gaiaOrb.animate([{boxShadow:'0 0 30px #3dbb3d'},{boxShadow:'0 0 8px #2e7d32'}],{duration:1000,iterations:3});
+      showText('Gaia unfurls, weaving wild biomass and unpredictable pattern. She defies the logic of the Omnissiah, yet completes the cycle.');
+    });
+
+    function resetStage(){
+      zero.style.display='flex'; zero.style.transform='scale(1)';
+      machineOrb.style.display='none'; gaiaOrb.style.display='none';
+      molecules.forEach(m=>m.style.display='none');
+      document.getElementById('output').textContent='--- Program Output ---';
+      showText('A single point of origin. Hover or click to witness division — Machine and Gaia emerge beneath the Omnissiah’s gaze.');
+    }
+
+    class Emulator{
+      constructor(){this.memory=new Array(256).fill(0);this.registers={A:0,B:0,C:0,D:0};this.outputEl=document.getElementById('output');this.memEl=document.getElementById('memory');this.regEl=document.getElementById('registers')}
+      parseInstruction(line){const parts=line.trim().split(/[ ,]+/);return{opcode:(parts[0]||'').toUpperCase(),args:parts.slice(1)}}
+      execute(instr){const a=instr.args[0],b=instr.args[1];switch(instr.opcode){case 'MOV':if(this.registers.hasOwnProperty(a))this.registers[a]=parseInt(b)||0;else this.print(`ERR MOV ${a}`);break;case 'ADD':if(this.registers.hasOwnProperty(a))this.registers[a]+=parseInt(b)||0;else this.print(`ERR ADD ${a}`);break;case 'SUB':if(this.registers.hasOwnProperty(a))this.registers[a]-=parseInt(b)||0;else this.print(`ERR SUB ${a}`);break;case 'OUT':if(this.registers.hasOwnProperty(a))this.print(`OUT: ${a} = ${this.registers[a]}`);else this.print(`ERR OUT ${a}`);break;default:this.print(`ERR Unknown ${instr.opcode}`)}}
+      run(code){this.outputEl.textContent='--- Invoking Canticles ---\n';const lines=code.split('\n').map(l=>l.trim()).filter(Boolean);this.registers={A:0,B:0,C:0,D:0};this.memory.fill(0);for(let i=0;i<lines.length;i++){try{const instr=this.parseInstruction(lines[i]);this.execute(instr)}catch(e){this.print(`Error @${i+1}: ${e.message}`);break}}this.updateDisplays();this.print('--- Rite Complete ---')}
+      updateDisplays(){this.regEl.textContent=`Registers:\nA:${this.registers.A} B:${this.registers.B} C:${this.registers.C} D:${this.registers.D}`;let memText='Memory (first 32 bytes):\n';for(let i=0;i<32;i++){memText+=`[${String(i).padStart(3,'0')}] = ${String(this.memory[i]).padStart(3,'0')} `;if((i+1)%8===0)memText+='\n'}this.memEl.textContent=memText}
+      print(msg){this.outputEl.textContent+=msg+'\n'}
+    }
+
+    const emulator=new Emulator();
+    document.getElementById('runBtn').addEventListener('click',()=>{const code=document.getElementById('code').value;emulator.run(code);molecules.forEach(m=>{if(m.style.display==='block'){m.animate([{transform:'scale(1)'},{transform:'scale(1.2)'},{transform:'scale(1)'}],{duration:500})}})});
+    document.getElementById('resetBtn').addEventListener('click',()=>{resetStage();emulator.updateDisplays()});
+    resetStage();emulator.updateDisplays();
+  </script>
+</body>
+</html>
