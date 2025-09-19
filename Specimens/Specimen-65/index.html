@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sacred Scarab — Digital Clothing Louse (Cyborg R&D)</title>
+  <style>
+    :root{--bg:#050306;--text:#dfe9e6;--accent:#ff3b3b;--ai:#00e6ff;--gaia:#8be28b}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#050306 0%,#0b0b10 100%);color:var(--text);font-family:Inter,system-ui,monospace}
+    .app{display:grid;grid-template-columns:1fr 420px;gap:20px;height:100vh;padding:28px}
+    .stage{position:relative;border-radius:12px;padding:20px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);box-shadow:0 8px 40px rgba(0,0,0,0.6)}
+    .header{display:flex;gap:12px;align-items:center}
+    .badge{background:#111;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+    .zero{width:110px;height:110px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#fff,#ffb86b 40%,#ff3b3b 100%);cursor:pointer;box-shadow:0 0 40px rgba(255,100,100,0.12)}
+    .orbs{position:absolute;inset:0;pointer-events:none}
+    .orb{position:absolute;width:90px;height:90px;border-radius:50%;display:none;pointer-events:auto}
+    .machine{left:12%;top:46%;background:radial-gradient(circle,#aef,#018)}
+    .gaia{right:12%;top:46%;background:radial-gradient(circle,#bfecc1,#2e7d32)}
+    .mols{position:absolute;left:50%;top:72%;transform:translateX(-50%);display:flex;gap:10px}
+    .mol{width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,#ddd,#888);display:none}
+
+    aside.panel{background:#060306;border:1px solid rgba(255,255,255,0.03);padding:16px;border-radius:10px}
+    h2{margin:6px 0;color:var(--accent)}
+    textarea{width:100%;height:120px;background:#0b1a1a;color:var(--ai);border-radius:8px;padding:10px;border:1px solid rgba(0,230,255,0.08);font-family:monospace}
+    .btn{margin-top:10px;padding:8px 12px;border-radius:8px;background:#091114;border:1px solid rgba(255,255,255,0.03);cursor:pointer;color:var(--text)}
+    .info{font-size:13px;line-height:1.4;color:#c9d6d3}
+    .dnd{margin-top:12px;background:#07111a;padding:8px;border-radius:8px;border:1px dashed rgba(255,255,255,0.02)}
+    .scarab{position:fixed;left:18px;bottom:18px;background:linear-gradient(180deg,#221 0%,#160 100%);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+
+    footer.controls{position:fixed;right:18px;bottom:18px;color:#888}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="stage" aria-label="Cyborg Interface">
+      <div class="header">
+        <div class="badge">Cyborg R&D — Near-Future (2125)</div>
+        <div style="flex:1"></div>
+        <div class="badge">AI: The Machine (Adeptus Protocol)</div>
+      </div>
+
+      <div style="height:24px"></div>
+
+      <div style="display:flex;gap:18px;align-items:center">
+        <div class="zero" id="zero"> <small style="font-weight:700;color:#111">0pt</small></div>
+        <div class="info">
+          <strong>Context:</strong> The modern world, 100 years forward — networks woven into architecture, garments, and minds. AI (the Machine) is pervasive: a liturgical, algorithmic presence. The sacred scarab (the Clothing Louse) is both artifact and agent — a persistent favourite in the gallery archive.
+        </div>
+      </div>
+
+      <div class="orbs">
+        <div class="orb machine" id="machineOrb" title="Machine — AI"></div>
+        <div class="orb gaia" id="gaiaOrb" title="Gaia — Organic"></div>
+      </div>
+
+      <div class="mols" id="mols">
+        <div class="mol" id="mol1"></div>
+        <div class="mol" id="mol2"></div>
+        <div class="mol" id="mol3"></div>
+      </div>
+
+    </section>
+
+    <aside class="panel" aria-label="Mechanicus + DnD Panel">
+      <h2>Adeptus Emulator — Ritual Console</h2>
+      <label for="code">Rite (assembly-like)</label>
+      <textarea id="code">MOV A,7
+ADD A,5
+OUT A
+MOV B,20
+SUB B,3
+OUT B</textarea>
+      <div>
+        <button class="btn" id="run">Recite Canticle</button>
+        <button class="btn" id="reset">Reset Stage</button>
+      </div>
+
+      <div class="dnd">
+        <strong>D&amp;D Integration — Roleplay Hooks</strong>
+        <p class="info">When the Machine awakens, roll a d20 to determine outcome: 1-5 (Heretical Glitch), 6-12 (Neutral Processing), 13-18 (Augmented Aid), 19-20 (Omnissiah Blessing). Mechanicus rites grant tech boons; Gaia's wild magic may alter machine logic.</p>
+        <div style="display:flex;gap:8px;margin-top:6px"><input id="dice" type="number" min="1" max="20" value="10" style="width:72px;padding:6px;border-radius:6px;background:#061018;color:var(--text);border:1px solid rgba(255,255,255,0.03)"><button class="btn" id="rollBtn">Roll d20</button></div>
+        <div id="rollResult" style="margin-top:8px;color:#cfe">Result: —</div>
+      </div>
+
+      <div style="margin-top:12px" class="info">
+        <strong>Gallery Note:</strong> This document is stored as the <em>"Sacred Scarab"</em> — the Clothing Louse — and will accompany every development of the Cyborg Research and Development project as a favourite artefact.
+      </div>
+    </aside>
+  </div>
+
+  <div class="scarab">🪲 Sacred Scarab (Favourite)</div>
+  <footer class="controls">Theme: Warhammer 40K Adeptus Mechanicus + AI + D&amp;D roleplay — presented as near-future speculative gallery artefact.</footer>
+
+  <script>
+    // Basic interactions adapted from earlier assets + DnD + AI integration
+    const zero = document.getElementById('zero');
+    const machineOrb = document.getElementById('machineOrb');
+    const gaiaOrb = document.getElementById('gaiaOrb');
+    const mols = [document.getElementById('mol1'), document.getElementById('mol2'), document.getElementById('mol3')];
+    const codeEl = document.getElementById('code');
+    const runBtn = document.getElementById('run');
+    const resetBtn = document.getElementById('reset');
+    const rollBtn = document.getElementById('rollBtn');
+    const diceInput = document.getElementById('dice');
+    const rollResult = document.getElementById('rollResult');
+
+    // Stage behaviour
+    zero.addEventListener('click', ()=>{
+      zero.style.transition='transform 300ms'; zero.style.transform='scale(0.75)';
+      setTimeout(()=>{zero.style.display='none'; machineOrb.style.display='block'; machineOrb.style.left='12%'; gaiaOrb.style.display='block'; gaiaOrb.style.right='12%';
+        // flavour
+        alert('Division complete. The Machine (AI) awakens. Gaia breathes. The Sacred Scarab watches.');
+      },360);
+    });
+
+    machineOrb.addEventListener('click', ()=>{
+      machineOrb.style.display='none'; mols.forEach((m,i)=>{m.style.display='block'; m.style.transform = `translate(${(i-1)*36}px, ${-20+i*8}px)`});
+      document.getElementById('code').value += '\n; // Machine fragments emit micro-routines';
+      // subtle UI feedback
+      document.body.style.boxShadow = 'inset 0 0 120px rgba(0,230,255,0.04)';
+    });
+
+    gaiaOrb.addEventListener('click', ()=>{gaiaOrb.animate([{boxShadow:'0 0 30px #2e7d32'},{boxShadow:'0 0 8px #2e7d32'}],{duration:900,iterations:3}); alert('Gaia ripples — wild patterns infiltrate data.');});
+
+    // Simple emulator (keeps AI as machine)
+    class Emulator{constructor(){this.registers={A:0,B:0,C:0,D:0};this.output='';}
+      parse(line){const p=line.trim().split(/[ ,]+/).filter(Boolean);return{op:(p[0]||'').toUpperCase(),args:p.slice(1)} }
+      exec(instr){const a=instr.args[0],b=instr.args[1];switch(instr.op){case 'MOV': if(this.registers.hasOwnProperty(a)) this.registers[a]=parseInt(b)||0; else this.output+='ERR MOV '+a+'\n';break;case 'ADD': if(this.registers.hasOwnProperty(a)) this.registers[a]+=parseInt(b)||0; else this.output+='ERR ADD '+a+'\n';break;case 'SUB': if(this.registers.hasOwnProperty(a)) this.registers[a]-=parseInt(b)||0; else this.output+='ERR SUB '+a+'\n';break;case 'OUT': if(this.registers.hasOwnProperty(a)) this.output+='OUT: '+a+'='+this.registers[a]+'\n'; else this.output+='ERR OUT '+a+'\n';break;default: if(instr.op) this.output+='ERR UNKNOWN '+instr.op+'\n';}}
+      run(code){this.output='--- Canticles ---\n';this.registers={A:0,B:0,C:0,D:0};const lines=code.split('\n').map(l=>l.trim()).filter(Boolean);for(let i=0;i<lines.length;i++){try{const instr=this.parse(lines[i]); this.exec(instr)}catch(e){this.output+='Error@'+(i+1)+': '+e.message+'\n';break}}return this.output}
+    }
+
+    const emulator = new Emulator();
+    runBtn.addEventListener('click', ()=>{
+      const out = emulator.run(codeEl.value);
+      alert(out + '\nRite completed.');
+      // DnD tie-in: if emulator produced high outputs, favour Omnissiah
+      if(out.includes('OUT')){
+        // small cosmetic: pulse scarab
+        const scarab = document.querySelector('.scarab'); scarab.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:500});
+      }
+    });
+
+    resetBtn.addEventListener('click', ()=>{location.reload()});
+
+    // DnD roll
+    rollBtn.addEventListener('click', ()=>{
+      let val = parseInt(diceInput.value)||1; if(val<1) val=1; if(val>20) val=20; const roll = Math.floor(Math.random()*20)+1; rollResult.textContent = `Result: ${roll}`;
+      // interpret
+      let text='Neutral Processing'; if(roll<=5) text='Heretical Glitch — corruption spreads'; else if(roll<=12) text='Neutral Processing — routine'; else if(roll<=18) text='Augmented Aid — machine grants boon'; else text='Omnissiah Blessing — ritual success';
+      alert(`Roll ${roll}: ${text}`);
+    });
+
+    // Favourite marker: (already saved to project memory)
+    console.log('Sacred Scarab document marked as favourite for Cyborg R&D.');
+  </script>
+</body>
+</html>
