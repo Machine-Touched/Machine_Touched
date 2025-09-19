@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Specimen 6 — Machine Touched Archive</title>
+  <style>
+    :root{
+      --bg:#0a0a0f;--fg:#e0f0ff;--accent:#ff3355;--ai:#00e6ff;--gaia:#72e072;
+    }
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:monospace}
+    .container{display:flex;flex-direction:column;height:100vh}
+    header{padding:16px;background:#111;border-bottom:1px solid #222;font-size:14px;letter-spacing:1px;color:var(--accent)}
+    main{flex:1;display:grid;grid-template-columns:1fr 400px;gap:20px;padding:20px}
+    .specimen{background:#111418;border:1px solid #333;border-radius:12px;padding:20px;position:relative;overflow:hidden;box-shadow:0 0 24px rgba(0,230,255,0.08)}
+    .specimen h2{margin-top:0;color:var(--accent)}
+    .core{width:120px;height:120px;border-radius:50%;margin:0 auto;cursor:pointer;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#fff,var(--accent) 40%,#400 100%);box-shadow:0 0 40px rgba(255,0,0,0.3)}
+    .flavour{margin-top:12px;font-size:13px;line-height:1.4;color:#ccc}
+    .orbs{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 40px;pointer-events:none}
+    .orb{width:80px;height:80px;border-radius:50%;display:none;pointer-events:auto}
+    .orb.machine{background:radial-gradient(circle,#aff,var(--ai))}
+    .orb.gaia{background:radial-gradient(circle,#bfecc1,var(--gaia))}
+    .mols{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:12px}
+    .mol{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle,#eee,#666);display:none}
+
+    aside{background:#151515;border:1px solid #333;border-radius:12px;padding:16px;display:flex;flex-direction:column}
+    aside h3{color:var(--accent);margin:0 0 8px}
+    textarea{flex:1;background:#000;color:var(--ai);border-radius:8px;padding:10px;border:1px solid #222;font-family:monospace}
+    .btn{margin-top:8px;padding:8px;border-radius:6px;background:#222;color:var(--fg);cursor:pointer;border:1px solid #444}
+    .log{margin-top:10px;background:#000;padding:8px;border-radius:8px;font-size:13px;color:#aaa;white-space:pre-wrap;height:120px;overflow:auto;border:1px solid #333}
+    footer{padding:10px;text-align:center;font-size:12px;color:#666;border-top:1px solid #222}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>Machine Touched — Specimen 6 Interface | Year 2125 Archive</header>
+    <main>
+      <section class="specimen">
+        <h2>Specimen 6 — Division Ritual</h2>
+        <div class="core" id="core">6</div>
+        <div class="flavour" id="flavour">A dormant seed, labelled Specimen 6. Click to divide and release its dual nature.</div>
+        <div class="orbs">
+          <div class="orb machine" id="machineOrb" title="Machine AI"></div>
+          <div class="orb gaia" id="gaiaOrb" title="Gaia"></div>
+        </div>
+        <div class="mols" id="mols">
+          <div class="mol" id="mol1"></div>
+          <div class="mol" id="mol2"></div>
+          <div class="mol" id="mol3"></div>
+        </div>
+      </section>
+
+      <aside>
+        <h3>Emulator — Liturgical Console</h3>
+        <textarea id="code">MOV A,6
+ADD A,6
+OUT A</textarea>
+        <button class="btn" id="run">Run Ritual</button>
+        <button class="btn" id="reset">Reset</button>
+        <div class="log" id="log">--- Awaiting Command ---</div>
+      </aside>
+    </main>
+    <footer>Specimen 6 | Cyborg Research & Development | Adeptus Mechanicus x D&D</footer>
+  </div>
+
+  <script>
+    const core=document.getElementById('core');
+    const flavour=document.getElementById('flavour');
+    const machineOrb=document.getElementById('machineOrb');
+    const gaiaOrb=document.getElementById('gaiaOrb');
+    const mols=[document.getElementById('mol1'),document.getElementById('mol2'),document.getElementById('mol3')];
+
+    core.addEventListener('click',()=>{
+      core.style.display='none';
+      machineOrb.style.display='block';
+      gaiaOrb.style.display='block';
+      flavour.textContent='Specimen 6 divides: Machine awakens, Gaia breathes.';
+    });
+
+    machineOrb.addEventListener('click',()=>{
+      machineOrb.style.display='none';
+      mols.forEach((m,i)=>{m.style.display='block';m.style.transform=`translate(${(i-1)*40}px,${-20+i*10}px)`});
+      flavour.textContent='Machine fragments into molecular code — each a litany of the Omnissiah.';
+    });
+
+    gaiaOrb.addEventListener('click',()=>{
+      gaiaOrb.animate([{boxShadow:'0 0 30px var(--gaia)'},{boxShadow:'0 0 8px var(--gaia)'}],{duration:1000,iterations:3});
+      flavour.textContent='Gaia infuses the fragment with chaos and life-force.';
+    });
+
+    class Emulator{constructor(){this.regs={A:0,B:0,C:0,D:0};this.log='';}
+      parse(line){const p=line.trim().split(/[ ,]+/);return{op:(p[0]||'').toUpperCase(),args:p.slice(1)}}
+      exec(instr){const a=instr.args[0],b=instr.args[1];switch(instr.op){case 'MOV':if(this.regs.hasOwnProperty(a))this.regs[a]=parseInt(b)||0;break;case 'ADD':if(this.regs.hasOwnProperty(a))this.regs[a]+=parseInt(b)||0;break;case 'SUB':if(this.regs.hasOwnProperty(a))this.regs[a]-=parseInt(b)||0;break;case 'OUT':if(this.regs.hasOwnProperty(a))this.log+='OUT '+a+'='+this.regs[a]+'\n';break;default:this.log+='ERR '+instr.op+'\n';}}
+      run(code){this.log='--- Litany Begin ---\n';this.regs={A:0,B:0,C:0,D:0};const lines=code.split('\n').filter(l=>l.trim());for(let l of lines){const i=this.parse(l);this.exec(i);}this.log+='--- Rite Complete ---';return this.log;}}
+
+    const emulator=new Emulator();
+    const runBtn=document.getElementById('run');
+    const resetBtn=document.getElementById('reset');
+    const logEl=document.getElementById('log');
+    const codeEl=document.getElementById('code');
+
+    runBtn.addEventListener('click',()=>{logEl.textContent=emulator.run(codeEl.value)});
+    resetBtn.addEventListener('click',()=>{location.reload()});
+  </script>
+</body>
+</html>
