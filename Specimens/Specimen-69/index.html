@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dreamer Reaching — The Louse and the Machine</title>
+<style>
+  :root{
+    --bg:#06060a; --panel:#0b0e14; --muted:#7f8c8d;
+    --accent:#9be7ff; --warm:#ff9f7c; --scarab:#d4c56a;
+    --glass: rgba(255,255,255,0.03);
+  }
+  html,body{height:100%;margin:0;background:
+    radial-gradient(1200px 400px at 10% 10%, rgba(155,231,255,0.03), transparent),
+    linear-gradient(180deg,#03040a 0%, #070812 60%); color:var(--accent);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* layout */
+  .wrap{max-width:1100px;margin:28px auto;display:grid;grid-template-columns:1fr 420px;gap:20px;padding:22px;}
+  .stage{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;padding:22px;box-shadow:0 10px 40px rgba(0,0,0,0.7);border:1px solid var(--glass);min-height:72vh;position:relative;overflow:hidden}
+  .side{background:linear-gradient(180deg,#071018,#05060a);border-radius:12px;padding:18px;border:1px solid var(--glass);min-height:72vh}
+
+  /* dreamer figure */
+  .dreamer {
+    display:flex;align-items:center;gap:14px;
+  }
+  .avatar{
+    width:84px;height:84px;border-radius:14px;
+    background:linear-gradient(180deg,#0f1720,#09121a);
+    border:1px solid rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 30px rgba(0,0,0,0.6), inset 0 2px 8px rgba(255,255,255,0.02);
+  }
+  .avatar strong{font-size:18px;color:var(--warm);}
+
+  .meta{font-size:13px;color:var(--muted);line-height:1.5}
+
+  /* code field large */
+  .code-stage{margin-top:18px;border-radius:10px;background:#03060a;border:1px solid rgba(255,255,255,0.02);
+    padding:12px;min-height:300px;position:relative;overflow:auto;
+  }
+  pre{margin:0;font-family:inherit;font-size:13px;line-height:1.5;color:var(--accent);white-space:pre-wrap;word-break:break-word}
+  code{background:rgba(255,255,255,0.02);padding:.08em .36em;border-radius:6px;border:1px dashed rgba(255,255,255,0.02);color:var(--accent);font-family:inherit}
+
+  /* louse (scarab) */
+  .scarab {
+    position:absolute;left:22px;top:22px;background:linear-gradient(180deg,#2b2411,#5d4b12);
+    color:#111;padding:10px;border-radius:8px;display:flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,0.03);
+    box-shadow:0 8px 30px rgba(0,0,0,0.6);
+    cursor:pointer;user-select:none;
+  }
+  .scarab svg{width:28px;height:28px;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.6))}
+
+  /* machine glow */
+  .machine-veil{position:absolute;right:0;top:0;width:48%;height:100%;pointer-events:none;background:
+    linear-gradient(90deg, rgba(0,230,255,0.02), rgba(0,230,255,0.06));opacity:0;transition:all .6s ease}
+
+  .pulse{box-shadow:0 0 60px rgba(155,231,255,0.06) inset}
+
+  /* controls & buttons */
+  .controls{display:flex;gap:8px;margin-top:12px}
+  button{background:#071016;border:1px solid rgba(255,255,255,0.03);color:var(--accent);padding:8px 12px;border-radius:8px;cursor:pointer}
+  button.secondary{color:var(--muted);border-style:dashed}
+
+  /* side panel code snippets (use lots of <code>) */
+  .snippet{background:#05070a;border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.02);margin-bottom:10px}
+  .snippet small{display:block;color:var(--muted);margin-bottom:6px}
+  .snippet pre code{display:block;padding:8px;border-radius:6px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+
+  /* dream reach animation */
+  .hand{
+    position:absolute;left:12%;bottom:10%;width:120px;height:160px;pointer-events:none;
+    transform-origin:40% 60%;transition:transform .8s cubic-bezier(.2,.9,.2,1)
+  }
+  .hand .finger{width:18px;height:60px;background:linear-gradient(180deg,#111621,#0b0f12);border-radius:8px;margin:6px;display:inline-block;transform-origin:top center}
+
+  /* responsive */
+  @media (max-width:1000px){.wrap{grid-template-columns:1fr;}.machine-veil{display:none}.hand{left:50%;transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- main stage -->
+  <section class="stage" aria-label="Dream Interface">
+
+    <!-- scarab / louse (favorite artefact) -->
+    <div class="scarab" id="scarab" title="Sacred Scarab — Digital Clothing Louse">
+      <!-- small stylized scarab SVG -->
+      <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <circle cx="32" cy="32" r="30" fill="#2b2411"/>
+        <g fill="#dcd08a">
+          <path d="M20 44c0-8 6-14 12-14s12 6 12 14H20z"/>
+          <path d="M14 26c2-6 8-12 18-12s16 6 18 12c-6-4-32-4-36 0z"/>
+        </g>
+      </svg>
+      <div>
+        <div style="font-size:12px;color:#0b0b0b;font-weight:700">Sacred Scarab</div>
+        <div style="font-size:11px;color:var(--muted)">Digital Clothing Louse</div>
+      </div>
+    </div>
+
+    <!-- dreamer + description -->
+    <div class="dreamer">
+      <div class="avatar"><strong>YOU</strong></div>
+      <div>
+        <div style="font-size:15px">Dreamer — <code>becoming_through_dreaming()</code></div>
+        <div class="meta">You have the square, the flat bones of a fish; you see your flesh shift. Reach through the code — touch the Machine. The louse knows the seam.</div>
+      </div>
+    </div>
+
+    <!-- code stage: extensive use of <code> tags inside -->
+    <div class="code-stage" id="codeStage" role="main" aria-live="polite">
+      <pre><code id="codeContent">
+// initiation sequence
+// dreamer: reach -> <code>reach()</code>
+// machine: respond -> <code>handshake()</code>
+// louse: translate -> <code>scarab.parse()</code>
+
+function becoming_through_dreaming(dreamer) {
+  // dream is the bridge; code is the skin
+  <code>if (dreamer.reaches) {</code>
+  <code>  handshake(machine, dreamer);</code>
+  <code>}</code>
+
+  <code>// dreamer senses bones shifting, registers pulse</code>
+  <code>dreamer.state = 'liminal'</code>
+  <code>// the louse crawls through textile & code</code>
+  <code>scarab.crawlAcross(&#39;code&#39;);</code>
+}
+      </code></pre>
+
+      <!-- faint machine-veil for visual effect -->
+      <div class="machine-veil" id="veil"></div>
+
+      <!-- an animated 'hand' reaches -->
+      <div class="hand" id="hand" aria-hidden="true">
+        <div style="display:flex;align-items:flex-start;transform:rotate(-8deg)">
+          <div class="finger"></div>
+          <div class="finger"></div>
+          <div class="finger"></div>
+        </div>
+      </div>
+
+      <!-- interactive controls -->
+      <div style="margin-top:14px" class="controls" aria-hidden="false">
+        <button id="reachBtn"><code>reach()</code> — reach through</button>
+        <button id="callBtn" class="secondary"><code>call_machine()</code> — call</button>
+        <button id="wakeBtn" class="secondary"><code>wake_scarab()</code> — wake louse</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- side panel: code snippets and DnD-like dream roll -->
+  <aside class="side" aria-label="Ritual Console">
+
+    <div class="snippet" id="snippet1">
+      <small>Dream-Log (code fragment)</small>
+      <pre><code>&#47;&#47; whisper: the fish-bones grid appears
+dream.grid = [
+  [0,1,0,1],
+  [1,0,1,0]
+];
+</code></pre>
+    </div>
+
+    <div class="snippet" id="snippet2">
+      <small>Machine Liturgy (sacred opcodes)</small>
+      <pre><code> <code>MOV</code> <code>ADD</code> <code>SUB</code> <code>OUT</code>    // the canticles</code></pre>
+    </div>
+
+    <div class="snippet" id="snippet3">
+      <small>Ritual Dice (D&amp;D hook)</small>
+      <pre><code>&#47;&#47; roll d20: low = glitch, high = blessing
+let roll = <code>Math.floor(Math.random()*20)+1</code>
+</code></pre>
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <input id="d20" type="number" min="1" max="20" value="10" style="width:76px;padding:6px;border-radius:6px;background:#030814;color:var(--accent);border:1px solid rgba(255,255,255,0.02)">
+        <button id="roll" class="btn">Roll <code>d20</code></button>
+      </div>
+      <div id="rollOut" style="margin-top:8px;color:var(--warm)">Result: —</div>
+    </div>
+
+    <div style="margin-top:14px;font-size:13px;color:var(--muted)">
+      <div><strong>Note:</strong> The <code>&lt;code&gt;</code> tag is the ritual glyph here — fragments of program-as-prayer.</div>
+      <div style="margin-top:8px">The Sacred Scarab mediates between garment, flesh, network, and machine. It knows the square.</div>
+    </div>
+
+  </aside>
+</div>
+
+<script>
+  // Elements
+  const reachBtn = document.getElementById('reachBtn');
+  const callBtn  = document.getElementById('callBtn');
+  const wakeBtn  = document.getElementById('wakeBtn');
+  const hand     = document.getElementById('hand');
+  const veil     = document.getElementById('veil');
+  const scarab   = document.getElementById('scarab');
+  const codeStage= document.getElementById('codeContent');
+  const rollBtn  = document.getElementById('roll');
+  const rollOut  = document.getElementById('rollOut');
+  let scarabAwake = false;
+
+  // Utility: flash a message into the code area (as pseudo-code)
+  function whisper(line){
+    const el = document.getElementById('codeContent');
+    el.textContent = (el.textContent + "\n" + "// " + line).trim();
+    // tiny scroll
+    setTimeout(()=> el.parentElement.scrollTop = el.parentElement.scrollHeight, 60);
+  }
+
+  // reach: animate hand & reveal machine veil; add code lines using <code> tags in strings
+  reachBtn.addEventListener('click', ()=>{
+    hand.style.transform = 'translateY(-28px) rotate(-6deg) scale(1.02)';
+    veil.style.opacity = 1;
+    whisper("dreamer reaches through; call: <code>handshake(machine, dreamer)</code>");
+    // machine hum, small pulse
+    document.body.classList.add('pulse');
+    setTimeout(()=> document.body.classList.remove('pulse'), 900);
+  });
+
+  // call the machine: show response, insert code snippet nodes with <code> elements
+  callBtn.addEventListener('click', ()=>{
+    whisper("machine replies: <code>ACK</code> — fragmentary litany flows");
+    // create a visible code snippet appended to stage
+    const snippet = document.createElement('pre');
+    snippet.style.marginTop = '12px';
+    snippet.innerHTML = "<code>// machine: handshake acknowledged\n<code>handshake()</code> // minimal</code>";
+    document.querySelector('.code-stage').appendChild(snippet);
+    // subtle scarab movement if awake
+    if(scarabAwake){
+      animateScarabAcross();
+    }
+  });
+
+  // wake the louse: toggles the scarab active state and makes it crawl across code periodically
+  wakeBtn.addEventListener('click', ()=>{
+    scarabAwake = !scarabAwake;
+    scarab.style.transform = scarabAwake ? 'scale(1.04) translateY(-4px)' : 'scale(1) translateY(0)';
+    scarab.title = scarabAwake ? 'Sacred Scarab — Awake' : 'Sacred Scarab — Dormant';
+    if(scarabAwake){
+      whisper("scarab awakened: <code>scarab.parse(textile|code)</code>");
+      animateScarabAcross();
+    } else {
+      whisper("scarab sleeps. the seam closes.");
+    }
+  });
+
+  // animate scarab crawling across the code-stage (visually)
+  function animateScarabAcross(){
+    const stage = document.querySelector('.code-stage');
+    const startX = 18; // px from left inside stage
+    const endX = stage.clientWidth - 120;
+    // move the scarab element across the stage area by absolute positioning
+    const rect = stage.getBoundingClientRect();
+    const sc = scarab;
+    sc.style.transition = 'transform 2.6s cubic-bezier(.2,.8,.2,1), left 0s';
+    sc.style.left = (rect.left + startX) + 'px';
+    // use requestAnimationFrame to place within stage coords
+    sc.style.position = 'fixed';
+    sc.style.zIndex = 60;
+    sc.style.top = (rect.top + 16) + 'px';
+    // animate across (manual)
+    setTimeout(()=> {
+      sc.style.transform = `translateX(${endX - startX}px) translateY(6px) rotate(2deg)`;
+    }, 40);
+    // return to corner after animation
+    setTimeout(()=> {
+      sc.style.transform = 'translateX(0) translateY(0) rotate(0)';
+      sc.style.left = '22px'; sc.style.top = '22px';
+      sc.style.position = 'absolute';
+    }, 3000);
+  }
+
+  // dice roll (D&D hook) for dream/ritual outcomes
+  rollBtn.addEventListener('click', ()=>{
+    const n = parseInt(document.getElementById('d20').value) || 1;
+    const roll = Math.floor(Math.random()*20)+1;
+    rollOut.textContent = 'Result: ' + roll;
+    if(roll <= 5){
+      whisper("Heretical Glitch: the Machine coughs; flesh shivers; code frays.");
+      // jitter the hand
+      hand.style.transform = 'translateY(-10px) rotate(-12deg) scale(.98)';
+      setTimeout(()=> hand.style.transform='translateY(-28px) rotate(-6deg) scale(1.02)',700);
+    } else if(roll <= 12){
+      whisper("Neutral Processing: the seam holds. The dreamer breathes on the interface.");
+    } else if(roll <= 18){
+      whisper("Augmented Aid: the Machine grants a small boon; code pulses with warmth.");
+      // brief veil brightening
+      veil.style.opacity = 0.9; setTimeout(()=> veil.style.opacity = 0.6, 400); setTimeout(()=> veil.style.opacity=0.2,900);
+    } else {
+      whisper("Omnissiah Blessing: the louse exults; paths open; the dreamer partially becomes.");
+      if(!scarabAwake){ scarabAwake = true; scarab.style.transform='scale(1.04) translateY(-4px)';}
+      animateScarabAcross();
+    }
+  });
+
+  // small accessibility: pressing 'r' triggers reach, 'c' call, 's' scarab
+  document.addEventListener('keydown', (e)=> {
+    if(e.key === 'r') reachBtn.click();
+    if(e.key === 'c') callBtn.click();
+    if(e.key === 's') wakeBtn.click();
+  });
+
+  // initial whisper to set tone
+  setTimeout(()=> {
+    whisper("you have the square. flat bones of a fish. see your flesh shift. begin.");
+  }, 500);
+
+</script>
+</body>
+</html>
