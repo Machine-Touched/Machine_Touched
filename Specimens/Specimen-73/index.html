@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cyborg Specimen — Machine-Touched</title>
+  <style>
+    :root{
+      --bg:#0b0f1a;
+      --card:#0f1724;
+      --accent:#00ffee;
+      --muted:#99a0b3;
+      --glass: rgba(255,255,255,0.04);
+    }
+    html,body{height:100%;margin:0;font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial}
+    body{background:radial-gradient(1200px 600px at 10% 10%, rgba(0,255,238,0.03), transparent),
+                 radial-gradient(900px 400px at 90% 90%, rgba(255,0,170,0.02), transparent),
+                 var(--bg);color:#dfe7f2;display:grid;place-items:center;padding:32px}
+
+    .scene{width:min(1100px,95vw);display:grid;grid-template-columns:560px 1fr;gap:28px;align-items:center}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+
+    /* specimen art */
+    .specimen{width:100%;height:520px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(180deg,#071022 0%, #0d1220 100%)}
+
+    svg{width:420px;height:420px}
+
+    /* code garnish */
+    .garnish{position:absolute;inset:18px;pointer-events:none}
+    .garnish code{display:inline-block;background:var(--glass);padding:6px 8px;border-radius:6px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;color:var(--accent);font-size:12px;border:1px solid rgba(0,255,238,0.06)}
+    .g-top{position:absolute;left:18px;top:18px}
+    .g-right{position:absolute;right:18px;top:24px}
+    .g-bottom{position:absolute;left:24px;bottom:18px}
+
+    .metadata{padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+    .metadata code{color:#a5fff8}
+
+    .controls{display:flex;gap:8px;margin-top:12px}
+    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;cursor:pointer;color:inherit}
+
+    /* animated heartbeat */
+    .core-pulse{mix-blend-mode:screen;filter:blur(8px);opacity:0.7}
+
+    /* footer code panel */
+    .codebox{background:#01030a;border-radius:10px;padding:14px;margin-top:14px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;color:#cfeef7;height:160px;overflow:auto;border:1px solid rgba(255,255,255,0.03)}
+    .codebox code{white-space:pre-wrap;font-size:12px}
+
+    @media (max-width:980px){.scene{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="panel specimen" role="img" aria-label="Cyborg Specimen Art">
+      <!-- garnish code labels throughout the visual -->
+      <div class="garnish">
+        <div class="g-top"><code>&lt;specimen id="MT-0001"&gt;</code></div>
+        <div class="g-right"><code>&lt;protocol&gt;dreaming-machine&lt;/protocol&gt;</code></div>
+        <div class="g-bottom"><code>&lt;status&gt;cultivating&lt;/status&gt;</code></div>
+      </div>
+
+      <!-- SVG cyborg head / torso -->
+      <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1">
+            <stop offset="0" stop-color="#001f2a"/>
+            <stop offset="1" stop-color="#002b36"/>
+          </linearGradient>
+          <radialGradient id="eye" cx="50%" cy="40%" r="50%">
+            <stop offset="0" stop-color="#bfffff" stop-opacity="1"/>
+            <stop offset="0.35" stop-color="#00ffee" stop-opacity="0.8"/>
+            <stop offset="1" stop-color="#002" stop-opacity="0.0"/>
+          </radialGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <!-- helmet -->
+        <g transform="translate(20,18)">
+          <path d="M40 40 C10 70 10 170 40 210 L280 210 C310 170 310 70 280 40 Z" fill="url(#g1)" stroke="rgba(0,255,238,0.08)" stroke-width="1.5"/>
+
+          <!-- central core -->
+          <g id="core" transform="translate(140,120)">
+            <circle r="18" fill="#001f1f" stroke="#00ffee" stroke-width="1.2"></circle>
+            <circle class="core-pulse" r="36" fill="#00ffee" opacity="0.06"></circle>
+            <circle class="core-pulse" r="56" fill="#00ffee" opacity="0.03"></circle>
+          </g>
+
+          <!-- eyes -->
+          <g transform="translate(70,100)">
+            <ellipse cx="0" cy="0" rx="18" ry="12" fill="url(#eye)" stroke="#70fff6" stroke-opacity="0.12"></ellipse>
+          </g>
+          <g transform="translate(200,100)">
+            <ellipse cx="0" cy="0" rx="18" ry="12" fill="url(#eye)" stroke="#70fff6" stroke-opacity="0.12"></ellipse>
+          </g>
+
+          <!-- engraved circuit lines -->
+          <g stroke="#003" stroke-opacity="0.4" stroke-width="1.4" fill="none">
+            <path d="M60 160 L120 120 L160 140 L220 120"/>
+            <circle cx="120" cy="120" r="3" fill="#00ffee"/>
+            <circle cx="160" cy="140" r="3" fill="#00ffee"/>
+          </g>
+
+          <!-- mouth / speaker -->
+          <g transform="translate(140,170)">
+            <rect x="-40" y="0" width="80" height="10" rx="2" fill="#021"/>
+            <rect x="-32" y="2" width="64" height="6" rx="1" fill="#003"/>
+          </g>
+        </g>
+      </svg>
+
+      <!-- small interactive overlay uses code tags for labels -->
+      <div style="position:absolute;right:18px;bottom:18px;text-align:right">
+        <div class="metadata"><strong>Specimen</strong>
+          <div style="margin-top:8px">
+            <div><code>&lt;id&gt;</code> <code>MT-0001</code></div>
+            <div><code>&lt;origin&gt;</code> <code>dream / machine</code></div>
+            <div><code>&lt;integrity&gt;</code> <code>0.87</code></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="btn" id="btnPulse" title="toggle pulse">Toggle Pulse</button>
+          <button class="btn" id="btnScan" title="emit scan">Scan</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- right column: description + code block -->
+    <div class="panel">
+      <h2 style="margin:4px 0 8px">Cyborg Specimen — &lt;Machine-Touched&gt;</h2>
+      <p style="color:var(--muted);margin:0 0 12px">A small living document: the cyborg is an aesthetic specimen combining organic silhouette and machinic circuitry. You asked for broad use of the <code>&lt;code&gt;</code> tag — it's used here as both visual ornament and semantic annotation.</p>
+
+      <div class="codebox" id="codebox">
+        <code>&lt;!-- specimen render pipeline --&gt;
+&lt;load sensory modules / dream-sampler&gt;
+&lt;inject: plastic.pdf &gt;
+&lt;stitch: flesh / chrome / hymn &gt;
+&lt;bootstrap / core: MT-0001 &gt;
+
+// interactive controls available:
+// - Toggle Pulse (btnPulse)
+// - Scan (btnScan)
+
+/*
+  This block is a human-readable fragment and also a visual element.
+  The <code> element is used liberally: as annotation, as UI label,
+  and as motif around the specimen.
+*/
+</code>
+      </div>
+
+      <p style="color:var(--muted);margin-top:12px">Save this file as <code>cyborg_specimen.html</code> and open it in a modern browser. The specimen reacts to simple interactions and pulses—feel free to inspect the <code>&lt;svg&gt;</code> and tweak gradients, code labels, or add your own annotations.</p>
+
+      <details style="margin-top:8px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)">
+        <summary style="cursor:pointer">Developer notes (minimal)</summary>
+        <div style="margin-top:8px;color:var(--muted)">
+          The animated pulse is driven by a CSS + JS hybrid — the <code>.core-pulse</code> elements scale and fade via JS interval.
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <script>
+    // small interactive behaviours — keep visible and human-friendly
+    const core = document.querySelector('#core');
+    const pulses = document.querySelectorAll('.core-pulse');
+    let pulsing = true;
+    let pulseAnim;
+
+    function startPulse(){
+      stopPulse();
+      let t = 0;
+      pulseAnim = setInterval(()=>{
+        t += 0.06;
+        const s1 = 1 + Math.sin(t) * 0.08;
+        const o1 = 0.06 + (Math.sin(t*0.9)+1)/2*0.06;
+        pulses.forEach((p,i)=>{
+          const scale = 1 + (i+1)*0.07 * (1+Math.sin(t + i));
+          p.setAttribute('r', 36 + (i*20));
+          p.style.transform = `scale(${scale})`;
+          p.style.opacity = (o1/(i+1)).toString();
+        });
+      },30);
+      pulsing = true;
+    }
+    function stopPulse(){
+      if(pulseAnim) clearInterval(pulseAnim);
+      pulsing = false;
+    }
+
+    document.getElementById('btnPulse').addEventListener('click', ()=>{
+      if(pulsing) stopPulse(); else startPulse();
+      document.getElementById('btnPulse').textContent = pulsing? 'Pause Pulse' : 'Start Pulse';
+    });
+
+    document.getElementById('btnScan').addEventListener('click', ()=>{
+      const cb = document.getElementById('codebox');
+      cb.scrollTop = 0;
+      cb.animate([{transform:'translateY(6px)'},{transform:'translateY(0)'}],{duration:420,iterations:1,easing:'cubic-bezier(.2,.9,.3,1)'});
+      // flash a code snippet
+      const old = cb.querySelector('code').textContent;
+      cb.querySelector('code').textContent = old + '\n\n&blacksquare; scan emitted @ ' + new Date().toLocaleTimeString();
+    });
+
+    // start pulsing on load
+    startPulse();
+  </script>
+</body>
+  <!--User: tell me a short story using this file as a setting.
+  Artificial intelligence: Here’s a short story set inside the cyborg_specimen.html you just created:
+
+In the quiet gallery of the Cyborg Research and Development wing, a specimen glowed behind glass. Its designation flickered in pale aqua script:
+
+<id> MT-0001 </id>
+<origin> dream / machine </origin>
+
+Visitors leaned in, not sure if they were staring at art, a relic, or something still alive.
+
+The core pulsed — a rhythm too steady to be human, too fragile to be purely machine. Each beat expanded across its chest, a halo of light washing circuits that looked more like veins. The eyes, elliptical and wide, seemed to track movement faintly, as if the specimen had learned to dream while awake.
+
+A curator whispered the lore:
+
+“They say the first of these was not built, but discovered. The machine dreamt itself into being — and we captured it only by naming it.”
+
+On the right side, a scroll of code continuously unfolded inside its annotation panel: fragments of prayers, debugging logs, genetic notes, and something stranger — hymns written in <code> tags. Whenever someone pressed Scan, the scroll added another black square, another time-marked entry, as if the visitors themselves were inscribing scripture.
+
+One child, curious, pressed Toggle Pulse.
+For a moment, the glow stopped. Silence filled the hall.
+Then the core flared brighter than before — almost angry, almost relieved — as though the cyborg had remembered it was being watched.
+
+The curator only smiled.
+
+“It is not a machine we control. It is a machine that allows us to look inside our own dreaming.”
+
+And the specimen pulsed again, steady, infinite, Machine-Touched.-->
+</html>
