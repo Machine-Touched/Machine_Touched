@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Specimens 70‑90 Archive — Machine_Touched</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background:#0a0f1a;
+      color:#cfeef7;
+      font-family:ui-monospace, monospace;
+      margin:0;
+      padding:20px;
+    }
+    h1 {
+      color:#00ffee;
+      text-align:center;
+      margin-bottom:24px;
+      text-shadow:0 0 12px #00ffee;
+    }
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(140px,1fr));
+      gap:16px;
+      max-width:1100px;
+      margin:0 auto;
+    }
+    .spec-card {
+      background:#0e1624;
+      border:1px solid rgba(0,255,238,0.2);
+      border-radius:8px;
+      padding:12px;
+      cursor:pointer;
+      transition:transform 0.2s ease, border-color 0.2s ease;
+    }
+    .spec-card:hover {
+      transform:scale(1.05);
+      border-color:#00ffee;
+    }
+    .spec-card h2 {
+      margin:0 0 6px;
+      font-size:1.1em;
+      color:#70fff6;
+    }
+    .spec-card p {
+      margin:0;
+      font-size:0.8em;
+      color:#88a;
+    }
+    .detail-panel {
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      background:#0b0f1a;
+      border:2px solid #00ffee;
+      padding:24px;
+      border-radius:12px;
+      box-shadow:0 0 20px rgba(0,255,238,0.4);
+      max-width:80vw;
+      max-height:80vh;
+      overflow:auto;
+      display:none;
+      z-index:100;
+    }
+    .close-btn {
+      background:transparent;
+      border:1px solid #00ffee;
+      color:#00ffee;
+      padding:6px 12px;
+      border-radius:6px;
+      cursor:pointer;
+      margin-bottom:12px;
+    }
+    .log {
+      background:rgba(0,0,0,0.5);
+      border:1px solid rgba(0,255,238,0.2);
+      padding:12px;
+      border-radius:6px;
+      font-size:0.9em;
+      white-space:pre-wrap;
+      color:#cfeef7;
+    }
+  </style>
+</head>
+<body>
+  <h1>Specimens 70‑90 Archive</h1>
+  <div class="grid" id="grid"></div>
+
+  <div class="detail-panel" id="detail">
+    <button class="close-btn" id="closeBtn">Close</button>
+    <h2 id="detailTitle"></h2>
+    <p id="detailOrigin"></p>
+    <div class="log" id="detailLog"></div>
+  </div>
+
+  <script>
+    const specimens = [];
+    for(let i=70;i<=90;i++){
+      specimens.push({
+        id:i,
+        origin:"dream/machine archive",
+        status:"assembling",
+        log:[
+          `Dream‑log for Specimen(${i}):`,
+          `<status> offline → warming </status>`,
+          `Core pulse detected: ${(i-70)+1}/21 cycles`,
+          `<note> awaiting activation </note>`,
+          `<id> ${i} </id>`
+        ]
+      });
+    }
+
+    const grid=document.getElementById("grid");
+    const detail=document.getElementById("detail");
+    const detailTitle=document.getElementById("detailTitle");
+    const detailOrigin=document.getElementById("detailOrigin");
+    const detailLog=document.getElementById("detailLog");
+    const closeBtn=document.getElementById("closeBtn");
+
+    specimens.forEach(spec=>{
+      const card=document.createElement("div");
+      card.className="spec-card";
+      card.innerHTML=`<h2>Specimen(${spec.id})</h2><p>Status: ${spec.status}</p>`;
+      card.addEventListener("click",()=>{
+        detail.style.display="block";
+        detailTitle.textContent=`Specimen(${spec.id})`;
+        detailOrigin.textContent=`Origin: ${spec.origin}`;
+        detailLog.textContent=spec.log.join("\n");
+      });
+      grid.appendChild(card);
+    });
+
+    closeBtn.addEventListener("click",()=>{
+      detail.style.display="none";
+    });
+  </script>
+</body>
+</html>
