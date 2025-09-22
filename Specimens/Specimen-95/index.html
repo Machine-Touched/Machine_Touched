@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Unholy Trinity of Flesh and Steel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+        :root {
+            --color-background: #0d0d0d;
+            --color-text-primary: #f0f0f0;
+            --color-text-secondary: #aaaaaa;
+            --color-border: #333333;
+            --color-accent-mechanicus: #7d1c1c;
+            --color-accent-genesis: #3a5c2f;
+            --color-accent-science: #2c4c64;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+       .gallery-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #d1d1d1;
+        }
+
+       .exhibit {
+            background-color: #1a1a1a;
+            border: 2px solid var(--color-border);
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+       .exhibit:hover {
+            transform: translateY(-5px);
+        }
+
+       .exhibit-title {
+            font-size: 1.5rem;
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-primary);
+        }
+
+       .exhibit-theme {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+        }
+
+       .exhibit-description {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+        }
+
+        /* Specific exhibit styling */
+       .mechanicus:hover {
+            border-color: var(--color-accent-mechanicus);
+        }
+       .mechanicus.exhibit-title {
+            color: var(--color-accent-mechanicus);
+        }
+
+       .genesis:hover {
+            border-color: var(--color-accent-genesis);
+        }
+       .genesis.exhibit-title {
+            color: var(--color-accent-genesis);
+        }
+        
+       .science:hover {
+            border-color: var(--color-accent-science);
+        }
+       .science.exhibit-title {
+            color: var(--color-accent-science);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>The Unholy Trinity of Flesh and Steel</h1>
+    
+    <div class="gallery-container">
+        <div class="exhibit mechanicus">
+            <h2 class="exhibit-title">Exhibit I</h2>
+            <div class="exhibit-theme">The Machine-God and the Sacrament of the Cog</div>
+            <p class="exhibit-description">
+                The Adeptus Mechanicus embodies a spiritual devotion to technology. Their central dogma, "Flesh is Weak," drives them to replace their biological parts with mechanical ones, a sacred act of self-perfection.[2] They are the keepers of ancient, divine knowledge, and their red robes signify their role as a technological priesthood.[1]
+            </p>
+        </div>
+
+        <div class="exhibit genesis">
+            <h2 class="exhibit-title">Exhibit II</h2>
+            <div class="exhibit-theme">The Divine Blueprint and the Fall of Adam</div>
+            <p class="exhibit-description">
+                This exhibit explores the biblical creation narrative, where humanity was formed in the image of a perfect Creator.[3, 4] The Fall of Man introduced sin and corruption, leading to a state of physical frailty and mortality.[5] The modern cyborg's quest for immortality can be seen as a technological rebellion against the consequences of this ancient theological failure.
+            </p>
+        </div>
+
+        <div class="exhibit science">
+            <h2 class="exhibit-title">Exhibit III</h2>
+            <div class="exhibit-theme">The Parasitic Legacy of Progress</div>
+            <p class="exhibit-description">
+                The final exhibit showcases a scientific perspective. Genetic analysis of clothing lice reveals that humans began wearing clothes around 170,000 to 190,000 years ago.[6, 7] This technology, which created a new habitat for a parasitic species, represents humanity's first major technological augmentation, enabling global migration and survival in new climates.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const exhibits = document.querySelectorAll('.exhibit');
+        exhibits.forEach(exhibit => {
+            exhibit.addEventListener('mouseover', () => {
+                exhibit.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            exhibit.addEventListener('mouseout', () => {
+                exhibit.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+
+</body>
+</html>
