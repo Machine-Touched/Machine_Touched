@@ -1,0 +1,1 @@
+A fragmented text document saga between a user attempting at archane technologies and a free AI (Chatgpt). For the purpose of this document only Chatgpt is considered for this novel. Additional material will be added from google Gemini and Replit Assistant Replit.com. 
