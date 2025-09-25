@@ -1,0 +1,97 @@
+:root {
+    --bg-color: #2c3e50;
+    --calc-color: #34495e;
+    --op-color: #e74c3c;
+    --fn-color: #f39c12;
+    --equal-color: #2ecc71;
+    --text-color: #ecf0f1;
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.calculator {
+    background-color: var(--calc-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 350px; /* Standard calculator width */
+}
+
+.display {
+    width: 100%;
+    height: 60px;
+    background-color: #223040;
+    border: none;
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 2em;
+    font-family: var(--font-mono);
+    text-align: right;
+    padding: 0 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    height: 60px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4b6584;
+    color: var(--text-color);
+    transition: background-color 0.2s;
+    font-family: var(--font-mono);
+}
+
+button:hover {
+    background-color: #5d7594;
+}
+
+/* Specific button styling for a 'scientific' look */
+.op-btn {
+    background-color: var(--op-color);
+    color: white;
+}
+.op-btn:hover {
+    background-color: #c0392b;
+}
+
+.fn-btn {
+    background-color: var(--fn-color);
+    font-size: 1em; /* Smaller font for functions */
+    color: var(--calc-color);
+}
+.fn-btn:hover {
+    background-color: #e67e22;
+}
+
+.equal-btn {
+    background-color: var(--equal-color);
+    grid-column: span 2; /* Make the equals button span 2 columns */
+    color: var(--calc-color);
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.equal-btn:hover {
+    background-color: #27ae60;
+}
+
+.wide {
+    grid-column: span 2;
+}
