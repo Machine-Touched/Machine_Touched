@@ -1,0 +1,128 @@
+:root {
+    --bg-color: #0d0101;
+    --text-color: #c9a24b; /* Gold/Bronze - Omnissiah */
+    --glitch-color: #b33c00; /* Red - AdMech Accent */
+    --mono-font: 'Courier New', Courier, monospace;
+}
+
+/* Base styles for the dark, digital theme */
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--mono-font);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.artifact-container {
+    position: relative;
+    width: 600px;
+    height: 200px;
+    text-align: center;
+    transform: perspective(800px) rotateX(5deg) rotateY(-5deg); /* Subtle 3D tilt */
+}
+
+/* Central text that is mostly stable */
+.core-data {
+    position: relative;
+    z-index: 10;
+    font-size: 3em;
+    padding: 20px 0;
+    border: 2px solid var(--text-color);
+    box-shadow: 0 0 20px rgba(180, 60, 0, 0.4);
+    background-color: rgba(13, 1, 1, 0.5); /* Semi-transparent background */
+}
+
+.symbol {
+    color: var(--glitch-color);
+    animation: blink 2s steps(1) infinite;
+}
+
+/* The glitching layers */
+.glitch-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 3em;
+    padding: 20px 0;
+    color: var(--glitch-color);
+    z-index: 5;
+    background-color: transparent;
+    border: 2px solid transparent;
+}
+
+/* Individual glitch layer effects */
+.layer-1 {
+    animation: glitch-anim-1 4s infinite linear alternate-reverse;
+}
+.layer-2 {
+    animation: glitch-anim-2 3.5s infinite linear alternate;
+    left: 2px;
+}
+.layer-3 {
+    animation: glitch-anim-3 5s infinite linear alternate-reverse;
+    left: -2px;
+}
+
+
+/* Scanline Overlay for a retro digital look */
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        rgba(0, 0, 0, 0.5) 1px,
+        transparent 2px
+    );
+    opacity: 0.2;
+    pointer-events: none; /* Ignore mouse events */
+}
+
+/* Keyframe Animations */
+
+/* Text Blinking */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Core Glitch Effects using clip-path */
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(6% 0 88% 0); transform: translateX(8px); }
+    10% { clip-path: inset(68% 0 1% 0); transform: translateX(-8px); }
+    20% { clip-path: inset(2% 0 65% 0); transform: translateX(4px); }
+    30% { clip-path: inset(80% 0 4% 0); transform: translateX(-4px); }
+    40% { clip-path: inset(5% 0 79% 0); transform: translateX(8px); }
+    50% { clip-path: inset(21% 0 1% 0); transform: translateX(-4px); }
+    60% { clip-path: inset(70% 0 10% 0); transform: translateX(4px); }
+    70% { clip-path: inset(55% 0 30% 0); transform: translateX(-8px); }
+    80% { clip-path: inset(10% 0 80% 0); transform: translateX(8px); }
+    90% { clip-path: inset(88% 0 6% 0); transform: translateX(-4px); }
+    100% { clip-path: inset(1% 0 95% 0); transform: translateX(0); }
+}
+/* ... additional layers use slightly different values for complexity ... */
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(80% 0 4% 0); transform: translateX(-4px); }
+    25% { clip-path: inset(45% 0 45% 0); transform: translateX(8px); }
+    50% { clip-path: inset(1% 0 79% 0); transform: translateX(-8px); }
+    75% { clip-path: inset(20% 0 70% 0); transform: translateX(4px); }
+    100% { clip-path: inset(6% 0 88% 0); transform: translateX(0); }
+}
+
+@keyframes glitch-anim-3 {
+    0% { clip-path: inset(10% 0 80% 0); transform: translateX(8px); }
+    33% { clip-path: inset(70% 0 10% 0); transform: translateX(-4px); }
+    66% { clip-path: inset(2% 0 65% 0); transform: translateX(8px); }
+    100% { clip-path: inset(55% 0 30% 0); transform: translateX(-8px); }
+}
