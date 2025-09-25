@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strict CSP Scientific Calculator</title>
+
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'none'; 
+        script-src 'self' https://cdn.jsdelivr.net; 
+        style-src 'self'; 
+        connect-src 'self'; 
+        img-src 'self';
+        font-src 'self';
+        form-action 'self';
+        base-uri 'self';
+    ">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.1/lib/browser/math.js"></script>
+</head>
+<body>
+
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled value="0">
+
+        <div class="buttons">
+            <button class="fn-btn" data-key="sin">sin</button>
+            <button class="fn-btn" data-key="cos">cos</button>
+            <button class="fn-btn" data-key="tan">tan</button>
+            <button class="fn-btn" data-key="log">log</button>
+            <button class="fn-btn" data-key="sqrt">√</button>
+
+            <button class="op-btn wide" data-key="AC">AC</button>
+            <button class="op-btn" data-key="DEL">DEL</button>
+            <button class="op-btn" data-key="/">/</button>
+
+            <button data-key="7">7</button>
+            <button data-key="8">8</button>
+            <button data-key="9">9</button>
+            <button class="op-btn" data-key="*">*</button>
+
+            <button data-key="4">4</button>
+            <button data-key="5">5</button>
+            <button data-key="6">6</button>
+            <button class="op-btn" data-key="-">-</button>
+
+            <button data-key="1">1</button>
+            <button data-key="2">2</button>
+            <button data-key="3">3</button>
+            <button class="op-btn" data-key="+">+</button>
+
+            <button data-key="(">(</button>
+            <button data-key="0">0</button>
+            <button data-key=")">)</button>
+            <button class="equal-btn" data-key="=">=</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
