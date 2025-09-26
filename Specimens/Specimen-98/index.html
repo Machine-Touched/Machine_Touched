@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adept's Lab: Servitor Drone Observation</title>
+    
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'none'; 
+        script-src 'self'; 
+        style-src 'self'; 
+        font-src 'self';
+        frame-ancestors 'none'; 
+    ">
+
+    <style>
+        :root {
+            --bg-color: #0d0101;
+            --text-color: #c9a24b; /* Gold/Omnissiah */
+            --drone-accent: #b33c00; /* Red AdMech */
+            --drone-eye: #00ff41; /* Digital Louse/Scan Green */
+            --mono-font: 'Courier New', Courier, monospace;
+        }
+
+        /* General Body and Container Styles */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--mono-font);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Important for the drone movement */
+        }
+        
+        .lab-title {
+            position: absolute;
+            top: 20%;
+            font-size: 2.5em;
+            text-shadow: 0 0 8px rgba(179, 60, 0, 0.5);
+            animation: pulse 4s infinite alternate;
+        }
+
+        /* SERVITOR DRONE STYLES */
+        .servitor-drone {
+            /* We start absolute, as JS will override this for cursor follow */
+            position: absolute; 
+            z-index: 1000;
+            cursor: none; /* Hide the default cursor for a digital feel */
+            /* Initial centered position before JS takes over */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+        }
+
+        .drone-body {
+            width: 40px;
+            height: 40px;
+            background-color: #1a1a1a;
+            border: 2px solid var(--drone-accent);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 10px rgba(179, 60, 0, 0.5);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+
+        .drone-head {
+            width: 20px;
+            height: 10px;
+            background-color: var(--text-color);
+            border-radius: 5px 5px 0 0;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background-color: var(--drone-eye);
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 7px;
+            box-shadow: 0 0 5px var(--drone-eye);
+            animation: blink 3s steps(1) infinite;
+        }
+
+        .drone-antennae {
+            width: 1px;
+            height: 8px;
+            background-color: var(--drone-accent);
+            position: absolute;
+            top: -18px;
+            left: 19px;
+            transform-origin: bottom;
+            animation: wobble 1s ease-in-out infinite;
+        }
+
+        /* KEYFRAME ANIMATIONS */
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
+        }
+
+        @keyframes blink {
+            0%, 90% { opacity: 1; }
+            91%, 93% { opacity: 0; }
+            94%, 100% { opacity: 1; }
+        }
+
+        @keyframes wobble {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="lab-title">Cognitorium Alpha-7: Seeking the Pure Form</h1>
+
+    <div class="servitor-drone" id="servitorDrone">
+        <div class="drone-body">
+            <div class="drone-head">
+                <div class="eye"></div>
+            </div>
+            <div class="drone-antennae"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const drone = document.getElementById('servitorDrone');
+            
+            // Offset the drone so the cursor hovers just above its body
+            let offsetX = -20; 
+            let offsetY = -50;
+
+            let targetX = window.innerWidth / 2;
+            let targetY = window.innerHeight / 2;
+            
+            // SECURE EVENT LISTENER for cursor follow (CSP compliant)
+            document.addEventListener('mousemove', (event) => {
+                // Set the target position based on the cursor
+                targetX = event.clientX + offsetX;
+                targetY = event.clientY + offsetY;
+            });
+
+            // Smooth movement function using requestAnimationFrame
+            function updateDronePosition() {
+                // Get current position (fallback to target if styles are not set)
+                const currentX = parseFloat(drone.style.left) || targetX;
+                const currentY = parseFloat(drone.style.top) || targetY;
+                
+                // Linear Interpolation (LERP) for smooth, non-jerky movement
+                const newX = currentX + (targetX - currentX) * 0.1;
+                const newY = currentY + (targetY - currentY) * 0.1;
+
+                drone.style.left = `${newX}px`;
+                drone.style.top = `${newY}px`;
+
+                requestAnimationFrame(updateDronePosition);
+            }
+
+            // Start the drone's movement loop
+            updateDronePosition(); 
+        });
+    </script>
+
+</body>
+</html>
