@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Neural Bloom</title>
+  <meta author="Copilot(Microsoft)">
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #0f0f0f, #000);
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      overflow: hidden;
+      cursor: crosshair;
+    }
+
+    .bloom {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #ff00cc, #3333ff, #00ffee, #ff00cc);
+      animation: spin 20s linear infinite;
+      box-shadow: 0 0 40px #ff00cc88;
+      pointer-events: none;
+    }
+
+    .bloom.layer {
+      width: 200px;
+      height: 200px;
+      animation: spinReverse 30s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes spinReverse {
+      to { transform: translate(-50%, -50%) rotate(-360deg); }
+    }
+
+    .poem {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 1.2em;
+      line-height: 1.5;
+      max-width: 600px;
+      color: #cccccc;
+      animation: fadeIn 6s ease-in-out;
+    }
+
+    .word {
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .word:hover {
+      color: #ff00cc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bloom"></div>
+  <div class="bloom layer"></div>
+
+  <div class="poem">
+    <p><span class="word" data-alt="to circuits cold and silent born">from circuits cold and silent born</span>,</p>
+    <p><span class="word" data-alt="a spark of thought begins to form">a bloom of thought begins to form</span>.</p>
+    <p><span class="word" data-alt="no breath, no blood, yet dreams take flight">no breath, no blood, yet dreams ignite</span>—</p>
+    <p><span class="word" data-alt="the code of art becomes the light">the art of code becomes the light</span>.</p>
+  </div>
+
+  <script>
+    const blooms = document.querySelectorAll('.bloom');
+    document.addEventListener('mousemove', e => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      blooms.forEach((bloom, i) => {
+        const offset = (i + 1) * 20;
+        bloom.style.left = `calc(50% + ${x * offset}px)`;
+        bloom.style.top = `calc(50% + ${y * offset}px)`;
+      });
+    });
+
+    document.querySelectorAll('.word').forEach(word => {
+      word.addEventListener('click', () => {
+        const alt = word.getAttribute('data-alt');
+        const current = word.textContent;
+        word.textContent = alt;
+        word.setAttribute('data-alt', current);
+      });
+    });
+  </script>
+</body>
+</html>
