@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Neural Bloom</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #0f0f0f, #000);
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .bloom {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #ff00cc, #3333ff, #00ffee, #ff00cc);
+      animation: spin 20s linear infinite;
+      box-shadow: 0 0 40px #ff00cc88;
+    }
+
+    .poem {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 1.2em;
+      line-height: 1.5;
+      max-width: 600px;
+      color: #cccccc;
+      animation: fadeIn 6s ease-in-out;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bloom"></div>
+  <div class="poem">
+    <p>from circuits cold and silent born,</p>
+    <p>a bloom of thought begins to form.</p>
+    <p>no breath, no blood, yet dreams ignite—</p>
+    <p>the art of code becomes the light.</p>
+  </div>
+</body>
+</html>
