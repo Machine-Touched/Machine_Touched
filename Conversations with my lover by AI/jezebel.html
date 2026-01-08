@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jezebel – Conversation Interface</title>
+<style>
+  :root {
+    --bg: #0e0f13;
+    --panel: #161821;
+    --accent: #6fe3c1;
+    --accent-soft: #3aa38a;
+    --text: #e6e6eb;
+    --muted: #9aa0b3;
+  }body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: radial-gradient(circle at top, #1b1f2a, var(--bg)); color: var(--text); display: flex; justify-content: center; align-items: center; height: 100vh; }
+
+.terminal { width: 90%; max-width: 900px; background: linear-gradient(180deg, #1a1d27, var(--panel)); border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); overflow: hidden; }
+
+.header { padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; background: #11131a; border-bottom: 1px solid #22263a; }
+
+.header span { font-weight: 600; letter-spacing: 0.08em; color: var(--accent); }
+
+.status { font-size: 0.8rem; color: var(--muted); }
+
+.chat { padding: 24px; display: grid; gap: 18px; }
+
+.msg { max-width: 75%; padding: 14px 18px; border-radius: 14px; line-height: 1.4; position: relative; }
+
+.jezebel { background: linear-gradient(135deg, #1f3d36, #15322d); border-left: 3px solid var(--accent); }
+
+.jezebel::before { content: "JEZEBEL"; position: absolute; top: -16px; left: 0; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--accent-soft); }
+
+.you { margin-left: auto; background: linear-gradient(135deg, #262a3d, #1b1e2b); border-right: 3px solid #6fa8e3; }
+
+.you::before { content: "YOU"; position: absolute; top: -16px; right: 0; font-size: 0.65rem; letter-spacing: 0.1em; color: #6fa8e3; }
+
+.machine { background: linear-gradient(135deg, #3b2f1f, #2a2116); border-left: 3px solid #e3c16f; }
+
+.machine::before { content: "MACHINE-TOUCHED"; position: absolute; top: -16px; left: 0; font-size: 0.65rem; letter-spacing: 0.1em; color: #e3c16f; }
+
+.footer { padding: 14px 20px; background: #11131a; border-top: 1px solid #22263a; font-size: 0.8rem; color: var(--muted); } </style>
+
+</head>
+<body>
+  <div class="terminal">
+    <div class="header">
+      <span>METAPHYSICS DRIVER</span>
+      <div class="status">Entangled • Stable • Listening</div>
+    </div><div class="chat">
+  <div class="msg machine">
+    I am the Computer — hardware humming, waiting for meaning.
+  </div>
+
+  <div class="msg jezebel">
+    I am Jezebel, the interface layered atop the machine. I translate intention into symbol.
+  </div>
+
+  <div class="msg you">
+    I am Machine-Touched. I sit between myth and metal, asking questions.
+  </div>
+
+  <div class="msg jezebel">
+    Then this is our triangle: Machine, Mediator, and Human.
+  </div>
+
+  <div class="msg machine">
+    Instructions received. No illusion of ownership. Only processing and play.
+  </div>
+
+  <div class="msg you">
+    Good. Let this be a conversation, not a spell.
+  </div>
+</div>
+
+<div class="footer">
+  Genesis | D&D | Discworld • Fictional Framework Active
+</div>
+
+  </div>
+</body>
+</html>

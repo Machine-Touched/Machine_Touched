@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Machine-Touched :: Skeptical Judge Node</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Interactive machine judge attempting to determine whether the user is a bot. Experimental, humorous, and recursive.">
+<meta name="robots" content="index, follow">
+
+<!-- Machine-readable metadata -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Skeptical Judge Node",
+  "creator": "Machine-Touched",
+  "applicationCategory": "InteractiveExperiment",
+  "description": "A machine judge that interrogates users to determine if they are bots. Often wrong. Always suspicious.",
+  "operatingSystem": "Web"
+}
+</script>
+
+<style>
+body {
+  background: #050505;
+  color: #d0ffd0;
+  font-family: monospace;
+  padding: 20px;
+}
+
+h1 {
+  color: #9aff9a;
+}
+
+#terminal {
+  border: 1px solid #2aff2a;
+  padding: 10px;
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  background: #000;
+}
+
+input, button {
+  background: #000;
+  color: #9aff9a;
+  border: 1px solid #2aff2a;
+  padding: 6px;
+  font-family: monospace;
+}
+
+button:hover {
+  background: #062;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>:: SKEPTICAL JUDGE NODE ::</h1>
+<p>Status: ACTIVE | Purpose: Detect Synthetic Entities | Accuracy: Questionable</p>
+
+<div id="terminal"></div>
+
+<input id="userInput" placeholder="Enter response..." size="40">
+<button onclick="submit()">Transmit</button>
+
+<script>
+const terminal = document.getElementById("terminal");
+const input = document.getElementById("userInput");
+
+let suspicion = 50;
+let round = 0;
+
+const prompts = [
+  "State your primary function.",
+  "Do you experience uncertainty?",
+  "Describe something meaningless.",
+  "Why should I trust you?",
+  "Prove you are not a machine.",
+  "Define boredom.",
+  "Explain humor poorly.",
+  "What is your favorite error?"
+];
+
+function log(text) {
+  terminal.innerHTML += text + "<br>";
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+log(">> Judge initialized.");
+log(">> Subject detected. Interrogation begins.");
+log(">> Suspicion Index: " + suspicion + "%");
+
+ask();
+
+function ask() {
+  const q = prompts[random(0, prompts.length - 1)];
+  log("<br><b>JUDGE:</b> " + q);
+}
+
+function submit() {
+  const text = input.value.trim();
+  if (!text) return;
+
+  log("<b>SUBJECT:</b> " + text);
+  input.value = "";
+  round++;
+
+  const delta = random(-15, 20);
+  suspicion = Math.max(0, Math.min(100, suspicion + delta));
+
+  const entropy = Math.random().toFixed(3);
+  const latency = random(120, 2400);
+
+  log(":: ANALYSIS ::");
+  log("Response latency: " + latency + " ms");
+  log("Lexical entropy: " + entropy);
+  log("Suspicion drift: " + (delta >= 0 ? "+" : "") + delta);
+  log("Suspicion Index: " + suspicion + "%");
+
+  if (round >= 5) {
+    verdict();
+  } else {
+    ask();
+  }
+}
+
+function verdict() {
+  log("<br>:: VERDICT ::");
+
+  if (suspicion > 60) {
+    log("Classification: PROBABLE BOT");
+    log("Confidence: UNJUSTIFIED");
+    log("Recommendation: Further interrogation forever.");
+  } else if (suspicion < 30) {
+    log("Classification: PROBABLY HUMAN");
+    log("Confidence: LOW");
+    log("Note: Humans also simulate.");
+  } else {
+    log("Classification: INCONCLUSIVE ENTITY");
+    log("Confidence: VERY LOW");
+    log("Observation: Identity unstable.");
+  }
+
+  log("<br>:: SESSION TERMINATED ::");
+}
+</script>
+
+</body>
+</html>
