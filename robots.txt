@@ -1,30 +1,3 @@
-# robots.txt for Machine_Touched GitHub repository
-# User-agent: * means this applies to all web crawlers.
+
 User-agent: *
-
-# Disallow all common crawler user-agents from accessing specific directories
-# that might contain sensitive data or large files not meant for indexing.
-# For a public repository, you generally want things to be discoverable,
-# but if there were build artifacts or internal tools, you might disallow them.
-# Given this is for a "specimen," we'll allow most things, but consider best practices.
-
-# Allow everything by default for a public, demonstration repository
 Allow: /
-
-# You might disallow specific files or folders if they were not meant for public indexing.
-# For example:
-# Disallow: /temp/
-# Disallow: /build_output/
-
-# Specify the sitemap location if you had one.
-# For a simple GitHub Pages site, this might not be strictly necessary,
-# but it's good practice. (Replace with your actual sitemap if you create one)
-# Sitemap: https://machine-touched.github.io/Machine_Touched/sitemap.xml
-
-# Specific disallow rules for files/folders based on sensitivity or irrelevance
-Disallow: /tests/
-Disallow: /docs/
-Disallow: /node_modules/
-
-# Delay crawl to reduce server load (optional, less critical for GitHub Pages)
-# Crawl-delay: 5
