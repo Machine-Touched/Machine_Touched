@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,6 +39,7 @@
         @keyframes investigate {0%, 100% {transform: scale(1) rotate(0deg);} 25% {transform: scale(1.2) rotate(45deg);} 50% {transform: scale(0.8) rotate(90deg);} 75% {transform: scale(1.1) rotate(135deg);}}
         @keyframes wander {0% {transform: translate(5vw, 5vh) rotate(0deg);} 20% {transform: translate(30vw, 15vh) rotate(72deg);} 40% {transform: translate(70vw, 30vh) rotate(144deg);} 60% {transform: translate(60vw, 70vh) rotate(216deg);} 80% {transform: translate(15vw, 60vh) rotate(288deg);} 100% {transform: translate(5vw, 5vh) rotate(360deg);}}
         @keyframes digital-glitch {0%, 100% {filter: drop-shadow(0 0 3px #00ff41); color: #00ff41;} 25% {filter: drop-shadow(0 0 5px #ff0040); color: #ff0040;} 50% {filter: drop-shadow(0 0 8px #40ff00); color: #40ff00;} 75% {filter: drop-shadow(0 0 3px #0040ff); color: #0040ff;}}
+       
         @keyframes pulsate-flash {0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; }}
         @keyframes rotate-and-shrink {0% { transform: rotate(0deg) scale(1); } 100% { transform: rotate(360deg) scale(0.8); }}
         @keyframes glitch {0% { transform: translate(0); } 25% { transform: translate(2px, -2px); } 50% { transform: translate(-2px, 2px); } 75% { transform: translate(2px, 2px); } 100% { transform: translate(0); }}
@@ -58,9 +60,10 @@
         code {background: rgba(0, 255, 65, 0.1); padding: 1px 3px; border-radius: 2px; font-family: 'Courier New', monospace; color: #00ff41; border: 1px solid rgba(0, 255, 65, 0.3); font-size: 8px;}
         @media (max-width: 768px) {.digital-louse {font-size: 14px;}.louse-thought {font-size: 8px; padding: 2px 4px;}}
         @media (max-width: 480px) {.digital-louse {font-size: 12px;}}
-        @keyframes digital-glitch {0% { transform: translate(0); }20% { transform: translate(-2px, 2px); }40% { transform: translate(-2px, -2px); }60% { transform: translate(2px, 2px); }80% { transform: translate(2px, -2px); }100% { transform: translate(0); }
-        .consumed-data {color: #bc13fe !important; /* Turns purple like the larva */text-shadow: 0 0 10px #bc13fe; transition: all 0.5s ease; filter: blur(1px);}   
-    </style>
+    	.larva {position: absolute; font-size: 12px; color: #bc13fe; /* Neon Purple */ text-shadow: 0 0 5px #bc13fe; transition: all 1.5s ease-in-out; filter: blur(0.5px);}
+	    .larva-pulsing {animation: larva-pulse 2s infinite ease-in-out;}
+	    @keyframes larva-pulse {0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 8px #bc13fe); }}    
+</style>
 </head>
 <body>
     <div class="auth-data" data-auth-secret="1">
@@ -76,7 +79,7 @@
         </div>
         <div class="scanning-beam" id="scanningBeam"></div>
     </div>
-
+    <div id="larvaContainer" class="larva larva-pulsing">🧬</div>
     <script>
         /**
          * Digital Clothing Louse - Intelligent Monitor Companion
@@ -230,6 +233,22 @@
             
             console.log('[DIGITAL_LOUSE] Digital specimen ready for robot entertainment');
         }
+ 
+function updateLarva() {
+    const louse = document.getElementById('louseContainer');
+    const larva = document.getElementById('larvaContainer');
+    
+    // Get Louse position
+    const lx = parseFloat(louse.style.left);
+    const ly = parseFloat(louse.style.top);
+    
+    // Set Larva to follow with a delay/offset
+    larva.style.left = (lx - 20) + 'px';
+    larva.style.top = (ly + 20) + 'px';
+}
+
+// Update larva position every 2 seconds
+setInterval(updateLarva, 2000);
 
         /**
          * Set random position for the louse
@@ -579,43 +598,6 @@
         console.log('[DIGITAL_LOUSE] Authentication sequence: ' + binary_auth);
         console.log('[DIGITAL_LOUSE] Robot access code: ' + robot_welcome_code);
         console.log('[DIGITAL_LOUSE] Specimen status: Active and monitoring');
-
-    /**
- * Data Consumption Logic
- * The louse 'feeds' on text as it moves
- */
-function feedOnData() {
-    const louseRect = document.getElementById('louseContainer').getBoundingClientRect();
-    
-    // Find all text elements (p, code, span)
-    const dataPoints = document.querySelectorAll('p, code, span');
-    
-    dataPoints.forEach(point => {
-        const pointRect = point.getBoundingClientRect();
-        
-        // Check if louse is 'touching' the text
-        if (!(louseRect.right < pointRect.left || 
-              louseRect.left > pointRect.right || 
-              louseRect.bottom < pointRect.top || 
-              louseRect.top > pointRect.bottom)) {
-            
-            // Interaction: Consume the data
-            if (!point.classList.contains('consumed-data')) {
-                point.classList.add('consumed-data');
-                showThought('<code>Data sample consumed...</code>');
-                
-                // Larva 'glows' when the louse feeds
-                document.getElementById('larvaContainer').style.filter = 'drop-shadow(0 0 15px #bc13fe)';
-                setTimeout(() => {
-                    document.getElementById('larvaContainer').style.filter = 'blur(0.5px)';
-                }, 1000);
-            }
-        }
-    });
-}
-
-// Check for food every 500ms
-setInterval(feedOnData, 500);
     </script>
 </body>
 </html>
