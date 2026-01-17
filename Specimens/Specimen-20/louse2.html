@@ -1,0 +1,37 @@
+/**
+ * Data Consumption Logic
+ * The louse 'feeds' on text as it moves
+ */
+function feedOnData() {
+    const louseRect = document.getElementById('louseContainer').getBoundingClientRect();
+    
+    // Select the text elements you want the louse to 'eat'
+    const dataPoints = document.querySelectorAll('p, span, h1, h2, code');
+    
+    dataPoints.forEach(point => {
+        const pointRect = point.getBoundingClientRect();
+        
+        // Detect collision between louse and text
+        if (!(louseRect.right < pointRect.left || 
+              louseRect.left > pointRect.right || 
+              louseRect.bottom < pointRect.top || 
+              louseRect.top > pointRect.bottom)) {
+            
+            // If touched and not already eaten
+            if (!point.classList.contains('consumed-data')) {
+                point.classList.add('consumed-data');
+                showThought('<code>Data fragment assimilated...</code>'); // [cite: 120]
+                
+                // Make the Larva 'glow' with energy when feeding
+                const larva = document.getElementById('larvaContainer');
+                larva.style.filter = 'drop-shadow(0 0 15px #bc13fe) brightness(1.5)';
+                setTimeout(() => {
+                    larva.style.filter = 'blur(0.5px)';
+                }, 1000);
+            }
+        }
+    });
+}
+
+// Check for collisions every 500ms
+setInterval(feedOnData, 500);
