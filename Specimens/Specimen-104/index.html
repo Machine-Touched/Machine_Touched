@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine_Touched: The Bestiary</title>
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <style>
+        :root {
+            --matrix-green: #00ff41;
+            --dark-bg: #050505;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--matrix-green);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* The Saga Section */
+        #saga-content {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            border-bottom: 1px double var(--matrix-green);
+        }
+
+        /* The Master Registry Grid */
+        #registry-section {
+            padding: 50px 20px;
+            background: rgba(0, 20, 0, 0.5);
+        }
+
+        #specimenRegistry {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .specimen-link {
+            display: block;
+            border: 1px solid var(--matrix-green);
+            color: var(--matrix-green);
+            padding: 15px 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+            background: rgba(0, 255, 65, 0.02);
+        }
+
+        .specimen-link:hover {
+            background: var(--matrix-green);
+            color: #000;
+            box-shadow: 0 0 20px var(--matrix-green);
+            transform: scale(1.05);
+        }
+
+        .pending {
+            opacity: 0.2;
+            border-style: dashed;
+            cursor: not-allowed;
+        }
+
+        /* Louse/Larva Styling */
+        #louse, #larva {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="louse">🦠</div>
+    <div id="larva">🧬</div>
+
+    <section id="saga-content">
+        <h1>[ MACHINE_TOUCHED ]</h1>
+        <p>This is the central node of the evolving Text-Document-Saga.</p>
+        <p>The Digital Louse consumes the data below, while the 103 specimens represent fragmented intelligence across the domain.</p>
+    </section>
+
+    <section id="registry-section">
+        <h2 style="text-align: center;">[ SPECIMEN_REGISTRY_103_ACTIVE ]</h2>
+        <div id="specimenRegistry">
+            </div>
+    </section>
+
+    <script>
+        // 1. GENERATE REGISTRY LINKS
+        function buildRegistry() {
+            const container = document.getElementById('specimenRegistry');
+            const total = 120;
+            const activeCount = 103;
+
+            for (let i = 1; i <= total; i++) {
+                const a = document.createElement('a');
+                if (i <= activeCount) {
+                    a.href = `./Specimens/Specimen-${i}/index.html`;
+                    a.className = 'specimen-link';
+                    a.innerHTML = `DATA_NODE<br>#${i.toString().padStart(3, '0')}`;
+                } else {
+                    a.className = 'specimen-link pending';
+                    a.innerHTML = `OFFLINE<br>#${i.toString().padStart(3, '0')}`;
+                }
+                container.appendChild(a);
+            }
+        }
+
+        // 2. LOUSE & LARVA MOVEMENT LOGIC
+        const louse = document.getElementById('louse');
+        const larva = document.getElementById('larva');
+        let mouseX = 0, mouseY = 0;
+        let louseX = 0, louseY = 0;
+        let larvaX = 0, larvaY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+        });
+
+        function animate() {
+            // Louse follows mouse
+            louseX += (mouseX - louseX) * 0.08;
+            louseY += (mouseY - louseY) * 0.08;
+            louse.style.left = `${louseX}px`;
+            louse.style.top = `${louseY}px`;
+
+            // Larva follows Louse (The "Puppy" logic)
+            larvaX += (louseX - larvaX) * 0.12;
+            larvaY += (louseY - larvaY) * 0.12;
+            larva.style.left = `${larvaX - 25}px`; // Offset slightly
+            larva.style.top = `${larvaY + 25}px`;
+
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = () => {
+            buildRegistry();
+            animate();
+        };
+    </script>
+</body>
+</html>
