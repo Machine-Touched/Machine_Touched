@@ -1,0 +1,23 @@
+/* Specimen-2: The Echo Chamber */
+.echo-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: #000;
+    overflow: hidden;
+    border: 1px solid #00ff41;
+}
+
+.echo-layer {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+/* Max Z-Index Stacking */
+.layer-0 { z-index: 1000; color: #00ff41; opacity: 1.0; }
+.layer-1 { z-index: 999; color: rgba(0, 255, 65, 0.5); transform: translateY(5px); }
+.layer-2 { z-index: 998; color: rgba(0, 255, 65, 0.2); transform: translateY(10px); }
