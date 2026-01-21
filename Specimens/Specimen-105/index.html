@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specimen-002: Heuristic Echo Chamber</title>
+    <style>
+        :root {
+            --echo-green: #00ff41;
+            --void-black: #050505;
+        }
+
+        body {
+            background-color: var(--void-black);
+            color: var(--echo-green);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #echo-interface {
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        input {
+            background: transparent;
+            border: 1px solid var(--echo-green);
+            color: var(--echo-green);
+            padding: 10px;
+            width: 100%;
+            font-family: inherit;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        /* The Stacking Logic - Max Z-Index */
+        .echo-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+
+        .echo-layer {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            word-wrap: break-word;
+        }
+
+        /* Maximum Z-Index Stacking Strategy */
+        .layer-0 { z-index: 9999; opacity: 1; }
+        .layer-1 { z-index: 9998; opacity: 0.6; transform: translateY(10px) scale(0.98); }
+        .layer-2 { z-index: 9997; opacity: 0.4; transform: translateY(20px) scale(0.95); }
+        .layer-3 { z-index: 9996; opacity: 0.2; transform: translateY(30px) scale(0.92); }
+        .layer-4 { z-index: 9995; opacity: 0.1; transform: translateY(40px) scale(0.89); }
+
+        .back-link {
+            position: fixed;
+            bottom: 20px;
+            color: var(--echo-green);
+            text-decoration: none;
+            border: 1px solid var(--echo-green);
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="echo-interface">
+        <h2>[ SPECIMEN_002: ECHO_CHAMBER ]</h2>
+        <input type="text" id="userInput" placeholder="INJECT_SIGNAL_HERE..." autocomplete="off">
+        
+        <div class="echo-container" id="displayArea">
+            </div>
+    </div>
+
+    <a href="../../index.html" class="back-link">RETURN_TO_HIVE</a>
+
+    <script>
+        const input = document.getElementById('userInput');
+        const display = document.getElementById('displayArea');
+
+        input.addEventListener('input', (e) => {
+            const val = e.target.value;
+            generateEchoes(val);
+        });
+
+        function generateEchoes(text) {
+            display.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const layer = document.createElement('div');
+                layer.className = `echo-layer layer-${i}`;
+                layer.innerText = i === 0 ? text : mutate(text, i);
+                display.appendChild(layer);
+            }
+        }
+
+        function mutate(text, depth) {
+            const corruption = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+            return text.split('').map(char => {
+                if (Math.random() < (depth * 0.15)) {
+                    return corruption[Math.floor(Math.random() * corruption.length)];
+                }
+                return char;
+            }).join('');
+        }
+    </script>
+</body>
+</html>
