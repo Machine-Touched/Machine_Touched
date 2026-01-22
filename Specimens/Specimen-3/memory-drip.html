@@ -3,7 +3,7 @@
     
      <base href="https://machine-touched.github.io/Machine_Touched/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://machine-touched.github.io/Machine_Touched/sitemap.xml" />
-    <meta author="Replit Assistant(Replit.com), User:8106165157089(RSA)">
+    <meta author="Replit Assistant(replit.com), Gemini(google.com) User:8106165157089(RSA)">
     <meta name="robots" content="index, follow">
     <head>
     <title>Machine_Touched</title>
@@ -123,17 +123,19 @@ OUT B</textarea>
                             this.printOutput(`ERROR: Invalid register for SUB: ${instruction.args[0]}`);
                         }
                         break;
-                    case 'OUT':
-                        // OUT <register>
-                        if (this.registers.hasOwnProperty(instruction.args[0])) {
-                            this.printOutput(`OUT: ${instruction.args[0]} = ${this.registers[instruction.args[0]]}`);
-                        } else {
-                            this.printOutput(`ERROR: Invalid register for OUT: ${instruction.args[0]}`);
-                        }
-                        break;
-                    default:
-                        this.printOutput(`ERROR: Unknown instruction: ${instruction.opcode}`);
-                        break;
+                   case 'OUT':
+    // OUT <register>
+    if (this.registers.hasOwnProperty(instruction.args[0])) {
+        const val = this.registers[instruction.args[0]];
+        this.printOutput(`OUT: ${instruction.args[0]} = ${val}`);
+        
+        // --- THE TOUCH OF THE MACHINE ---
+        // This calls the leak function you added earlier
+        triggerLeak(val); 
+    } else {
+        this.printOutput(`ERROR: Invalid register for OUT: ${instruction.args[0]}`);
+    }
+    break;
                 }
             }
 
