@@ -1,0 +1,5 @@
+exclude:
+  - "Conversations with my lover by AI/"
+  - "Readme(z-index).md"
+  - "node_modules"
+  - "vendor"
